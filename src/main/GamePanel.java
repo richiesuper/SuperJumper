@@ -31,7 +31,7 @@ public class GamePanel extends JPanel {
 			this.bufferedImage = ImageIO.read(is);
 			
 			for (int i = 0; i < 8; i++)
-				this.arr[i] = this.bufferedImage.getSubimage(i*72, 0, 75, 86);
+				this.arr[i] = this.bufferedImage.getSubimage(i*72, 0, 72, 86);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
