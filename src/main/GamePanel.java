@@ -18,20 +18,21 @@ public class GamePanel extends JPanel {
 	private KeyboardInput keyboardInput;
 	private MouseInput mouseInput;
 	private BufferedImage bufferedImage;
-	private BufferedImage[] arr;
+	private BufferedImage[][] arr;
 	
 	public GamePanel(int width, int height) {
 		super();
 		this.keyboardInput = new KeyboardInput(this);
 		this.mouseInput = new MouseInput(this);
-		this.arr = new BufferedImage[8];
+		this.arr = new BufferedImage[12][7];
 
 		try {
-			InputStream is = getClass().getResourceAsStream("/entities/player/Walk.png");
+			InputStream is = getClass().getResourceAsStream("/entities/player/player.png");
 			this.bufferedImage = ImageIO.read(is);
 			
-			for (int i = 0; i < 8; i++)
-				this.arr[i] = this.bufferedImage.getSubimage(i*72, 0, 72, 86);
+			for (int i = 0; i < 12; i++)
+				for (int j = 0; j < 7; j++)
+					this.arr[i][j] = this.bufferedImage.getSubimage(j*128, i*128, 128, 128);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -45,7 +46,8 @@ public class GamePanel extends JPanel {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
-		for (int i = 0; i < 8; i++)
-			g.drawImage(arr[i], 0, i*86, 72, 86, null);
+		for (int i = 0; i < 12; i++)
+			for (int j = 0; j < 7; j++)
+				g.drawImage(arr[i][j], j*128, i*128, 128, 128, null);
 	}
 }
