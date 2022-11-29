@@ -2,8 +2,8 @@ package main;
 
 public class Game implements Runnable {
 	private final String GAME_NAME = "Super Jumper";
-	private final int GAME_PANEL_WIDTH = 1920;
-	private final int GAME_PANEL_HEIGHT = 1080;
+	private final int GAME_PANEL_WIDTH = 800;
+	private final int GAME_PANEL_HEIGHT = 600;
 	private final int FPS = 60;
 	private final long FRAME_PERIOD_IN_MS = 1000 / FPS;
 

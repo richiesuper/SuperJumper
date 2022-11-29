@@ -19,6 +19,7 @@ public class GamePanel extends JPanel {
 	private MouseInput mouseInput;
 	private BufferedImage bufferedImage;
 	private BufferedImage[][] arr;
+	private int ticker, idx;
 	
 	public GamePanel(int width, int height) {
 		super();
@@ -40,14 +41,26 @@ public class GamePanel extends JPanel {
 		setPreferredSize(new Dimension(width, height));
 		addKeyListener(this.keyboardInput);
 		addMouseListener(this.mouseInput);
+		
+		ticker = 0;
+		idx = 0;
 	}
 	
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		ticker++;
 
-		for (int i = 0; i < 12; i++)
-			for (int j = 0; j < 7; j++)
-				g.drawImage(arr[i][j], j*128, i*128, 128, 128, null);
+		g.drawImage(arr[1][idx], 0, 0, 128, 128, null);
+
+		if (ticker % 10 == 0) {
+			ticker = 0;
+			
+			if (idx >= 6) {
+				idx = 0;
+			}
+
+			idx++;
+		}
 	}
 }
