@@ -12,28 +12,32 @@ import javax.swing.JPanel;
 
 import inputs.KeyboardInput;
 import inputs.MouseInput;
+import tilemap.Background;
+import utils.Constants;
 
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel {
 	private KeyboardInput keyboardInput;
 	private MouseInput mouseInput;
-	private BufferedImage bufferedImage;
-	private BufferedImage[][] arr;
+	private Background bg;
+	private BufferedImage spriteSheet;
+	private BufferedImage[][] spriteTile;
 	private int ticker, idx;
 	
 	public GamePanel(int width, int height) {
 		super();
 		this.keyboardInput = new KeyboardInput(this);
 		this.mouseInput = new MouseInput(this);
-		this.arr = new BufferedImage[12][7];
+		this.spriteTile = new BufferedImage[12][7];
 
 		try {
+			bg = new Background(Constants.Backgrounds.MAIN_MENU);
 			InputStream is = getClass().getResourceAsStream("/entities/player/player.png");
-			this.bufferedImage = ImageIO.read(is);
+			this.spriteSheet = ImageIO.read(is);
 			
 			for (int i = 0; i < 12; i++)
 				for (int j = 0; j < 7; j++)
-					this.arr[i][j] = this.bufferedImage.getSubimage(j*128, i*128, 128, 128);
+					this.spriteTile[i][j] = this.spriteSheet.getSubimage(j*128, i*128, 128, 128);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -51,7 +55,8 @@ public class GamePanel extends JPanel {
 		super.paintComponent(g);
 		ticker++;
 
-		g.drawImage(arr[1][idx], 0, 0, 128, 128, null);
+		bg.draw(g);
+		g.drawImage(spriteTile[1][idx], 0, 0, 128, 128, null);
 
 		if (ticker % 10 == 0) {
 			ticker = 0;
