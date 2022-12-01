@@ -1,5 +1,5 @@
 package gamestates;
 
-public class GameState {
-
+public abstract class GameState {
+	
 }
