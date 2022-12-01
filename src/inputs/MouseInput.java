@@ -7,7 +7,7 @@ import main.GamePanel;
 
 public class MouseInput implements MouseListener {
 	private GamePanel gamePanel;
-	
+
 	public MouseInput(GamePanel gamePanel) {
 		this.gamePanel = gamePanel;
 	}

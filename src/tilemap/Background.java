@@ -11,21 +11,20 @@ import utils.Constants;
 import java.awt.Graphics;
 
 public class Background {
-    private BufferedImage bg;
+	private BufferedImage bg;
 
-    public Background(String filename) {
-        this.bg = null;
-        InputStream is;
-        try {
-            is = getClass().getResourceAsStream(filename);
-            this.bg = ImageIO.read(is);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+	public Background(String filename) {
+		this.bg = null;
+		InputStream is;
+		try {
+			is = getClass().getResourceAsStream(filename);
+			this.bg = ImageIO.read(is);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
-    public void draw(Graphics g) {
-        //g.drawImage(bg, 0, 0, Constants.Panel.WIDTH, Constants.Panel.HEIGHT, 0, 0, 446, 289, null);
-        g.drawImage(bg, 0, 0, 32*25, 33*18, null);
-    }
+	public void draw(Graphics g) {
+		g.drawImage(bg, 0, 0, Constants.Panel.WIDTH, Constants.Panel.HEIGHT, null);
+	}
 }

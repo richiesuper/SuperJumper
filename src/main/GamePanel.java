@@ -23,7 +23,7 @@ public class GamePanel extends JPanel {
 	private BufferedImage spriteSheet;
 	private BufferedImage[][] spriteTile;
 	private int ticker, idx;
-	
+
 	public GamePanel(int width, int height) {
 		super();
 		this.keyboardInput = new KeyboardInput(this);
@@ -34,10 +34,10 @@ public class GamePanel extends JPanel {
 			bg = new Background(Constants.Backgrounds.MAIN_MENU);
 			InputStream is = getClass().getResourceAsStream("/entities/player/player.png");
 			this.spriteSheet = ImageIO.read(is);
-			
+
 			for (int i = 0; i < 12; i++)
 				for (int j = 0; j < 7; j++)
-					this.spriteTile[i][j] = this.spriteSheet.getSubimage(j*128, i*128, 128, 128);
+					this.spriteTile[i][j] = this.spriteSheet.getSubimage(j * 128, i * 128, 128, 128);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -45,11 +45,11 @@ public class GamePanel extends JPanel {
 		setPreferredSize(new Dimension(width, height));
 		addKeyListener(this.keyboardInput);
 		addMouseListener(this.mouseInput);
-		
+
 		ticker = 0;
 		idx = 0;
 	}
-	
+
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -60,7 +60,7 @@ public class GamePanel extends JPanel {
 
 		if (ticker % 10 == 0) {
 			ticker = 0;
-			
+
 			if (idx >= 6) {
 				idx = 0;
 			}
