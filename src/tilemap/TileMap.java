@@ -116,8 +116,8 @@ public class TileMap {
 
 	public void setPosition(double x, double y) {
 
-		this.x += (x - this.x) * tween;
-		this.y += (y - this.y) * tween;
+		this.x += (x - this.x) * tween; // thisx = 0 - 0 * 1;
+		this.y += (y - this.y) * tween; // thisy = 0 - 0 * 1;
 
 		fixBounds();
 
@@ -125,6 +125,12 @@ public class TileMap {
 		rowOffset = (int) -this.y / tileSize;
 
 	}
+	
+	public int getTileSize() { return tileSize; }
+	public double getx() { return x; }
+	public double gety() { return y; }
+	public int getWidth() { return width; }
+	public int getHeight() { return height; }
 
 	private void fixBounds() {
 		if (x < xmin)
