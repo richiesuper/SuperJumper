@@ -37,6 +37,7 @@ public class Constants {
 		// tile dimensions
 		public static final byte WIDTH = 32;
 		public static final byte HEIGHT = 32;
+		
 		// tile count
 		public static final byte HORIZ_SUM = 32;
 		public static final byte VERT_SUM = 18;

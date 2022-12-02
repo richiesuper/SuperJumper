@@ -56,7 +56,7 @@ public class Background {
 			// draw the second pane to the right, while also REVERSING THE BACKGROUND TO MAKE IT PRETTY!
 			// notice the multiplication by 2 and MINUS SIGN on the Constants.Panel.WIDTH!
 			g.drawImage(bg, (int) x + 2 * Constants.Panel.WIDTH, (int) y, -Constants.Panel.WIDTH, Constants.Panel.HEIGHT, null);
-		else if (x > 0)
+		if (x > 0)
 			// draw the pane to the left of original pane
 			g.drawImage(bg, (int) x - Constants.Panel.WIDTH, (int) y, Constants.Panel.WIDTH, Constants.Panel.HEIGHT, null);
 	}
