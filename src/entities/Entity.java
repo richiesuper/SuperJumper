@@ -3,35 +3,37 @@ package entities;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+import utils.Constants;
+
 public abstract class Entity {
 	// intrinsic traits
-	private float x;
-	private float y;
-	private byte state;
-	private byte direction;
-	private float speed;
-	private float health;
-	private float maxHealth;
-	private float attackDmg;
-	private boolean moving;
-	private boolean running;
-	private boolean jumping;
-	private byte ticker;
-	private byte idx;
-	private byte[] tileColCount;
+	protected float x;
+	protected float y;
+	protected byte state;
+	protected byte direction;
+	protected float speedX;
+	protected float health;
+	protected float maxHealth;
+	protected float attackDmg;
+	protected boolean moving;
+	protected boolean running;
+	protected boolean jumping;
+	protected byte ticker;
+	protected byte idx;
+	protected byte[] tileColCount;
 
 	// dimensions
-	private short width;
-	private short height;
+	protected short width;
+	protected short height;
 
 	// assets
-	private BufferedImage spriteSheet;
-	private BufferedImage spriteTile[][];
+	protected BufferedImage spriteSheet;
+	protected BufferedImage spriteTile[][];
 
 	// constructor
 	public Entity(float x, float y) {
-		setX(x);
-		setY(y);
+		this.x = x;
+		this.y = y;
 	}
 
 	// abstract methods
@@ -47,15 +49,9 @@ public abstract class Entity {
 
 	public abstract void update();
 
-	public abstract void computeHealth();
-
 	public abstract void attack();
 
 	public abstract void die();
-
-	public abstract void jump();
-
-	public abstract void run();
 
 	// concrete methods
 	public float getX() {
@@ -82,12 +78,20 @@ public abstract class Entity {
 		this.state = state;
 	}
 
-	public float getSpeed() {
-		return speed;
+	public byte getDirection() {
+		return direction;
 	}
 
-	public void setSpeed(float speed) {
-		this.speed = speed;
+	public void setDirection(byte direction) {
+		this.direction = direction;
+	}
+
+	public float getSpeedX() {
+		return speedX;
+	}
+
+	public void setSpeedX(float speedX) {
+		this.speedX = speedX;
 	}
 
 	public float getHealth() {
@@ -114,68 +118,12 @@ public abstract class Entity {
 		this.attackDmg = attackDmg;
 	}
 
-	public short getWidth() {
-		return width;
-	}
-
-	public void setWidth(short width) {
-		this.width = width;
-	}
-
-	public short getHeight() {
-		return height;
-	}
-
-	public void setHeight(short height) {
-		this.height = height;
-	}
-
-	public byte getDirection() {
-		return direction;
-	}
-
-	public void setDirection(byte direction) {
-		this.direction = direction;
-	}
-
 	public boolean isMoving() {
 		return moving;
 	}
 
 	public void setMoving(boolean moving) {
 		this.moving = moving;
-	}
-
-	public BufferedImage[][] getSpriteTile() {
-		return spriteTile;
-	}
-
-	public void setSpriteTile(BufferedImage[][] spriteTile) {
-		this.spriteTile = spriteTile;
-	}
-
-	public BufferedImage getSpriteSheet() {
-		return spriteSheet;
-	}
-
-	public void setSpriteSheet(BufferedImage spriteSheet) {
-		this.spriteSheet = spriteSheet;
-	}
-
-	public byte getTicker() {
-		return ticker;
-	}
-
-	public void setTicker(byte ticker) {
-		this.ticker = ticker;
-	}
-
-	public byte getIdx() {
-		return idx;
-	}
-
-	public void setIdx(byte idx) {
-		this.idx = idx;
 	}
 
 	public boolean isRunning() {
@@ -194,11 +142,73 @@ public abstract class Entity {
 		this.jumping = jumping;
 	}
 
+	public byte getTicker() {
+		return ticker;
+	}
+
+	public void setTicker(byte ticker) {
+		this.ticker = ticker;
+	}
+
+	public byte getIdx() {
+		return idx;
+	}
+
+	public void setIdx(byte idx) {
+		this.idx = idx;
+	}
+
 	public byte[] getTileColCount() {
 		return tileColCount;
 	}
 
-	public void setTileColCount(byte[] tileCount) {
-		this.tileColCount = tileCount;
+	public void setTileColCount(byte[] tileColCount) {
+		this.tileColCount = tileColCount;
+	}
+
+	public short getWidth() {
+		return width;
+	}
+
+	public void setWidth(short width) {
+		this.width = width;
+	}
+
+	public short getHeight() {
+		return height;
+	}
+
+	public void setHeight(short height) {
+		this.height = height;
+	}
+
+	public BufferedImage getSpriteSheet() {
+		return spriteSheet;
+	}
+
+	public void setSpriteSheet(BufferedImage spriteSheet) {
+		this.spriteSheet = spriteSheet;
+	}
+
+	public BufferedImage[][] getSpriteTile() {
+		return spriteTile;
+	}
+
+	public void setSpriteTile(BufferedImage[][] spriteTile) {
+		this.spriteTile = spriteTile;
+	}
+
+	public void updateTicker() {
+		if (ticker % Constants.Animations.TICKER_CYCLE == 0) {
+			ticker = 0;
+
+			if (idx >= tileColCount[state] - 1) {
+				idx = 0;
+			} else {
+				idx++;
+			}
+		}
+
+		ticker++;
 	}
 }
