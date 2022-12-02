@@ -44,8 +44,8 @@ public class Constants {
 
 	public static class Panel {
 		// panel dimensions
-		public static final short WIDTH = Tile.WIDTH * Tile.HORIZ_SUM;
-		public static final short HEIGHT = Tile.HEIGHT * Tile.VERT_SUM;
+		public static final short WIDTH = Tile.WIDTH * Tile.HORIZ_SUM; // 32 32 -> 1024
+		public static final short HEIGHT = Tile.HEIGHT * Tile.VERT_SUM; // 32 18 -> 576
 	}
 
 	public static class Backgrounds {
@@ -124,7 +124,7 @@ public class Constants {
 
 			// player stats
 			public static final float DEFAULT_HEALTH = 1000f;
-			public static final float DEFAULT_WALK_SPEED = 0.5f;
+			public static final float DEFAULT_WALK_SPEED = 2f;
 			public static final float DEFAULT_RUN_SPEED = DEFAULT_WALK_SPEED * 2.5f;
 			public static final float DEFAULT_JUMP_HEIGHT = Tile.HEIGHT * 2.5f;
 		}
