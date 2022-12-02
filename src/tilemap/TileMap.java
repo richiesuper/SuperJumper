@@ -14,24 +14,26 @@ import javax.swing.JPanel;
 import utils.Constants;
 
 public class TileMap {
-	// Position
+	// position
 	private double x;
 	private double y;
 	private double tween;
 
-	// Tileset
+	// tileset
 	private BufferedImage tileset;
-	private int numTilesAcross;
+	private int tileRows;
+	private int tileCols;
 	private Tile[][] tiles;
 
-	// Drawing
+	// drawing
 	private int rowOffset;
 	private int colOffset;
 	private int numRowsToDraw;
 	private int numColsToDraw;
-	private int tileSize;
+	private int tileWidth;
+	private int tileHeight;
 
-	// Bounds
+	// bounds
 	private int xmin;
 	private int xmax;
 	private int ymin;
@@ -39,57 +41,67 @@ public class TileMap {
 
 	// map
 	private int[][] map;
-	private int numRows;
-	private int numCols;
+	private int rowCount;
+	private int colCount;
 	private int width;
 	private int height;
 
 	// loadmap
 	BufferedReader br;
 
-	public TileMap(int tileSize) {
-		this.tileSize = tileSize;
-		this.numRowsToDraw = Constants.Panel.WIDTH / tileSize + 15; 
-		this.numColsToDraw = Constants.Panel.HEIGHT / tileSize + 15;
+	public TileMap(int tileWidth, int tileHeight) {
+		this.x = 0;
+		this.y = 0;
+		this.tileWidth = tileWidth;
+		this.tileHeight = tileHeight;
+		this.numRowsToDraw = Constants.Tile.VERT_SUM + Constants.TileMap.OFFSET;
+		this.numColsToDraw = Constants.Tile.HORIZ_SUM + Constants.TileMap.OFFSET;
 		this.tween = 0.07;
 	}
 
-	public void loadTiles(String s) {
+	public void loadTiles(String filename) {
+		InputStream is;
+
 		try {
-			InputStream is;
-			is = getClass().getResourceAsStream(s);
-			this.tileset = ImageIO.read(is);
+			is = getClass().getResourceAsStream(filename);
+			tileset = ImageIO.read(is);
 
-			numTilesAcross = tileset.getWidth() / tileSize;
-			tiles = new Tile[2][numTilesAcross];
+			// compute number of cols and rows
+			tileCols = tileset.getWidth() / tileWidth;
+			tileRows = tileset.getHeight() / tileHeight;
 
+			// allocate memory for our tile matrix
+			tiles = new Tile[tileRows][tileCols];
+
+			// temporary image
 			BufferedImage subimage;
-			for (int col = 0; col < numTilesAcross; col++) {
-				subimage = tileset.getSubimage(col * tileSize, 0, tileSize, tileSize);
-				tiles[0][col] = new Tile(subimage, Tile.NORMAL);
-				subimage = tileset.getSubimage(col * tileSize, tileSize, tileSize, tileSize);
-				tiles[1][col] = new Tile(subimage, Tile.BLOCKED);
+
+			for (int row = 0; row < tileRows; row++) {
+				for (int col = 0; col < tileCols; col++) {
+					subimage = tileset.getSubimage(col * tileWidth, row * tileHeight, tileWidth, tileHeight);
+					tiles[row][col] = new Tile(subimage, (row == 0) ? Constants.Tile.PASSTHROUGH : Constants.Tile.BLOCKED);
+				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void loadMap(String s) {
+	public void loadMap(String filename) {
+		InputStream is;
+
 		try {
-			InputStream is;
-			is = getClass().getResourceAsStream(s);
+			is = getClass().getResourceAsStream(filename);
 			br = new BufferedReader(new InputStreamReader(is));
 
-			numCols = Integer.parseInt(br.readLine());
-			numRows = Integer.parseInt(br.readLine());
+			// get those first 2 lines in *.map files
+			colCount = Integer.parseInt(br.readLine());
+			rowCount = Integer.parseInt(br.readLine());
 
-			map = new int[numRows][numCols];
-//			System.out.println(numRows);
-//			System.out.println(numCols);
+			map = new int[rowCount][colCount];
 
-			this.width = numCols * tileSize;
-			this.height = numRows * tileSize;
+			this.width = colCount * tileWidth;
+			this.height = rowCount * tileHeight;
 
 			xmin = Constants.Panel.WIDTH - this.width;
 			xmax = 0;
@@ -97,10 +109,12 @@ public class TileMap {
 			ymax = 0;
 
 			String delims = "\\s+";
-			for (int row = 0; row < numRows; row++) {
-				String line = br.readLine();
+			String line;
+			for (int row = 0; row < rowCount; row++) {
+				line = br.readLine();
 				String[] tokens = line.split(delims);
-				for (int col = 0; col < numCols; col++) {
+
+				for (int col = 0; col < colCount; col++) {
 					map[row][col] = Integer.parseInt(tokens[col]);
 				}
 			}
@@ -110,29 +124,45 @@ public class TileMap {
 		}
 	}
 
-	public void setTween(double d) {
-		this.tween = d;
+	public void setTween(double tween) {
+		this.tween = tween;
 	}
 
 	public void setPosition(double x, double y) {
 
-		this.x += (x - this.x) * tween; // thisx = 0 - 0 * 1
-		this.y += (y - this.y) * tween; // thisy = 0 - 0 
-//		System.out.println("this x : " + this.x);
-//		System.out.println("this y : " + this.y);
+		this.x += (x - this.x) * tween;
+		this.y += (y - this.y) * tween;
 
 		fixBounds();
 
-		colOffset = (int) -this.x / tileSize;
-		rowOffset = (int) -this.y / tileSize;
+		colOffset = (int) -this.x / tileWidth;
+		rowOffset = (int) -this.y / tileHeight;
 
 	}
-	
-	public int getTileSize() { return tileSize; }
-	public double getx() { return x; }
-	public double gety() { return y; }
-	public int getWidth() { return width; }
-	public int getHeight() { return height; }
+
+	public int getTileWidth() {
+		return tileWidth;
+	}
+
+	public int getTileHeight() {
+		return tileHeight;
+	}
+
+	public double getX() {
+		return x;
+	}
+
+	public double getY() {
+		return y;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
 
 	private void fixBounds() {
 		if (x < xmin)
@@ -148,28 +178,22 @@ public class TileMap {
 	public void draw(Graphics g) {
 
 		for (int row = rowOffset; row < rowOffset + numRowsToDraw; row++) {
-
-			if (row >= numRows)
+			if (row >= rowCount)
 				break;
 
 			for (int col = colOffset; col < colOffset + numColsToDraw; col++) {
-
-				if (col >= numCols)
+				if (col >= colCount)
 					break;
 
 				if (map[row][col] == 0)
 					continue;
 
 				int rc = map[row][col];
-				int r = rc / numTilesAcross;
-				int c = rc % numTilesAcross;
+				int r = rc / tileCols;
+				int c = rc % tileCols;
 
-				g.drawImage(tiles[r][c].getImage(), (int) x + col * tileSize, (int) y + row * tileSize, null);
-
+				g.drawImage(tiles[r][c].getImage(), (int) x + col * tileWidth, (int) y + row * tileHeight, null);
 			}
-
 		}
-
 	}
-
 }
