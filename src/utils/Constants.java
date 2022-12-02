@@ -40,12 +40,20 @@ public class Constants {
 		// tile count
 		public static final byte HORIZ_SUM = 32;
 		public static final byte VERT_SUM = 18;
+
+		// collision type
+		public static final byte PASSTHROUGH = 0;
+		public static final byte BLOCKED = 1;
+	}
+	
+	public static class TileMap {
+		public static final byte OFFSET = 16;
 	}
 
 	public static class Panel {
 		// panel dimensions
-		public static final short WIDTH = Tile.WIDTH * Tile.HORIZ_SUM; // 32 32 -> 1024
-		public static final short HEIGHT = Tile.HEIGHT * Tile.VERT_SUM; // 32 18 -> 576
+		public static final short WIDTH = Tile.WIDTH * Tile.HORIZ_SUM; // 32 * 32 -> 1024
+		public static final short HEIGHT = Tile.HEIGHT * Tile.VERT_SUM; // 32 * 18 -> 576
 	}
 
 	public static class Backgrounds {
@@ -122,7 +130,7 @@ public class Constants {
 			public static final byte HURT = 10;
 			public static final byte DEAD = 11;
 
-			// player stats
+			// player general stats
 			public static final float DEFAULT_HEALTH = 1000f;
 			public static final float DEFAULT_WALK_SPEED = 2f;
 			public static final float DEFAULT_RUN_SPEED = DEFAULT_WALK_SPEED * 2.5f;
