@@ -11,54 +11,58 @@ import utils.Constants;
 
 public class Player extends Entity {
 
+	private boolean goingLeft;
+	private boolean goingRight;
+	private float speedY;
+
 	public Player(float x, float y) {
 		super(x, y);
-
 		init();
 	}
 
 	@Override
 	public void init() {
 		// default values
-		setState(Constants.Entities.Player.IDLE);
-		setSpeed(Constants.Entities.Player.DEFAULT_WALK_SPEED);
-		setMaxHealth(Constants.Entities.Player.DEFAULT_HEALTH);
-		setHealth(getMaxHealth());
-		setWidth(Constants.Entities.Player.SPRITE_WIDTH);
-		setHeight(Constants.Entities.Player.SPRITE_HEIGHT);
-		setTicker((byte) 0);
-		setIdx((byte) 0);
+		state = Constants.Entities.Player.IDLE;
+		speedX = Constants.Entities.Player.DEFAULT_WALK_SPEED;
+		maxHealth = Constants.Entities.Player.DEFAULT_HEALTH;
+		health = maxHealth;
+		width = Constants.Entities.Player.SPRITE_WIDTH;
+		height = Constants.Entities.Player.SPRITE_HEIGHT;
+		ticker = (byte) 0;
+		idx = (byte) 0;
 
+		// sprite loading
 		loadSprite();
 		setupTileCount();
 	}
 
 	@Override
 	public void setupTileCount() {
-		setTileColCount(new byte[Constants.Entities.Player.SPRITE_HEIGHT]);
-		getTileColCount()[0] = Constants.Entities.Player.IDLE_TILE_COUNT;
-		getTileColCount()[1] = Constants.Entities.Player.WALK_TILE_COUNT;
-		getTileColCount()[2] = Constants.Entities.Player.RUN_TILE_COUNT;
-		getTileColCount()[3] = Constants.Entities.Player.JUMP_TILE_COUNT;
-		getTileColCount()[4] = Constants.Entities.Player.ATK_1_TILE_COUNT;
-		getTileColCount()[5] = Constants.Entities.Player.ATK_2_TILE_COUNT;
-		getTileColCount()[6] = Constants.Entities.Player.ATK_3_TILE_COUNT;
-		getTileColCount()[7] = Constants.Entities.Player.ATK_RUN_TILE_COUNT;
-		getTileColCount()[8] = Constants.Entities.Player.DEFEND_TILE_COUNT;
-		getTileColCount()[9] = Constants.Entities.Player.PROTECT_TILE_COUNT;
-		getTileColCount()[10] = Constants.Entities.Player.HURT_TILE_COUNT;
-		getTileColCount()[11] = Constants.Entities.Player.DEAD_TILE_COUNT;
+		tileColCount = new byte[Constants.Entities.Player.SPRITE_HEIGHT];
+		tileColCount[0] = Constants.Entities.Player.IDLE_TILE_COUNT;
+		tileColCount[1] = Constants.Entities.Player.WALK_TILE_COUNT;
+		tileColCount[2] = Constants.Entities.Player.RUN_TILE_COUNT;
+		tileColCount[3] = Constants.Entities.Player.JUMP_TILE_COUNT;
+		tileColCount[4] = Constants.Entities.Player.ATK_1_TILE_COUNT;
+		tileColCount[5] = Constants.Entities.Player.ATK_2_TILE_COUNT;
+		tileColCount[6] = Constants.Entities.Player.ATK_3_TILE_COUNT;
+		tileColCount[7] = Constants.Entities.Player.ATK_RUN_TILE_COUNT;
+		tileColCount[8] = Constants.Entities.Player.DEFEND_TILE_COUNT;
+		tileColCount[9] = Constants.Entities.Player.PROTECT_TILE_COUNT;
+		tileColCount[10] = Constants.Entities.Player.HURT_TILE_COUNT;
+		tileColCount[11] = Constants.Entities.Player.DEAD_TILE_COUNT;
 	}
 
 	@Override
 	public void move() {
-		if (isMoving()) {
-			switch (getDirection()) {
+		if (moving) {
+			switch (direction) {
 			case Constants.Entities.Player.DIR_LEFT:
-				setX(getX() - getSpeed());
+				x -= speedX;
 				break;
 			case Constants.Entities.Player.DIR_RIGHT:
-				setX(getX() + getSpeed());
+				x += speedX;
 				break;
 			default:
 				break;
@@ -68,50 +72,32 @@ public class Player extends Entity {
 
 	@Override
 	public void update() {
-		switch (getState()) {
-		case Constants.Entities.Player.IDLE:
-			setSpeed(0);
-			break;
+		switch (state) {
 		case Constants.Entities.Player.WALK:
-			setSpeed(Constants.Entities.Player.DEFAULT_WALK_SPEED);
+			speedX = Constants.Entities.Player.DEFAULT_WALK_SPEED;
 			break;
 		case Constants.Entities.Player.RUN:
-			setSpeed(Constants.Entities.Player.DEFAULT_RUN_SPEED);
+			speedX = Constants.Entities.Player.DEFAULT_RUN_SPEED;
 			break;
 		case Constants.Entities.Player.JUMP:
-			setSpeed(0);
+			speedY = Constants.Entities.Player.DEFAULT_JUMP_HEIGHT;
 			break;
+		case Constants.Entities.Player.IDLE:
 		case Constants.Entities.Player.ATK_1:
-			setSpeed(0);
-			break;
 		case Constants.Entities.Player.ATK_2:
-			setSpeed(0);
-			break;
 		case Constants.Entities.Player.ATK_3:
-			setSpeed(0);
-			break;
 		case Constants.Entities.Player.ATK_RUN:
-			setSpeed(0);
-			break;
 		case Constants.Entities.Player.DEFEND:
-			setSpeed(0);
-			break;
 		case Constants.Entities.Player.PROTECT:
-			setSpeed(0);
-			break;
 		case Constants.Entities.Player.HURT:
-			setSpeed(0);
-			break;
 		case Constants.Entities.Player.DEAD:
-			setSpeed(0);
+			speedX = 0;
+			break;
+		default:
 			break;
 		}
 
 		move();
-	}
-
-	@Override
-	public void computeHealth() {
 	}
 
 	@Override
@@ -123,25 +109,11 @@ public class Player extends Entity {
 	}
 
 	@Override
-	public void jump() {
-	}
-
-	@Override
 	public void draw(Graphics g) {
-		setTicker((byte) (getTicker() + 1));
+		g.drawImage(spriteTile[state][idx], (int) x, (int) y, Constants.Entities.Player.SPRITE_WIDTH,
+				Constants.Entities.Player.SPRITE_HEIGHT, null);
 
-		g.drawImage(getSpriteTile()[getState()][getIdx()], (int) getX(), (int) getY(),
-				Constants.Entities.Player.SPRITE_WIDTH, Constants.Entities.Player.SPRITE_HEIGHT, null);
-
-		if (getTicker() % Constants.Animations.TICKER_CYCLE == 0) {
-			setTicker((byte) 0);
-
-			if (getIdx() >= getTileColCount()[getState()] - 1) {
-				setIdx((byte) 0);
-			} else {
-				setIdx((byte) (getIdx() + 1));
-			}
-		}
+		updateTicker();
 	}
 
 	@Override
@@ -149,22 +121,27 @@ public class Player extends Entity {
 		// get the input stream
 		InputStream is = getClass().getResourceAsStream(Constants.Entities.Player.SPRITE);
 
+		// load image
 		try {
-			setSpriteSheet(ImageIO.read(is));
+			spriteSheet = ImageIO.read(is);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		setSpriteTile(new BufferedImage[Constants.Entities.Player.SPRITE_ROWS][Constants.Entities.Player.SPRITE_COLS]);
+		// load individual tiles into array
+		spriteTile = new BufferedImage[Constants.Entities.Player.SPRITE_ROWS][Constants.Entities.Player.SPRITE_COLS];
 
 		for (int i = 0; i < Constants.Entities.Player.SPRITE_ROWS; i++)
 			for (int j = 0; j < Constants.Entities.Player.SPRITE_COLS; j++)
-				getSpriteTile()[i][j] = getSpriteSheet().getSubimage(j * Constants.Entities.Player.SPRITE_WIDTH,
+				spriteTile[i][j] = spriteSheet.getSubimage(j * Constants.Entities.Player.SPRITE_WIDTH,
 						i * Constants.Entities.Player.SPRITE_HEIGHT, Constants.Entities.Player.SPRITE_WIDTH,
 						Constants.Entities.Player.SPRITE_HEIGHT);
 	}
 
-	@Override
-	public void run() {
+	public void halt() {
+		moving = false;
+		goingLeft = false;
+		goingRight = false;
+		state = Constants.Entities.Player.IDLE;
 	}
 }
