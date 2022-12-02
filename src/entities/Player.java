@@ -55,10 +55,12 @@ public class Player extends Entity {
 		if (isMoving()) {
 			switch (getDirection()) {
 			case Constants.Entities.Player.DIR_LEFT:
-				setX(getX() - getSpeed());
+				if (getX() - getSpeed() >= 0)
+					setX(getX() - getSpeed());
 				break;
 			case Constants.Entities.Player.DIR_RIGHT:
-				setX(getX() + getSpeed());
+				if (getX() + getSpeed() <= Constants.Panel.WIDTH - Constants.Entities.Player.SPRITE_WIDTH / 2.25)
+					setX(getX() + getSpeed());
 				break;
 			default:
 				break;

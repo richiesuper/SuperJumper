@@ -2,8 +2,10 @@ package inputs;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 import main.GamePanel;
+import utils.Constants;
 
 public class MouseInput implements MouseListener {
 	private GamePanel gamePanel;
@@ -11,29 +13,16 @@ public class MouseInput implements MouseListener {
 	public MouseInput(GamePanel gamePanel) {
 		this.gamePanel = gamePanel;
 	}
-
+	
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		switch (e.getButton()) {
-		case MouseEvent.BUTTON1:
-			System.out.println("Mouse button 1 was clicked!");
-			break;
-		case MouseEvent.BUTTON2:
-			System.out.println("Mouse button 2 was clicked!");
-			break;
-		case MouseEvent.BUTTON3:
-			System.out.println("Mouse button 3 was clicked!");
-			break;
-		default:
-			break;
-		}
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
 		switch (e.getButton()) {
 		case MouseEvent.BUTTON1:
-			System.out.println("Mouse button 1 was pressed!");
+			gamePanel.getPlayer().setState(Constants.Entities.Player.ATK_1);
 			break;
 		case MouseEvent.BUTTON2:
 			System.out.println("Mouse button 2 was pressed!");
@@ -50,7 +39,7 @@ public class MouseInput implements MouseListener {
 	public void mouseReleased(MouseEvent e) {
 		switch (e.getButton()) {
 		case MouseEvent.BUTTON1:
-			System.out.println("Mouse button 1 was released!");
+			gamePanel.getPlayer().setState(Constants.Entities.Player.IDLE);
 			break;
 		case MouseEvent.BUTTON2:
 			System.out.println("Mouse button 2 was released!");
@@ -63,12 +52,9 @@ public class MouseInput implements MouseListener {
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		System.out.println("Mouse cursor entered the panel!");
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		System.out.println("Mouse cursor left the panel!");
 	}
-
 }
