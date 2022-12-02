@@ -21,7 +21,7 @@ public class Game implements Runnable {
 			gamePanel.repaint();
 
 			try {
-				Thread.sleep(Constants.Game.FRAME_PERIOD);
+				Thread.sleep((long) Constants.Game.FRAME_PERIOD);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
