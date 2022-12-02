@@ -14,6 +14,7 @@ public class MouseInput implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
+		/*
 		switch (e.getButton()) {
 		case MouseEvent.BUTTON1:
 			System.out.println("Mouse button 1 was clicked!");
@@ -27,10 +28,12 @@ public class MouseInput implements MouseListener {
 		default:
 			break;
 		}
+		*/
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
+		/*
 		switch (e.getButton()) {
 		case MouseEvent.BUTTON1:
 			System.out.println("Mouse button 1 was pressed!");
@@ -44,10 +47,12 @@ public class MouseInput implements MouseListener {
 		default:
 			break;
 		}
+		*/
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
+		/*
 		switch (e.getButton()) {
 		case MouseEvent.BUTTON1:
 			System.out.println("Mouse button 1 was released!");
@@ -59,16 +64,17 @@ public class MouseInput implements MouseListener {
 			System.out.println("Mouse button 3 was released!");
 			break;
 		}
+		*/
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		System.out.println("Mouse cursor entered the panel!");
+//		System.out.println("Mouse cursor entered the panel!");
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		System.out.println("Mouse cursor left the panel!");
+//		System.out.println("Mouse cursor left the panel!");
 	}
 
 }
