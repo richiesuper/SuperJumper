@@ -19,32 +19,42 @@ public abstract class Entity {
 	private byte ticker;
 	private byte idx;
 	private byte[] tileColCount;
-	
+
 	// dimensions
 	private short width;
 	private short height;
-	
+
 	// assets
 	private BufferedImage spriteSheet;
 	private BufferedImage spriteTile[][];
-	
+
 	// constructor
 	public Entity(float x, float y) {
 		setX(x);
 		setY(y);
 	}
-	
+
 	// abstract methods
 	public abstract void init();
+
 	public abstract void setupTileCount();
+
 	public abstract void loadSprite();
+
 	public abstract void draw(Graphics g);
+
 	public abstract void move();
+
 	public abstract void update();
+
 	public abstract void computeHealth();
+
 	public abstract void attack();
+
 	public abstract void die();
+
 	public abstract void jump();
+
 	public abstract void run();
 
 	// concrete methods

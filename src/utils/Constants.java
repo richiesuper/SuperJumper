@@ -67,12 +67,12 @@ public class Constants {
 		public static final String LVL_1 = Folders.MAPS + "level-1.map";
 		public static final String LVL_2 = Folders.MAPS + "level-2.map";
 	}
-	
+
 	public static class Animations {
 		// ticker divider
 		public static final byte TICKER_CYCLE = 10;
 	}
-	
+
 	public static class Entities {
 		// entity types
 		public static final byte PLAYER = 0;
@@ -103,7 +103,7 @@ public class Constants {
 			public static final byte PROTECT_TILE_COUNT = 1;
 			public static final byte HURT_TILE_COUNT = 2;
 			public static final byte DEAD_TILE_COUNT = 6;
-			
+
 			// player direction
 			public static final byte DIR_LEFT = 0;
 			public static final byte DIR_RIGHT = 1;
@@ -121,7 +121,7 @@ public class Constants {
 			public static final byte PROTECT = 9;
 			public static final byte HURT = 10;
 			public static final byte DEAD = 11;
-			
+
 			// player stats
 			public static final float DEFAULT_HEALTH = 1000f;
 			public static final float DEFAULT_WALK_SPEED = 0.5f;

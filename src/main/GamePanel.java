@@ -32,11 +32,11 @@ public class GamePanel extends JPanel {
 		addKeyListener(this.keyboardInput);
 		addMouseListener(this.mouseInput);
 	}
-	
+
 	public Player getPlayer() {
 		return player;
 	}
-	
+
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);

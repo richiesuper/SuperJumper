@@ -13,10 +13,10 @@ public class Player extends Entity {
 
 	public Player(float x, float y) {
 		super(x, y);
-		
+
 		init();
 	}
-	
+
 	@Override
 	public void init() {
 		// default values
@@ -28,11 +28,11 @@ public class Player extends Entity {
 		setHeight(Constants.Entities.Player.SPRITE_HEIGHT);
 		setTicker((byte) 0);
 		setIdx((byte) 0);
-		
+
 		loadSprite();
 		setupTileCount();
 	}
-	
+
 	@Override
 	public void setupTileCount() {
 		setTileColCount(new byte[Constants.Entities.Player.SPRITE_HEIGHT]);
@@ -128,7 +128,7 @@ public class Player extends Entity {
 
 	@Override
 	public void draw(Graphics g) {
-		setTicker((byte) (getTicker() + 1)); 
+		setTicker((byte) (getTicker() + 1));
 
 		g.drawImage(getSpriteTile()[getState()][getIdx()], (int) getX(), (int) getY(),
 				Constants.Entities.Player.SPRITE_WIDTH, Constants.Entities.Player.SPRITE_HEIGHT, null);
@@ -148,7 +148,7 @@ public class Player extends Entity {
 	public void loadSprite() {
 		// get the input stream
 		InputStream is = getClass().getResourceAsStream(Constants.Entities.Player.SPRITE);
-		
+
 		try {
 			setSpriteSheet(ImageIO.read(is));
 		} catch (IOException e) {
