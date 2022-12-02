@@ -48,8 +48,6 @@ public class GamePanel extends JPanel {
 	
 	public void update() {
 		tm.setPosition(Constants.Panel.WIDTH / 2 - player.getX(), Constants.Panel.HEIGHT / 2 - player.getY());
-		System.out.println(Constants.Panel.WIDTH / 2 - player.getX()); // 512 - 0
-		System.out.println(Constants.Panel.HEIGHT / 2 - player.getY()); // 
 		bg.setPosition(tm.getx(), tm.gety());
 	}
 

@@ -49,8 +49,8 @@ public class TileMap {
 
 	public TileMap(int tileSize) {
 		this.tileSize = tileSize;
-		this.numRowsToDraw = Constants.Panel.WIDTH / tileSize + 2;
-		this.numColsToDraw = Constants.Panel.HEIGHT / tileSize + 2;
+		this.numRowsToDraw = Constants.Panel.WIDTH / tileSize + 15; 
+		this.numColsToDraw = Constants.Panel.HEIGHT / tileSize + 15;
 		this.tween = 0.07;
 	}
 
@@ -116,8 +116,10 @@ public class TileMap {
 
 	public void setPosition(double x, double y) {
 
-		this.x += (x - this.x) * tween; // thisx = 0 - 0 * 1;
-		this.y += (y - this.y) * tween; // thisy = 0 - 0 * 1;
+		this.x += (x - this.x) * tween; // thisx = 0 - 0 * 1
+		this.y += (y - this.y) * tween; // thisy = 0 - 0 
+//		System.out.println("this x : " + this.x);
+//		System.out.println("this y : " + this.y);
 
 		fixBounds();
 

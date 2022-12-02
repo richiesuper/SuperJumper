@@ -26,17 +26,23 @@ public class Background {
 		try {
 			is = getClass().getResourceAsStream(filename);
 			this.bg = ImageIO.read(is);
+			int[] bgColor = this.bg.getRGB(0, 0, this.bg.getWidth(), this.bg.getHeight(), null, 0, this.bg.getWidth() * this.bg.getHeight() );
+			//System.out.println(bgColor[1]);
+			//System.out.println( this.bg.getHeight());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public void setPosition(double d, double e) {
-		this.x = (float) ((d * moveScale) % Constants.Panel.WIDTH);
-		this.y = (float) ((e * moveScale) % Constants.Panel.HEIGHT);
+	public void setPosition(double x, double y) {
+		this.x = (float) ((x * moveScale) % Constants.Panel.WIDTH);
+		this.y = (float) ((y * moveScale) % Constants.Panel.HEIGHT);
 	}
 
 	public void draw(Graphics g) {
 		g.drawImage(bg, (int) x, (int) y, Constants.Panel.WIDTH, Constants.Panel.HEIGHT, null);
+		
+		if(x < 0) g.drawImage(bg, (int) x + Constants.Panel.WIDTH, (int) y, Constants.Panel.WIDTH, Constants.Panel.HEIGHT, null);
+		if(x > 0) g.drawImage(bg, (int) x - Constants.Panel.WIDTH, (int) y, Constants.Panel.WIDTH, Constants.Panel.HEIGHT, null);
 	}
 }
