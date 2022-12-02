@@ -21,6 +21,8 @@ public abstract class Entity {
 	protected byte ticker;
 	protected byte idx;
 	protected byte[] tileColCount;
+	protected boolean facingRight;
+	protected boolean facingLeft;
 
 	// dimensions
 	protected short width;
@@ -92,6 +94,22 @@ public abstract class Entity {
 
 	public void setSpeedX(float speedX) {
 		this.speedX = speedX;
+	}
+	
+	public boolean getFacingRight() {
+		return facingRight;
+	}
+	
+	public void setFacingRight(boolean facingRight) {
+		this.facingRight = facingRight;
+	}
+	
+	public boolean getFacingLeft() {
+		return facingLeft;
+	}
+	
+	public void setFacingLeft(boolean facingLeft) {
+		this.facingLeft = facingLeft;
 	}
 
 	public float getHealth() {

@@ -14,6 +14,9 @@ public class Player extends Entity {
 	private boolean goingLeft;
 	private boolean goingRight;
 	private float speedY;
+	
+	// Temp
+	protected boolean facingRight = true;
 
 	public Player(float x, float y) {
 		super(x, y);
@@ -31,6 +34,8 @@ public class Player extends Entity {
 		height = Constants.Entities.Player.SPRITE_HEIGHT;
 		ticker = (byte) 0;
 		idx = (byte) 0;
+		facingRight = true;
+		facingLeft = false;
 
 		// sprite loading
 		loadSprite();
@@ -60,9 +65,13 @@ public class Player extends Entity {
 			switch (direction) {
 			case Constants.Entities.Player.DIR_LEFT:
 				x -= speedX;
+				facingLeft = true;
+				facingRight = false;
 				break;
 			case Constants.Entities.Player.DIR_RIGHT:
 				x += speedX;
+				facingRight = true;
+				facingLeft = false;
 				break;
 			default:
 				break;
@@ -110,8 +119,15 @@ public class Player extends Entity {
 
 	@Override
 	public void draw(Graphics g) {
-		g.drawImage(spriteTile[state][idx], (int) x, (int) y, Constants.Entities.Player.SPRITE_WIDTH,
-				Constants.Entities.Player.SPRITE_HEIGHT, null);
+		System.out.println(facingRight);
+		if(facingRight && !facingLeft) {
+			g.drawImage(spriteTile[state][idx], (int) x, (int) y, Constants.Entities.Player.SPRITE_WIDTH,
+					Constants.Entities.Player.SPRITE_HEIGHT, null);
+		}
+		else {
+			g.drawImage(spriteTile[state][idx], (int) x + width / 2 - 5, (int) y, -Constants.Entities.Player.SPRITE_WIDTH,
+					Constants.Entities.Player.SPRITE_HEIGHT, null);
+		}
 
 		updateTicker();
 	}
