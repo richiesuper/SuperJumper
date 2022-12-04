@@ -41,6 +41,26 @@ public class KeyboardInput implements KeyListener {
 			gamePanel.getPlayer().setMoving(true);
 			gamePanel.getPlayer().setState(Constants.Entities.Player.RUN);
 			break;
+		case 'w':
+			gamePanel.getPlayer().setDirection(Constants.Entities.Player.DIR_UP);
+			gamePanel.getPlayer().setMoving(true);
+			gamePanel.getPlayer().setState(Constants.Entities.Player.WALK);
+			break;
+		case 'W':
+			gamePanel.getPlayer().setDirection(Constants.Entities.Player.DIR_UP);
+			gamePanel.getPlayer().setMoving(true);
+			gamePanel.getPlayer().setState(Constants.Entities.Player.RUN);
+			break;
+		case 's':
+			gamePanel.getPlayer().setDirection(Constants.Entities.Player.DIR_DOWN);
+			gamePanel.getPlayer().setMoving(true);
+			gamePanel.getPlayer().setState(Constants.Entities.Player.WALK);
+			break;
+		case 'S':
+			gamePanel.getPlayer().setDirection(Constants.Entities.Player.DIR_DOWN);
+			gamePanel.getPlayer().setMoving(true);
+			gamePanel.getPlayer().setState(Constants.Entities.Player.RUN);
+			break;
 		default:
 			break;
 		}
@@ -50,6 +70,10 @@ public class KeyboardInput implements KeyListener {
 	public void keyReleased(KeyEvent e) {
 		System.out.println("Key " + e.getKeyChar() + " was released!");
 		switch (e.getKeyChar()) {
+		case 'w':
+		case 'W':
+		case 's':
+		case 'S':
 		case 'a':
 		case 'A':
 		case 'd':

@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import utils.Constants;
+import gamestates.Level;
 
 public class TileMap {
 	// position
@@ -58,7 +59,7 @@ public class TileMap {
 		this.numColsToDraw = Constants.Tile.HORIZ_SUM + Constants.TileMap.OFFSET;
 		this.tween = 0.07;
 	}
-
+	
 	public void loadTiles(String filename) {
 		InputStream is;
 
@@ -69,6 +70,8 @@ public class TileMap {
 			// compute number of cols and rows
 			tileCols = tileset.getWidth() / tileWidth;
 			tileRows = tileset.getHeight() / tileHeight;
+			System.out.println(tileCols);
+			System.out.println(tileRows);
 
 			// allocate memory for our tile matrix
 			tiles = new Tile[tileRows][tileCols];
@@ -129,10 +132,9 @@ public class TileMap {
 	}
 
 	public void setPosition(double x, double y) {
-
 		this.x += (x - this.x) * tween;
 		this.y += (y - this.y) * tween;
-
+		
 		fixBounds();
 
 		colOffset = (int) -this.x / tileWidth;

@@ -14,21 +14,21 @@ public class GameFrame extends JFrame {
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		add(gamePanel);
-		addWindowFocusListener(new WindowFocusListener() {
-			@Override
-			public void windowGainedFocus(WindowEvent e) {
-			}
-
-			@Override
-			public void windowLostFocus(WindowEvent e) {
-				gamePanel.getPlayer().halt();
-			}
-		});
 
 		setLocationRelativeTo(null);
 		setResizable(false);
 		pack();
 		setVisible(true);
+		addWindowFocusListener(new WindowFocusListener() {
+			@Override
+			public void windowGainedFocus(WindowEvent e) {
+			}
+			
+			@Override
+			public void windowLostFocus(WindowEvent e) {
+				gamePanel.getPlayer().halt();
+			}
+		});
 	}
 
 }
