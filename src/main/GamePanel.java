@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import javax.swing.JPanel;
 
 import entities.Player;
+import gamestates.LevelManager;
 import inputs.KeyboardInput;
 import inputs.MouseInput;
 import tilemap.Background;
@@ -22,25 +23,31 @@ public class GamePanel extends JPanel {
 	private short halfHeight;
 
 	private Player player;
+	
+	private LevelManager levelManager;
 
 	public GamePanel(int width, int height) {
 		super();
 
 		this.halfWidth = Constants.Panel.WIDTH / 2;
 		this.halfWidth = Constants.Panel.HEIGHT / 2;
-
-		this.player = new Player(0, Constants.Panel.HEIGHT - Constants.Entities.Player.SPRITE_HEIGHT);
-
-		this.keyboardInput = new KeyboardInput(this);
-		this.mouseInput = new MouseInput(this);
-
+		
+		// LevelManager and Player
+		this.player = new Player(100, 100, 
+				(short) Constants.Entities.Player.SPRITE_WIDTH, (short) Constants.Entities.Player.SPRITE_HEIGHT);
+		
+		// Background
 		bg = new Background(Constants.Backgrounds.LVL_1);
 
+		// Tilemap
 		tm = new TileMap(Constants.Tile.WIDTH, Constants.Tile.HEIGHT);
 		tm.loadTiles(Constants.TileSets.LVL_1);
 		tm.loadMap(Constants.Maps.LVL_1);
 		tm.setPosition(0, 0);
 		tm.setTween(1);
+		
+		this.keyboardInput = new KeyboardInput(this);
+		this.mouseInput = new MouseInput(this);
 
 		setPreferredSize(new Dimension(width, height));
 		addKeyListener(this.keyboardInput);

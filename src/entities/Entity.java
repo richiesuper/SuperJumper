@@ -1,6 +1,9 @@
 package entities;
 
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 import utils.Constants;
@@ -12,6 +15,7 @@ public abstract class Entity {
 	protected byte state;
 	protected byte direction;
 	protected float speedX;
+	protected float speedY;
 	protected float health;
 	protected float maxHealth;
 	protected float attackDmg;
@@ -31,11 +35,31 @@ public abstract class Entity {
 	// assets
 	protected BufferedImage spriteSheet;
 	protected BufferedImage spriteTile[][];
+	protected int[][] lvlData;
+	
+	// Hitbox for testing collision
+	protected Rectangle2D.Float hitbox;
 
 	// constructor
-	public Entity(float x, float y) {
+	public Entity(float x, float y, short width, short height) {
 		this.x = x;
 		this.y = y;
+		this.width = width;
+		this.height = height;
+	}
+	
+	// Hitbox
+	protected void initHitbox(float x, float y, float width, float height) {
+		hitbox = new Rectangle2D.Float(x, y, width, height);
+	}
+	
+	protected Rectangle2D.Float getHitbox() {
+		return hitbox;
+	}
+	
+	protected void drawHitbox(Graphics g) {
+		g.setColor(Color.PINK);
+		g.drawRect((int) hitbox.x, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height);
 	}
 
 	// abstract methods

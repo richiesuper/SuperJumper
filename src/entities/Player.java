@@ -13,14 +13,16 @@ public class Player extends Entity {
 
 	private boolean goingLeft;
 	private boolean goingRight;
-	private float speedY;
 	
-	// Temp
-	protected boolean facingRight = true;
+	
+	// Temp for hitbox
+	protected float xOffset = 48;
+	protected float yOffset = 32;
 
-	public Player(float x, float y) {
-		super(x, y);
+	public Player(float x, float y, short width, short height) {
+		super(x, y, width, height);
 		init();
+		initHitbox(x, y, 32, 64);
 	}
 
 	@Override
@@ -61,32 +63,63 @@ public class Player extends Entity {
 
 	@Override
 	public void move() {
+		// Temp
+		float tempSpeedX = 0;
+		float tempSpeedY = 0;
+		
 		if (moving) {
 			switch (direction) {
 			case Constants.Entities.Player.DIR_LEFT:
+				// Temp
+				tempSpeedX = -speedX;
+				
 				x -= speedX;
 				facingLeft = true;
 				facingRight = false;
 				break;
 			case Constants.Entities.Player.DIR_RIGHT:
+				// Temp 
+				tempSpeedX = speedX;
+				
 				x += speedX;
 				facingRight = true;
 				facingLeft = false;
+				break;
+			case Constants.Entities.Player.DIR_UP:
+				// Temp
+				tempSpeedY = -speedY;
+				
+				y -= speedY;
+				break;
+			case Constants.Entities.Player.DIR_DOWN:
+				// Temp
+				tempSpeedY = speedY;
+				
+				y += speedY;
 				break;
 			default:
 				break;
 			}
 		}
+		
+		if(CanMoveHere(hitbox.x + tempSpeedX, hitbox.y + tempSpeedY, hitbox.width, hitbox.height, lvlData)) {
+			hitbox.x += tempSpeedX;
+			hitbox.y += tempSpeedY;
+		}
+		
 	}
 
 	@Override
-	public void update() {
+	public void update(){
+		//updateHitbox();
 		switch (state) {
 		case Constants.Entities.Player.WALK:
 			speedX = Constants.Entities.Player.DEFAULT_WALK_SPEED;
+			speedY = Constants.Entities.Player.DEFAULT_WALK_SPEED;
 			break;
 		case Constants.Entities.Player.RUN:
 			speedX = Constants.Entities.Player.DEFAULT_RUN_SPEED;
+			speedY = Constants.Entities.Player.DEFAULT_RUN_SPEED;
 			break;
 		case Constants.Entities.Player.JUMP:
 			speedY = Constants.Entities.Player.DEFAULT_JUMP_HEIGHT;
@@ -119,17 +152,18 @@ public class Player extends Entity {
 
 	@Override
 	public void draw(Graphics g) {
-		System.out.println(facingRight);
+		//System.out.println(facingRight);
 		if(facingRight && !facingLeft) {
-			g.drawImage(spriteTile[state][idx], (int) x, (int) y, Constants.Entities.Player.SPRITE_WIDTH,
+			g.drawImage(spriteTile[state][idx], (int) (hitbox.x - xOffset), (int) (hitbox.y - yOffset), Constants.Entities.Player.SPRITE_WIDTH,
 					Constants.Entities.Player.SPRITE_HEIGHT, null);
 		}
 		else {
-			g.drawImage(spriteTile[state][idx], (int) x + width / 2 - 5, (int) y, -Constants.Entities.Player.SPRITE_WIDTH,
+			g.drawImage(spriteTile[state][idx], (int) (hitbox.x - xOffset) + width, (int) (hitbox.y - yOffset), -Constants.Entities.Player.SPRITE_WIDTH,
 					Constants.Entities.Player.SPRITE_HEIGHT, null);
 		}
-
+		
 		updateTicker();
+		drawHitbox(g);
 	}
 
 	@Override
@@ -148,10 +182,11 @@ public class Player extends Entity {
 		spriteTile = new BufferedImage[Constants.Entities.Player.SPRITE_ROWS][Constants.Entities.Player.SPRITE_COLS];
 
 		for (int i = 0; i < Constants.Entities.Player.SPRITE_ROWS; i++)
-			for (int j = 0; j < Constants.Entities.Player.SPRITE_COLS; j++)
+			for (int j = 0; j < Constants.Entities.Player.SPRITE_COLS; j++) {
 				spriteTile[i][j] = spriteSheet.getSubimage(j * Constants.Entities.Player.SPRITE_WIDTH,
 						i * Constants.Entities.Player.SPRITE_HEIGHT, Constants.Entities.Player.SPRITE_WIDTH,
 						Constants.Entities.Player.SPRITE_HEIGHT);
+			}
 	}
 
 	public void halt() {
@@ -159,5 +194,27 @@ public class Player extends Entity {
 		goingLeft = false;
 		goingRight = false;
 		state = Constants.Entities.Player.IDLE;
+	}
+	
+	public void loadLvlData(int[][] lvlData) {
+		this.lvlData = lvlData;
+	}
+	
+	public static boolean CanMoveHere(float x, float y, float width, float height, int[][] lvldata) {
+		if (!IsSolid(x, y, lvldata))
+			if (!IsSolid(x + width, y + height, lvldata))
+				if (!IsSolid(x + width, y, lvldata))
+					if (!IsSolid(x, y + height, lvldata))
+						return true;
+		return false;
+	}
+
+	private static boolean IsSolid(float x, float y, int[][] lvldata) {
+		if (x < 0 || x >= Constants.Panel.WIDTH)
+			return true;
+		if (y < 0 || y >= Constants.Panel.HEIGHT)
+			return true;
+		
+		return false;
 	}
 }
