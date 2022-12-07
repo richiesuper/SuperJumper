@@ -1,26 +1,23 @@
 package entities;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
+import tilemap.TileMap;
 import utils.Constants;
 
 public class Player extends Entity {
 
 	private boolean goingLeft;
 	private boolean goingRight;
-	
-	
-	// Temp for hitbox
-	protected float xOffset = 48;
-	protected float yOffset = 32;
 
-	public Player(float x, float y, short width, short height) {
-		super(x, y, width, height);
+	public Player(float x, float y, short width, short height, TileMap tileMap) {
+		super(x, y, width, height, tileMap);
 		init();
 		initHitbox(x, y, 32, 64);
 	}
@@ -102,16 +99,14 @@ public class Player extends Entity {
 			}
 		}
 		
-		if(CanMoveHere(hitbox.x + tempSpeedX, hitbox.y + tempSpeedY, hitbox.width, hitbox.height, lvlData)) {
+		if(CanMoveHere(hitbox.x + tempSpeedX, hitbox.y + tempSpeedY, hitbox.width, hitbox.height)) {
 			hitbox.x += tempSpeedX;
 			hitbox.y += tempSpeedY;
 		}
-		
 	}
 
 	@Override
 	public void update(){
-		//updateHitbox();
 		switch (state) {
 		case Constants.Entities.Player.WALK:
 			speedX = Constants.Entities.Player.DEFAULT_WALK_SPEED;
@@ -140,6 +135,8 @@ public class Player extends Entity {
 		}
 
 		move();
+		//checkTileMapCollision();
+		//setPosition(xtemp, ytemp);
 	}
 
 	@Override
@@ -152,7 +149,7 @@ public class Player extends Entity {
 
 	@Override
 	public void draw(Graphics g) {
-		//System.out.println(facingRight);
+		//setMapPosition();
 		if(facingRight && !facingLeft) {
 			g.drawImage(spriteTile[state][idx], (int) (hitbox.x - xOffset), (int) (hitbox.y - yOffset), Constants.Entities.Player.SPRITE_WIDTH,
 					Constants.Entities.Player.SPRITE_HEIGHT, null);
@@ -196,20 +193,16 @@ public class Player extends Entity {
 		state = Constants.Entities.Player.IDLE;
 	}
 	
-	public void loadLvlData(int[][] lvlData) {
-		this.lvlData = lvlData;
-	}
-	
-	public static boolean CanMoveHere(float x, float y, float width, float height, int[][] lvldata) {
-		if (!IsSolid(x, y, lvldata))
-			if (!IsSolid(x + width, y + height, lvldata))
-				if (!IsSolid(x + width, y, lvldata))
-					if (!IsSolid(x, y + height, lvldata))
+	public static boolean CanMoveHere(float x, float y, float width, float height) {
+		if (!IsSolid(x, y))
+			if (!IsSolid(x + width, y + height))
+				if (!IsSolid(x + width, y))
+					if (!IsSolid(x, y + height))
 						return true;
 		return false;
 	}
-
-	private static boolean IsSolid(float x, float y, int[][] lvldata) {
+	
+	private static boolean IsSolid(float x, float y) {
 		if (x < 0 || x >= Constants.Panel.WIDTH)
 			return true;
 		if (y < 0 || y >= Constants.Panel.HEIGHT)

@@ -2,10 +2,11 @@ package main;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+
 import javax.swing.JPanel;
 
 import entities.Player;
-import gamestates.LevelManager;
 import inputs.KeyboardInput;
 import inputs.MouseInput;
 import tilemap.Background;
@@ -17,14 +18,13 @@ public class GamePanel extends JPanel {
 	private KeyboardInput keyboardInput;
 	private MouseInput mouseInput;
 	private Background bg;
-	private TileMap tm;
+	private TileMap tileMap;
 
 	private short halfWidth;
 	private short halfHeight;
 
 	private Player player;
 	
-	private LevelManager levelManager;
 
 	public GamePanel(int width, int height) {
 		super();
@@ -32,19 +32,19 @@ public class GamePanel extends JPanel {
 		this.halfWidth = Constants.Panel.WIDTH / 2;
 		this.halfWidth = Constants.Panel.HEIGHT / 2;
 		
-		// LevelManager and Player
-		this.player = new Player(100, 100, 
-				(short) Constants.Entities.Player.SPRITE_WIDTH, (short) Constants.Entities.Player.SPRITE_HEIGHT);
+		// Tilemap
+		tileMap = new TileMap(Constants.Tile.WIDTH, Constants.Tile.HEIGHT);
+		tileMap.loadTiles(Constants.TileSets.LVL_1);
+		tileMap.loadMap(Constants.Maps.LVL_1);
+		tileMap.setPosition(0, 0);
+		tileMap.setTween(1);
 		
 		// Background
 		bg = new Background(Constants.Backgrounds.LVL_1);
 
-		// Tilemap
-		tm = new TileMap(Constants.Tile.WIDTH, Constants.Tile.HEIGHT);
-		tm.loadTiles(Constants.TileSets.LVL_1);
-		tm.loadMap(Constants.Maps.LVL_1);
-		tm.setPosition(0, 0);
-		tm.setTween(1);
+		// LevelManager and Player
+		this.player = new Player(100, 100, 
+				(short) Constants.Entities.Player.SPRITE_WIDTH, (short) Constants.Entities.Player.SPRITE_HEIGHT, tileMap);
 		
 		this.keyboardInput = new KeyboardInput(this);
 		this.mouseInput = new MouseInput(this);
@@ -59,8 +59,8 @@ public class GamePanel extends JPanel {
 	}
 
 	public void update() {
-		tm.setPosition(halfWidth - player.getX(), halfHeight - player.getY());
-		bg.setPosition(tm.getX(), tm.getY());
+		tileMap.setPosition(halfWidth - player.getX(), halfHeight - player.getY());
+		bg.setPosition(tileMap.getX(), tileMap.getY());
 	}
 
 	@Override
@@ -69,7 +69,7 @@ public class GamePanel extends JPanel {
 
 		update();
 		bg.draw(g);
-		tm.draw(g);
+		tileMap.draw(g);
 		player.update();
 		player.draw(g);
 	}

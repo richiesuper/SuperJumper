@@ -12,7 +12,6 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import utils.Constants;
-import gamestates.Level;
 
 public class TileMap {
 	// position
@@ -70,8 +69,6 @@ public class TileMap {
 			// compute number of cols and rows
 			tileCols = tileset.getWidth() / tileWidth;
 			tileRows = tileset.getHeight() / tileHeight;
-			System.out.println(tileCols);
-			System.out.println(tileRows);
 
 			// allocate memory for our tile matrix
 			tiles = new Tile[tileRows][tileCols];
@@ -164,6 +161,13 @@ public class TileMap {
 
 	public int getHeight() {
 		return height;
+	}
+	
+	public int getType(int row, int col) {
+		int rc = map[row][col];
+		int r = rc / numRowsToDraw;
+		int c = rc % numRowsToDraw;
+		return tiles[r][c].getType();
 	}
 
 	private void fixBounds() {

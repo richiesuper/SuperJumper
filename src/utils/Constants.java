@@ -22,6 +22,9 @@ public class Constants {
 	}
 
 	public static class GameStates {
+		// Num GameStates
+		public static final byte NUM_GAME_STATE = 8;
+		
 		// types of game states
 		public static final byte MAIN_MENU = 0;
 		public static final byte PAUSE_MENU = 1;

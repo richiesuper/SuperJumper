@@ -1,11 +1,13 @@
 package main;
 
+import gamestates.GameStateManager;
 import utils.Constants;
 
 public class Game implements Runnable {
 	private GameFrame gameFrame;
 	private GamePanel gamePanel;
 	private Thread gameThread;
+	private GameStateManager gsm;
 
 	public Game() {
 		this.gamePanel = new GamePanel(Constants.Panel.WIDTH, Constants.Panel.HEIGHT);
@@ -17,6 +19,7 @@ public class Game implements Runnable {
 
 	@Override
 	public void run() {
+		init();
 		while (true) {
 			gamePanel.repaint();
 
@@ -26,5 +29,9 @@ public class Game implements Runnable {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public void init() {
+		gsm = new GameStateManager();
 	}
 }
