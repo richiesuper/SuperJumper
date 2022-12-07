@@ -2,11 +2,14 @@ package entities;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
+import tilemap.TileMap;
 import utils.Constants;
+import utils.Constants.Tile;
 
 public abstract class Entity {
 	// intrinsic traits
@@ -25,8 +28,11 @@ public abstract class Entity {
 	protected byte ticker;
 	protected byte idx;
 	protected byte[] tileColCount;
+	
+	// Animation
 	protected boolean facingRight;
 	protected boolean facingLeft;
+	protected Player player;
 
 	// dimensions
 	protected short width;
@@ -39,13 +45,57 @@ public abstract class Entity {
 	
 	// Hitbox for testing collision
 	protected Rectangle2D.Float hitbox;
+	
+	// Temp for hitbox
+	protected float xOffset = 48;
+	protected float yOffset = 32;
+	
+	/* Map Object */ 
+	
+	// TileStuff
+	protected TileMap tileMap;
+	protected int tileSize;
+	protected double xMap;
+	protected double yMap;
+	
+	// Position and vector
+	protected double xPos;
+	protected double yPos;
+	protected double dx;
+	protected double dy;
+	
+	// Collision Box
+	protected int cWidth = 20;
+	protected int cHeight = 20;
+	
+	// collision
+	protected int currRow;
+	protected int currCol;
+	protected double xdest;
+	protected double ydest;
+	protected double xtemp;
+	protected double ytemp;
+	protected boolean topLeft;
+	protected boolean topRight;
+	protected boolean bottomLeft;
+	protected boolean bottomRight;
+	
+	// Movement
+	protected boolean left;
+	protected boolean right;
+	protected boolean up;
+	protected boolean down;
 
 	// constructor
-	public Entity(float x, float y, short width, short height) {
+	public Entity(float x, float y, short width, short height, TileMap tileMap) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
+		
+		// Tile
+		this.tileMap = tileMap;
+		this.tileSize = tileMap.getTileWidth(); // Get the size of the tile
 	}
 	
 	// Hitbox
@@ -61,7 +111,102 @@ public abstract class Entity {
 		g.setColor(Color.PINK);
 		g.drawRect((int) hitbox.x, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height);
 	}
+	
+	public float getHitboxX() {
+		return hitbox.x;
+	}
+	
+	public float getHitboxY() {
+		return hitbox.y;
+	}
+	
+	// MapObject
+	public void calculateCorners(double x, double y) {
+		int leftTile = (int) (x - cWidth / 2) / tileSize;
+		int rightTile = (int) (x + cWidth / 2 - 1) / tileSize;
+		int topTile = (int) (y - cHeight / 2) / tileSize;
+		int bottomTile = (int) (y + cHeight / 2 - 1) / tileSize;
+		
+		// Check tiles normal or blocked
+		int tl = tileMap.getType(topTile, leftTile);
+		int tr = tileMap.getType(topTile, rightTile);
+		int bl = tileMap.getType(bottomTile, leftTile);
+		int br = tileMap.getType(bottomTile, rightTile);
+		
+		topLeft = tl == Tile.BLOCKED;
+		topRight = tr == Tile.BLOCKED;
+		bottomLeft = bl == Tile.BLOCKED;
+		bottomRight = br == Tile.BLOCKED;
+	}
+	
+	public void checkTileMapCollision() {
+		currCol = (int) x / tileSize;
+		currRow = (int) y / tileSize;
+		
+		xdest = x + dx;
+		ydest = y + dy;
 
+		xtemp = x;
+		ytemp = y;
+		
+		calculateCorners(x, ydest);
+		if(dy < 0) {
+			if(topLeft || topRight) {
+				dy = 0;
+				ytemp = currRow * tileSize + cHeight / 2;
+			}
+			else {
+				ytemp += dy;
+			}
+		}
+		
+		if(dy > 0) {
+			if(bottomLeft || bottomRight) {
+				dy = 0;
+				ytemp = (currRow + 1) * tileSize - cHeight / 2;
+			}
+			else {
+				ytemp += dy;
+			}
+		}
+		
+		calculateCorners(xdest, y);
+		if(dx < 0) {
+			if(topLeft || bottomLeft) {
+				dx = 0;
+				xtemp = currCol * tileSize + cWidth / 2;
+			}
+			else {
+				xtemp += dx;
+			}	
+		}
+		
+		if(dx > 0) {
+			if(topRight || bottomRight) {
+				dx = 0;
+				xtemp = (currCol + 1) * tileSize - cWidth / 2;
+			}
+			else {
+				xtemp += dx;
+			}
+		}
+	}
+
+	public void setVector(double dx, double dy) {
+		this.dx = dx;
+		this.dy = dy;
+	}
+
+	public void setMapPosition() {
+		xMap = tileMap.getX();
+		yMap = tileMap.getY();
+	}
+	
+	public void setPosition(double x, double y) {
+		this.x = (float) x;
+		this.y = (float) y;
+	}
+	
 	// abstract methods
 	public abstract void init();
 
@@ -69,9 +214,9 @@ public abstract class Entity {
 
 	public abstract void loadSprite();
 
-	public abstract void draw(Graphics g);
-
 	public abstract void move();
+	
+	public abstract void draw(Graphics g);
 
 	public abstract void update();
 
