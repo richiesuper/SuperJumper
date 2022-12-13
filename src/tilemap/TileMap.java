@@ -134,6 +134,8 @@ public class TileMap {
 		this.y += (y - this.y) * tween;
 
 		fixBounds();
+		
+		//System.out.println("TileMap: x: " + x + " y: " + y);
 
 		colOffset = (int) -this.x / tileWidth;
 		rowOffset = (int) -this.y / tileHeight;
@@ -202,5 +204,29 @@ public class TileMap {
 				g.drawImage(tiles[r][c].getImage(), (int) x + col * tileWidth, (int) y + row * tileHeight, null);
 			}
 		}
+	}
+
+	public int[][] getMap() {
+		return map;
+	}
+
+	public void setMap(int[][] map) {
+		this.map = map;
+	}
+
+	public int getRowCount() {
+		return rowCount;
+	}
+
+	public void setRowCount(int rowCount) {
+		this.rowCount = rowCount;
+	}
+
+	public int getColCount() {
+		return colCount;
+	}
+
+	public void setColCount(int colCount) {
+		this.colCount = colCount;
 	}
 }

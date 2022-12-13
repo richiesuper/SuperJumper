@@ -29,20 +29,20 @@ public class GamePanel extends JPanel {
 		super();
 
 		this.halfWidth = Constants.Panel.WIDTH / 2;
-		this.halfWidth = Constants.Panel.HEIGHT / 2;
+		this.halfHeight = Constants.Panel.HEIGHT / 2;
 
 		// Tilemap
 		tileMap = new TileMap(Constants.Tile.WIDTH, Constants.Tile.HEIGHT);
-		tileMap.loadTiles(Constants.TileSets.LVL_1);
-		tileMap.loadMap(Constants.Maps.LVL_1);
+		tileMap.loadTiles(Constants.TileSets.LVL_2);
+		tileMap.loadMap(Constants.Maps.LVL_2);
 		tileMap.setPosition(0, 0);
 		tileMap.setTween(1);
 
 		// Background
-		bg = new Background(Constants.Backgrounds.LVL_1);
+		bg = new Background(Constants.Backgrounds.LVL_2);
 
 		// LevelManager and Player
-		this.player = new Player(100, 100, (short) Constants.Entities.Player.SPRITE_WIDTH,
+		this.player = new Player(0, 0, (short) Constants.Entities.Player.SPRITE_WIDTH,
 				(short) Constants.Entities.Player.SPRITE_HEIGHT, tileMap);
 
 		this.keyboardInput = new KeyboardInput(this);
