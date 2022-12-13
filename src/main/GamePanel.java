@@ -24,28 +24,27 @@ public class GamePanel extends JPanel {
 	private short halfHeight;
 
 	private Player player;
-	
 
 	public GamePanel(int width, int height) {
 		super();
 
 		this.halfWidth = Constants.Panel.WIDTH / 2;
 		this.halfWidth = Constants.Panel.HEIGHT / 2;
-		
+
 		// Tilemap
 		tileMap = new TileMap(Constants.Tile.WIDTH, Constants.Tile.HEIGHT);
 		tileMap.loadTiles(Constants.TileSets.LVL_1);
 		tileMap.loadMap(Constants.Maps.LVL_1);
 		tileMap.setPosition(0, 0);
 		tileMap.setTween(1);
-		
+
 		// Background
 		bg = new Background(Constants.Backgrounds.LVL_1);
 
 		// LevelManager and Player
-		this.player = new Player(100, 100, 
-				(short) Constants.Entities.Player.SPRITE_WIDTH, (short) Constants.Entities.Player.SPRITE_HEIGHT, tileMap);
-		
+		this.player = new Player(100, 100, (short) Constants.Entities.Player.SPRITE_WIDTH,
+				(short) Constants.Entities.Player.SPRITE_HEIGHT, tileMap);
+
 		this.keyboardInput = new KeyboardInput(this);
 		this.mouseInput = new MouseInput(this);
 

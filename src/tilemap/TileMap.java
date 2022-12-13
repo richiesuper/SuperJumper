@@ -58,7 +58,7 @@ public class TileMap {
 		this.numColsToDraw = Constants.Tile.HORIZ_SUM + Constants.TileMap.OFFSET;
 		this.tween = 0.07;
 	}
-	
+
 	public void loadTiles(String filename) {
 		InputStream is;
 
@@ -79,7 +79,8 @@ public class TileMap {
 			for (int row = 0; row < tileRows; row++) {
 				for (int col = 0; col < tileCols; col++) {
 					subimage = tileset.getSubimage(col * tileWidth, row * tileHeight, tileWidth, tileHeight);
-					tiles[row][col] = new Tile(subimage, (row == 0) ? Constants.Tile.PASSTHROUGH : Constants.Tile.BLOCKED);
+					tiles[row][col] = new Tile(subimage,
+							(row == 0) ? Constants.Tile.PASSTHROUGH : Constants.Tile.BLOCKED);
 				}
 			}
 		} catch (IOException e) {
@@ -131,7 +132,7 @@ public class TileMap {
 	public void setPosition(double x, double y) {
 		this.x += (x - this.x) * tween;
 		this.y += (y - this.y) * tween;
-		
+
 		fixBounds();
 
 		colOffset = (int) -this.x / tileWidth;
@@ -162,7 +163,7 @@ public class TileMap {
 	public int getHeight() {
 		return height;
 	}
-	
+
 	public int getType(int row, int col) {
 		int rc = map[row][col];
 		int r = rc / numRowsToDraw;

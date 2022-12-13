@@ -24,7 +24,7 @@ public class Constants {
 	public static class GameStates {
 		// Num GameStates
 		public static final byte NUM_GAME_STATE = 8;
-		
+
 		// types of game states
 		public static final byte MAIN_MENU = 0;
 		public static final byte PAUSE_MENU = 1;
@@ -40,7 +40,7 @@ public class Constants {
 		// tile dimensions
 		public static final byte WIDTH = 32;
 		public static final byte HEIGHT = 32;
-		
+
 		// tile count
 		public static final byte HORIZ_SUM = 32;
 		public static final byte VERT_SUM = 18;
@@ -49,7 +49,7 @@ public class Constants {
 		public static final byte PASSTHROUGH = 0;
 		public static final byte BLOCKED = 1;
 	}
-	
+
 	public static class TileMap {
 		public static final byte OFFSET = 16;
 	}
@@ -142,6 +142,9 @@ public class Constants {
 			public static final float DEFAULT_WALK_SPEED = 1.5f;
 			public static final float DEFAULT_RUN_SPEED = DEFAULT_WALK_SPEED * 2.5f;
 			public static final float DEFAULT_JUMP_HEIGHT = Tile.HEIGHT * 2.5f;
+
+			public static final int HITBOX_X_OFFSET = 48;
+			public static final int HITBOX_Y_OFFSET = 32;
 		}
 
 		public static class Enemies {

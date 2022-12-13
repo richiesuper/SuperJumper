@@ -15,56 +15,34 @@ public class MouseInput implements MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		/*
-		switch (e.getButton()) {
-		case MouseEvent.BUTTON1:
-			System.out.println("Mouse button 1 was clicked!");
-			break;
-		case MouseEvent.BUTTON2:
-			System.out.println("Mouse button 2 was clicked!");
-			break;
-		case MouseEvent.BUTTON3:
-			System.out.println("Mouse button 3 was clicked!");
-			break;
-		default:
-			break;
-		}
-		*/
+		 * switch (e.getButton()) { case MouseEvent.BUTTON1:
+		 * System.out.println("Mouse button 1 was clicked!"); break; case
+		 * MouseEvent.BUTTON2: System.out.println("Mouse button 2 was clicked!"); break;
+		 * case MouseEvent.BUTTON3: System.out.println("Mouse button 3 was clicked!");
+		 * break; default: break; }
+		 */
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
 		/*
-		switch (e.getButton()) {
-		case MouseEvent.BUTTON1:
-			System.out.println("Mouse button 1 was pressed!");
-			break;
-		case MouseEvent.BUTTON2:
-			System.out.println("Mouse button 2 was pressed!");
-			break;
-		case MouseEvent.BUTTON3:
-			System.out.println("Mouse button 3 was pressed!");
-			break;
-		default:
-			break;
-		}
-		*/
+		 * switch (e.getButton()) { case MouseEvent.BUTTON1:
+		 * System.out.println("Mouse button 1 was pressed!"); break; case
+		 * MouseEvent.BUTTON2: System.out.println("Mouse button 2 was pressed!"); break;
+		 * case MouseEvent.BUTTON3: System.out.println("Mouse button 3 was pressed!");
+		 * break; default: break; }
+		 */
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		/*
-		switch (e.getButton()) {
-		case MouseEvent.BUTTON1:
-			System.out.println("Mouse button 1 was released!");
-			break;
-		case MouseEvent.BUTTON2:
-			System.out.println("Mouse button 2 was released!");
-			break;
-		case MouseEvent.BUTTON3:
-			System.out.println("Mouse button 3 was released!");
-			break;
-		}
-		*/
+		 * switch (e.getButton()) { case MouseEvent.BUTTON1:
+		 * System.out.println("Mouse button 1 was released!"); break; case
+		 * MouseEvent.BUTTON2: System.out.println("Mouse button 2 was released!");
+		 * break; case MouseEvent.BUTTON3:
+		 * System.out.println("Mouse button 3 was released!"); break; }
+		 */
 	}
 
 	@Override

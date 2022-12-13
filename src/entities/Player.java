@@ -63,21 +63,21 @@ public class Player extends Entity {
 		// Temp
 		float tempSpeedX = 0;
 		float tempSpeedY = 0;
-		
+
 		if (moving) {
 			switch (direction) {
 			case Constants.Entities.Player.DIR_LEFT:
 				// Temp
 				tempSpeedX = -speedX;
-				
+
 				x -= speedX;
 				facingLeft = true;
 				facingRight = false;
 				break;
 			case Constants.Entities.Player.DIR_RIGHT:
-				// Temp 
+				// Temp
 				tempSpeedX = speedX;
-				
+
 				x += speedX;
 				facingRight = true;
 				facingLeft = false;
@@ -85,28 +85,28 @@ public class Player extends Entity {
 			case Constants.Entities.Player.DIR_UP:
 				// Temp
 				tempSpeedY = -speedY;
-				
+
 				y -= speedY;
 				break;
 			case Constants.Entities.Player.DIR_DOWN:
 				// Temp
 				tempSpeedY = speedY;
-				
+
 				y += speedY;
 				break;
 			default:
 				break;
 			}
 		}
-		
-		if(CanMoveHere(hitbox.x + tempSpeedX, hitbox.y + tempSpeedY, hitbox.width, hitbox.height)) {
+
+		if (CanMoveHere(hitbox.x + tempSpeedX, hitbox.y + tempSpeedY, hitbox.width, hitbox.height)) {
 			hitbox.x += tempSpeedX;
 			hitbox.y += tempSpeedY;
 		}
 	}
 
 	@Override
-	public void update(){
+	public void update() {
 		switch (state) {
 		case Constants.Entities.Player.WALK:
 			speedX = Constants.Entities.Player.DEFAULT_WALK_SPEED;
@@ -135,8 +135,8 @@ public class Player extends Entity {
 		}
 
 		move();
-		//checkTileMapCollision();
-		//setPosition(xtemp, ytemp);
+		// checkTileMapCollision();
+		// setPosition(xtemp, ytemp);
 	}
 
 	@Override
@@ -149,18 +149,23 @@ public class Player extends Entity {
 
 	@Override
 	public void draw(Graphics g) {
-		//setMapPosition();
-		if(facingRight && !facingLeft) {
-			g.drawImage(spriteTile[state][idx], (int) (hitbox.x - xOffset), (int) (hitbox.y - yOffset), Constants.Entities.Player.SPRITE_WIDTH,
-					Constants.Entities.Player.SPRITE_HEIGHT, null);
+		// setMapPosition();
+		if (facingRight && !facingLeft) {
+			g.drawImage(spriteTile[state][idx], (int) (hitbox.x - Constants.Entities.Player.HITBOX_X_OFFSET),
+					(int) (hitbox.y - Constants.Entities.Player.HITBOX_Y_OFFSET),
+					Constants.Entities.Player.SPRITE_WIDTH, Constants.Entities.Player.SPRITE_HEIGHT, null);
+		} else {
+			g.drawImage(spriteTile[state][idx], (int) (hitbox.x - Constants.Entities.Player.HITBOX_X_OFFSET) + width,
+					(int) (hitbox.y - Constants.Entities.Player.HITBOX_Y_OFFSET),
+					-Constants.Entities.Player.SPRITE_WIDTH, Constants.Entities.Player.SPRITE_HEIGHT, null);
 		}
-		else {
-			g.drawImage(spriteTile[state][idx], (int) (hitbox.x - xOffset) + width, (int) (hitbox.y - yOffset), -Constants.Entities.Player.SPRITE_WIDTH,
-					Constants.Entities.Player.SPRITE_HEIGHT, null);
-		}
-		
+
 		updateTicker();
 		drawHitbox(g);
+
+		// debugging
+		System.out.println("x: " + x + " y: " + y);
+		System.out.println("hb-x: " + hitbox.x + " hb-y: " + hitbox.y);
 	}
 
 	@Override
@@ -188,11 +193,11 @@ public class Player extends Entity {
 
 	public void halt() {
 		moving = false;
-		goingLeft = false;
-		goingRight = false;
+		setGoingLeft(false);
+		setGoingRight(false);
 		state = Constants.Entities.Player.IDLE;
 	}
-	
+
 	public static boolean CanMoveHere(float x, float y, float width, float height) {
 		if (!IsSolid(x, y))
 			if (!IsSolid(x + width, y + height))
@@ -201,13 +206,29 @@ public class Player extends Entity {
 						return true;
 		return false;
 	}
-	
+
 	private static boolean IsSolid(float x, float y) {
 		if (x < 0 || x >= Constants.Panel.WIDTH)
 			return true;
 		if (y < 0 || y >= Constants.Panel.HEIGHT)
 			return true;
-		
+
 		return false;
+	}
+
+	public boolean isGoingLeft() {
+		return goingLeft;
+	}
+
+	public void setGoingLeft(boolean goingLeft) {
+		this.goingLeft = goingLeft;
+	}
+
+	public boolean isGoingRight() {
+		return goingRight;
+	}
+
+	public void setGoingRight(boolean goingRight) {
+		this.goingRight = goingRight;
 	}
 }

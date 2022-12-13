@@ -30,7 +30,7 @@ public class Game implements Runnable {
 			}
 		}
 	}
-	
+
 	public void init() {
 		gsm = new GameStateManager();
 	}

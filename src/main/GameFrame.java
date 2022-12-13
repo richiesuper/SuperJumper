@@ -23,7 +23,7 @@ public class GameFrame extends JFrame {
 			@Override
 			public void windowGainedFocus(WindowEvent e) {
 			}
-			
+
 			@Override
 			public void windowLostFocus(WindowEvent e) {
 				gamePanel.getPlayer().halt();
