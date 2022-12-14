@@ -79,8 +79,7 @@ public class TileMap {
 			for (int row = 0; row < tileRows; row++) {
 				for (int col = 0; col < tileCols; col++) {
 					subimage = tileset.getSubimage(col * tileWidth, row * tileHeight, tileWidth, tileHeight);
-					tiles[row][col] = new Tile(subimage,
-							(row == 0) ? Constants.Tile.PASSTHROUGH : Constants.Tile.BLOCKED);
+					tiles[row][col] = new Tile(subimage);
 				}
 			}
 		} catch (IOException e) {
@@ -164,13 +163,6 @@ public class TileMap {
 
 	public int getHeight() {
 		return height;
-	}
-
-	public int getType(int row, int col) {
-		int rc = map[row][col];
-		int r = rc / numRowsToDraw;
-		int c = rc % numRowsToDraw;
-		return tiles[r][c].getType();
 	}
 
 	private void fixBounds() {
