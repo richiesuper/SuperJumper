@@ -72,4 +72,12 @@ public class GamePanel extends JPanel {
 		player.update();
 		player.draw(g);
 	}
+
+	public TileMap getTileMap() {
+		return tileMap;
+	}
+
+	public void setTileMap(TileMap tileMap) {
+		this.tileMap = tileMap;
+	}
 }

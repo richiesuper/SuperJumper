@@ -22,7 +22,7 @@ public class Player extends Entity {
 	public Player(float x, float y, short width, short height, TileMap tileMap) {
 		super(x, y, width, height, tileMap);
 		init();
-		initHitbox(x, y, 32, 64);
+		initHitbox(x, y, Constants.Entities.Player.HITBOX_WIDTH, Constants.Entities.Player.HITBOX_HEIGHT);
 		inMiddleArea = false;
 	}
 
@@ -99,13 +99,27 @@ public class Player extends Entity {
 			}
 		}
 
-		if (canMoveHere(hitbox.x + tempSpeedX, hitbox.y + tempSpeedY, hitbox.width, hitbox.height, tileMap.getMap(), hitbox)) {
-			if (!inMiddleArea) {
-				hitbox.x += tempSpeedX;
-				hitbox.y += tempSpeedY;
-				x += tempSpeedX;
-				y += tempSpeedY;
+		if (!inMiddleArea) {
+			if (x >= tileMap.getColCount() * Constants.Tile.WIDTH - Constants.Panel.WIDTH / 2) {
+				if (canMoveHere(x + tempSpeedX, y + tempSpeedY, hitbox.width, hitbox.height, tileMap.getMap(),
+						inMiddleArea, hitbox, tileMap)) {
+					hitbox.x += tempSpeedX;
+					hitbox.y += tempSpeedY;
+					x += tempSpeedX;
+					y += tempSpeedY;
+				}
 			} else {
+				if (canMoveHere(hitbox.x + tempSpeedX, hitbox.y + tempSpeedY, hitbox.width, hitbox.height,
+						tileMap.getMap(), inMiddleArea, hitbox, tileMap)) {
+					hitbox.x += tempSpeedX;
+					hitbox.y += tempSpeedY;
+					x += tempSpeedX;
+					y += tempSpeedY;
+				}
+			}
+		} else {
+			if (canMoveHere(x + tempSpeedX, y + tempSpeedY, hitbox.width, hitbox.height, tileMap.getMap(), inMiddleArea,
+					hitbox, tileMap)) {
 				x += tempSpeedX;
 				y += tempSpeedY;
 				if (direction == Constants.Entities.Player.DIR_DOWN || direction == Constants.Entities.Player.DIR_UP) {
@@ -113,6 +127,7 @@ public class Player extends Entity {
 				}
 			}
 		}
+
 	}
 
 	@Override
@@ -161,9 +176,11 @@ public class Player extends Entity {
 	public void draw(Graphics g) {
 		// setMapPosition();
 		if (facingRight && !facingLeft) {
-			if (x >= Constants.Panel.WIDTH/2 && x <= Constants.Tile.WIDTH * tileMap.getColCount() - Constants.Panel.WIDTH/2) {
+			if (x >= Constants.Panel.WIDTH / 2
+					&& x <= Constants.Tile.WIDTH * tileMap.getColCount() - Constants.Panel.WIDTH / 2) {
 				inMiddleArea = true;
-				g.drawImage(spriteTile[state][idx], Constants.Panel.WIDTH/2 - Constants.Entities.Player.HITBOX_X_OFFSET,
+				g.drawImage(spriteTile[state][idx],
+						Constants.Panel.WIDTH / 2 - Constants.Entities.Player.HITBOX_X_OFFSET,
 						(int) (hitbox.y - Constants.Entities.Player.HITBOX_Y_OFFSET),
 						Constants.Entities.Player.SPRITE_WIDTH, Constants.Entities.Player.SPRITE_HEIGHT, null);
 			} else {
@@ -173,14 +190,17 @@ public class Player extends Entity {
 						Constants.Entities.Player.SPRITE_WIDTH, Constants.Entities.Player.SPRITE_HEIGHT, null);
 			}
 		} else {
-			if (x >= Constants.Panel.WIDTH/2 && x <= Constants.Tile.WIDTH * tileMap.getColCount() - Constants.Panel.WIDTH/2) {
+			if (x >= Constants.Panel.WIDTH / 2
+					&& x <= Constants.Tile.WIDTH * tileMap.getColCount() - Constants.Panel.WIDTH / 2) {
 				inMiddleArea = true;
-				g.drawImage(spriteTile[state][idx], Constants.Panel.WIDTH/2 + width - Constants.Entities.Player.HITBOX_X_OFFSET,
+				g.drawImage(spriteTile[state][idx],
+						Constants.Panel.WIDTH / 2 + width - Constants.Entities.Player.HITBOX_X_OFFSET,
 						(int) (hitbox.y - Constants.Entities.Player.HITBOX_Y_OFFSET),
 						-Constants.Entities.Player.SPRITE_WIDTH, Constants.Entities.Player.SPRITE_HEIGHT, null);
 			} else {
 				inMiddleArea = false;
-				g.drawImage(spriteTile[state][idx], (int) (hitbox.x - Constants.Entities.Player.HITBOX_X_OFFSET) + width,
+				g.drawImage(spriteTile[state][idx],
+						(int) (hitbox.x - Constants.Entities.Player.HITBOX_X_OFFSET) + width,
 						(int) (hitbox.y - Constants.Entities.Player.HITBOX_Y_OFFSET),
 						-Constants.Entities.Player.SPRITE_WIDTH, Constants.Entities.Player.SPRITE_HEIGHT, null);
 			}
@@ -190,8 +210,8 @@ public class Player extends Entity {
 		drawHitbox(g);
 
 		// debugging
-//		System.out.println("x: " + x + " y: " + y);
-//		System.out.println("hb-x: " + hitbox.x + " hb-y: " + hitbox.y);
+		System.out.println("x: " + x + " y: " + y);
+		System.out.println("hb-x: " + hitbox.x + " hb-y: " + hitbox.y);
 	}
 
 	@Override
@@ -223,7 +243,6 @@ public class Player extends Entity {
 		setGoingRight(false);
 		state = Constants.Entities.Player.IDLE;
 	}
-
 
 	public boolean isGoingLeft() {
 		return goingLeft;

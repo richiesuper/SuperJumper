@@ -143,8 +143,15 @@ public class Constants {
 			public static final float DEFAULT_RUN_SPEED = DEFAULT_WALK_SPEED * 2.5f;
 			public static final float DEFAULT_JUMP_HEIGHT = Tile.HEIGHT * 2.5f;
 
-			public static final int HITBOX_X_OFFSET = 48;
-			public static final int HITBOX_Y_OFFSET = 32;
+			public static final int HITBOX_INITIAL_WIDTH = 80;
+			public static final int HITBOX_INITIAL_HEIGHT = 96;
+			public static final int HITBOX_X_OFFSET = 48; // original = 48 (for full body hitbox)
+			public static final int HITBOX_Y_OFFSET = 33; // original = 32 (for full body hitbox)
+			// we made this so the player can zip through 2 tiles separated by a gap of
+			// player sprite height
+
+			public static final int HITBOX_WIDTH = HITBOX_INITIAL_WIDTH - HITBOX_X_OFFSET;
+			public static final int HITBOX_HEIGHT = HITBOX_INITIAL_HEIGHT - HITBOX_Y_OFFSET;
 		}
 
 		public static class Enemies {
