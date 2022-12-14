@@ -134,8 +134,8 @@ public class TileMap {
 		this.y += (y - this.y) * tween;
 
 		fixBounds();
-		
-		//System.out.println("TileMap: x: " + x + " y: " + y);
+
+		// System.out.println("TileMap: x: " + x + " y: " + y);
 
 		colOffset = (int) -this.x / tileWidth;
 		rowOffset = (int) -this.y / tileHeight;

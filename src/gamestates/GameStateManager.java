@@ -21,7 +21,8 @@ public class GameStateManager {
 			gameStates[state] = new MainMenuState(this);
 		} else if (state == Constants.GameStates.LVL_1) {
 			gameStates[state] = new Level1State(this);
-		} if (state == Constants.GameStates.LVL_2) {
+		}
+		if (state == Constants.GameStates.LVL_2) {
 			gameStates[state] = new Level2State(this);
 		}
 	}
