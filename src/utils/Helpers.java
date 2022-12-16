@@ -40,7 +40,7 @@ public class Helpers {
 
 		int tile = lvlData[(int) yIndex][(int) xIndex];
 
-		System.out.println("xCorner: " + x + " yCorner: " + y + " Tile: " + tile);
+		//System.out.println("xCorner: " + x + " yCorner: " + y + " Tile: " + tile);
 
 		if (tile < 0 || tile > 19)
 			return true;

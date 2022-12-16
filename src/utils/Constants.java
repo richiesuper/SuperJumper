@@ -88,7 +88,7 @@ public class Constants {
 	public static class Entities {
 		// entity types
 		public static final byte PLAYER = 0;
-		public static final byte ZOMBIE = 0;
+		public static final byte ZOMBIE = 1;
 
 		public static class Player {
 			// sprite filename
@@ -124,6 +124,8 @@ public class Constants {
 			public static final byte DIR_DOWN = 3;
 
 			// player states
+			public static final byte STATE_COUNT = 12;
+
 			public static final byte IDLE = 0;
 			public static final byte WALK = 1;
 			public static final byte RUN = 2;
@@ -155,6 +157,7 @@ public class Constants {
 		}
 
 		public static class Enemies {
+			
 			public static class Zombie {
 				// sprite filename
 				public static final String SPRITE = Folders.ENEMIES + "zombie.png";
@@ -180,6 +183,8 @@ public class Constants {
 				public static final byte DEAD_TILE_COUNT = 5;
 
 				// zombie states
+				public static final byte STATE_COUNT = 10;
+
 				public static final byte IDLE = 0;
 				public static final byte WALK = 1;
 				public static final byte RUN = 2;
@@ -190,6 +195,20 @@ public class Constants {
 				public static final byte EATING = 7;
 				public static final byte HURT = 8;
 				public static final byte DEAD = 9;
+
+				// zombie general stats
+				public static final float DEFAULT_HEALTH = 100f;
+				public static final float DEFAULT_WALK_SPEED = 1.5f;
+				public static final float DEFAULT_RUN_SPEED = DEFAULT_WALK_SPEED * 2.5f;
+				public static final float DEFAULT_JUMP_HEIGHT = Tile.HEIGHT * 2.5f;
+
+				public static final int HITBOX_INITIAL_WIDTH = 80;
+				public static final int HITBOX_INITIAL_HEIGHT = 96;
+				public static final int HITBOX_X_OFFSET = 48; // original = 48 (for full body hitbox)
+				public static final int HITBOX_Y_OFFSET = 33; // original = 32 (for full body hitbox)
+
+				public static final int HITBOX_WIDTH = HITBOX_INITIAL_WIDTH - HITBOX_X_OFFSET;
+				public static final int HITBOX_HEIGHT = HITBOX_INITIAL_HEIGHT - HITBOX_Y_OFFSET;
 			}
 		}
 	}

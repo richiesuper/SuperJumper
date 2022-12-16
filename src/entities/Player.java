@@ -47,7 +47,7 @@ public class Player extends Entity {
 
 	@Override
 	public void setupTileCount() {
-		tileColCount = new byte[Constants.Entities.Player.SPRITE_HEIGHT];
+		tileColCount = new byte[Constants.Entities.Player.STATE_COUNT];
 		tileColCount[0] = Constants.Entities.Player.IDLE_TILE_COUNT;
 		tileColCount[1] = Constants.Entities.Player.WALK_TILE_COUNT;
 		tileColCount[2] = Constants.Entities.Player.RUN_TILE_COUNT;
@@ -160,8 +160,6 @@ public class Player extends Entity {
 		}
 
 		move();
-		// checkTileMapCollision();
-		// setPosition(xtemp, ytemp);
 	}
 
 	@Override
@@ -174,7 +172,6 @@ public class Player extends Entity {
 
 	@Override
 	public void draw(Graphics g) {
-		// setMapPosition();
 		if (facingRight && !facingLeft) {
 			if (x >= Constants.Panel.WIDTH / 2
 					&& x <= Constants.Tile.WIDTH * tileMap.getColCount() - Constants.Panel.WIDTH / 2) {
@@ -210,8 +207,8 @@ public class Player extends Entity {
 		drawHitbox(g);
 
 		// debugging
-		System.out.println("x: " + x + " y: " + y);
-		System.out.println("hb-x: " + hitbox.x + " hb-y: " + hitbox.y);
+		//System.out.println("x: " + x + " y: " + y);
+		//System.out.println("hb-x: " + hitbox.x + " hb-y: " + hitbox.y);
 	}
 
 	@Override
