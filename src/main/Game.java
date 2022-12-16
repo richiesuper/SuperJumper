@@ -8,6 +8,7 @@ public class Game implements Runnable {
 	private GamePanel gamePanel;
 	private Thread gameThread;
 	private GameStateManager gsm;
+	private boolean running;
 
 	public Game() {
 		this.gamePanel = new GamePanel(Constants.Panel.WIDTH, Constants.Panel.HEIGHT);
@@ -20,7 +21,7 @@ public class Game implements Runnable {
 	@Override
 	public void run() {
 		init();
-		while (true) {
+		while (running) {
 			gamePanel.repaint();
 
 			try {
@@ -32,6 +33,8 @@ public class Game implements Runnable {
 	}
 
 	public void init() {
+		running = true;
+		
 		gsm = new GameStateManager();
 	}
 }
