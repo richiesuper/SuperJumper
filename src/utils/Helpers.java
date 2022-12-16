@@ -21,20 +21,23 @@ public class Helpers {
 
 	private static boolean isSolid(float x, float y, int[][] lvlData, boolean inMiddleArea, Rectangle2D.Float hitbox,
 			TileMap tileMap) {
-		if (inMiddleArea) {
-			if (x < 0 || x >= tileMap.getColCount() * Constants.Tile.WIDTH)
-				return true;
-			if (y < 0 || y >= tileMap.getColCount() * Constants.Tile.HEIGHT)
-				return true;
-		} else {
-			if (hitbox.x < 0 || hitbox.x >= Constants.Panel.WIDTH)
-				return true;
-			if (hitbox.y < 0 || hitbox.y >= Constants.Panel.HEIGHT)
-				return true;
-		}
+		if (x < 0 || x >= tileMap.getColCount() * Constants.Tile.WIDTH)
+			return true;
+		if (y < 0 || y >= tileMap.getColCount() * Constants.Tile.HEIGHT)
+			return true;
+
+		if (hitbox.x < 0 || hitbox.x >= Constants.Panel.WIDTH)
+			return true;
+		if (hitbox.y < 0 || hitbox.y >= Constants.Panel.HEIGHT)
+			return true;
 
 		float xIndex = x / Constants.Tile.WIDTH;
 		float yIndex = y / Constants.Tile.HEIGHT;
+		
+		// measure against ArrayIndexOutOfBounds when player tries to move past panel borders
+		if (xIndex < 0 || xIndex > tileMap.getColCount() || yIndex < 0 || yIndex > tileMap.getRowCount())
+			return true;
+
 		int tile = lvlData[(int) yIndex][(int) xIndex];
 
 		System.out.println("xCorner: " + x + " yCorner: " + y + " Tile: " + tile);
