@@ -52,6 +52,20 @@ public class GamePanel extends JPanel {
 		this.zombies = new ArrayList<Zombie>();
 		this.zombies.add(new Zombie(100, 100, (short) Constants.Entities.Enemies.Zombie.SPRITE_WIDTH,
 				(short) Constants.Entities.Enemies.Zombie.SPRITE_HEIGHT, tileMap));
+		this.zombies.add(new Zombie(200, 200, (short) Constants.Entities.Enemies.Zombie.SPRITE_WIDTH,
+				(short) Constants.Entities.Enemies.Zombie.SPRITE_HEIGHT, tileMap));
+		this.zombies.add(new Zombie(300, 300, (short) Constants.Entities.Enemies.Zombie.SPRITE_WIDTH,
+				(short) Constants.Entities.Enemies.Zombie.SPRITE_HEIGHT, tileMap));
+		this.zombies.add(new Zombie(400, 200, (short) Constants.Entities.Enemies.Zombie.SPRITE_WIDTH,
+				(short) Constants.Entities.Enemies.Zombie.SPRITE_HEIGHT, tileMap));
+		this.zombies.add(new Zombie(500, 100, (short) Constants.Entities.Enemies.Zombie.SPRITE_WIDTH,
+				(short) Constants.Entities.Enemies.Zombie.SPRITE_HEIGHT, tileMap));
+		this.zombies.add(new Zombie(200, 100, (short) Constants.Entities.Enemies.Zombie.SPRITE_WIDTH,
+				(short) Constants.Entities.Enemies.Zombie.SPRITE_HEIGHT, tileMap));
+		this.zombies.add(new Zombie(300, 100, (short) Constants.Entities.Enemies.Zombie.SPRITE_WIDTH,
+				(short) Constants.Entities.Enemies.Zombie.SPRITE_HEIGHT, tileMap));
+		this.zombies.add(new Zombie(400, 100, (short) Constants.Entities.Enemies.Zombie.SPRITE_WIDTH,
+				(short) Constants.Entities.Enemies.Zombie.SPRITE_HEIGHT, tileMap));
 
 		this.keyboardInput = new KeyboardInput(this);
 		this.mouseInput = new MouseInput(this);

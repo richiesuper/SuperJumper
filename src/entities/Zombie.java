@@ -84,8 +84,8 @@ public class Zombie extends Enemy {
 	@Override
 	public void draw(Graphics g) {
 		g.drawImage(spriteTile[state][idx],
-				(int) (hitbox.x - Constants.Entities.Enemies.Zombie.HITBOX_X_OFFSET) + width,
-				(int) (hitbox.y - Constants.Entities.Enemies.Zombie.HITBOX_Y_OFFSET),
+				(int) (x + tileMap.getX() + 1000) + width,
+				(int) (y + tileMap.getY()),
 				-Constants.Entities.Enemies.Zombie.SPRITE_WIDTH, Constants.Entities.Enemies.Zombie.SPRITE_HEIGHT, null);
 
 		updateTicker();
