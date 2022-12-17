@@ -1,5 +1,6 @@
 package tilemap;
 
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,8 +8,6 @@ import java.io.InputStream;
 import javax.imageio.ImageIO;
 
 import utils.Constants;
-
-import java.awt.Graphics;
 
 public class Background {
 	private BufferedImage bg;
@@ -45,7 +44,7 @@ public class Background {
 		// debugging
 		ticker++;
 		if (ticker >= 20) {
-			System.out.println("x: " + x + " y: " + y);
+//			System.out.println("x: " + x + " y: " + y);
 			ticker = 0;
 		}
 
