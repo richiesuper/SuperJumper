@@ -36,14 +36,14 @@ public class Constants {
 		public static final byte LVL_1 = 6;
 		public static final byte LVL_2 = 7;
 	}
-	
+
 	// UI game
-	public static class UI{
+	public static class UI {
 		// Button menu
-		public static class Button{
+		public static class Button {
 			public static final String MENU_BUTTON = Folders.UI + "menubutton.png";
-			public static final int B_WIDTH = 140;
-			public static final int B_HEIGHT = 56;
+			public static final int B_WIDTH = 139;
+			public static final int B_HEIGHT = 55;
 		}
 	}
 
@@ -168,7 +168,7 @@ public class Constants {
 		}
 
 		public static class Enemies {
-			
+
 			public static class Zombie {
 				// sprite filename
 				public static final String SPRITE = Folders.ENEMIES + "zombie.png";

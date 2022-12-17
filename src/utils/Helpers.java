@@ -1,7 +1,7 @@
 package utils;
 
 import java.awt.geom.Rectangle2D;
-import main.GamePanel;
+
 import tilemap.TileMap;
 
 public class Helpers {
@@ -21,9 +21,7 @@ public class Helpers {
 
 	private static boolean isSolid(float x, float y, int[][] lvlData, boolean inMiddleArea, Rectangle2D.Float hitbox,
 			TileMap tileMap) {
-		if (x < 0 || x >= tileMap.getColCount() * Constants.Tile.WIDTH)
-			return true;
-		if (y < 0 || y >= tileMap.getColCount() * Constants.Tile.HEIGHT)
+		if (x < 0 || x >= tileMap.getColCount() * Constants.Tile.WIDTH || y < 0 || y >= tileMap.getColCount() * Constants.Tile.HEIGHT)
 			return true;
 
 		if (hitbox.x < 0 || hitbox.x >= Constants.Panel.WIDTH)
@@ -33,14 +31,15 @@ public class Helpers {
 
 		float xIndex = x / Constants.Tile.WIDTH;
 		float yIndex = y / Constants.Tile.HEIGHT;
-		
-		// measure against ArrayIndexOutOfBounds when player tries to move past panel borders
+
+		// measure against ArrayIndexOutOfBounds when player tries to move past panel
+		// borders
 		if (xIndex < 0 || xIndex > tileMap.getColCount() || yIndex < 0 || yIndex > tileMap.getRowCount())
 			return true;
 
 		int tile = lvlData[(int) yIndex][(int) xIndex];
 
-		//System.out.println("xCorner: " + x + " yCorner: " + y + " Tile: " + tile);
+		// System.out.println("xCorner: " + x + " yCorner: " + y + " Tile: " + tile);
 
 		if (tile < 0 || tile > 19)
 			return true;
