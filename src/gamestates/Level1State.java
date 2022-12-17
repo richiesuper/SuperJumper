@@ -1,6 +1,6 @@
 package gamestates;
 
-import java.awt.Graphics2D;
+import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
@@ -38,8 +38,8 @@ public class Level1State extends GameState {
 		bg = new Background(Constants.Backgrounds.LVL_1);
 
 		// LevelManager and Player
-		this.player = new Player(100, 100, (short) Constants.Entities.Player.SPRITE_WIDTH,
-				(short) Constants.Entities.Player.SPRITE_HEIGHT, tileMap);
+		this.player = new Player(100, 100, Constants.Entities.Player.SPRITE_WIDTH,
+				Constants.Entities.Player.SPRITE_HEIGHT, tileMap);
 
 	}
 
@@ -57,7 +57,7 @@ public class Level1State extends GameState {
 	}
 
 	@Override
-	public void draw(Graphics2D g) {
+	public void draw(Graphics g) {
 		// Draw Bg
 		bg.draw(g);
 
@@ -72,13 +72,18 @@ public class Level1State extends GameState {
 	@Override
 	public void keyPressed(int k) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void keyReleased(int k) {
 		// TODO Auto-generated method stub
-		
+
+	}
+
+	@Override
+	public Player getPlayer() {
+		return player;
 	}
 
 }
