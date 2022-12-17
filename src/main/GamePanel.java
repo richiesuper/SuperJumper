@@ -2,70 +2,24 @@ package main;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
-import entities.Player;
-import entities.Zombie;
+import gamestates.GameStateManager;
 import inputs.KeyboardInput;
 import inputs.MouseInput;
-import tilemap.Background;
-import tilemap.TileMap;
-import utils.Constants;
 
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel {
 	private KeyboardInput keyboardInput;
 	private MouseInput mouseInput;
-	private Background bg;
-	private TileMap tileMap;
 
-	private short halfWidth;
-	private short halfHeight;
+	private GameStateManager gsm;
 
-	private Player player;
-	private ArrayList<Zombie> zombies;
-
-	public GamePanel(int width, int height) {
+	public GamePanel(int width, int height, GameStateManager gsm) {
 		super();
 
-		this.halfWidth = Constants.Panel.WIDTH / 2;
-		this.halfHeight = Constants.Panel.HEIGHT / 2;
-
-		// Tilemap
-		tileMap = new TileMap(Constants.Tile.WIDTH, Constants.Tile.HEIGHT);
-		tileMap.loadTiles(Constants.TileSets.LVL_1);
-		tileMap.loadMap(Constants.Maps.LVL_1);
-		tileMap.setPosition(0, 0);
-		tileMap.setTween(1);
-
-		// Background
-		bg = new Background(Constants.Backgrounds.LVL_1);
-
-		// LevelManager and Player
-		this.player = new Player(0, 0, (short) Constants.Entities.Player.SPRITE_WIDTH,
-				(short) Constants.Entities.Player.SPRITE_HEIGHT, tileMap);
-		
-		// zombies
-		this.zombies = new ArrayList<Zombie>();
-		this.zombies.add(new Zombie(100, 100, (short) Constants.Entities.Enemies.Zombie.SPRITE_WIDTH,
-				(short) Constants.Entities.Enemies.Zombie.SPRITE_HEIGHT, tileMap));
-		this.zombies.add(new Zombie(200, 200, (short) Constants.Entities.Enemies.Zombie.SPRITE_WIDTH,
-				(short) Constants.Entities.Enemies.Zombie.SPRITE_HEIGHT, tileMap));
-		this.zombies.add(new Zombie(300, 300, (short) Constants.Entities.Enemies.Zombie.SPRITE_WIDTH,
-				(short) Constants.Entities.Enemies.Zombie.SPRITE_HEIGHT, tileMap));
-		this.zombies.add(new Zombie(400, 200, (short) Constants.Entities.Enemies.Zombie.SPRITE_WIDTH,
-				(short) Constants.Entities.Enemies.Zombie.SPRITE_HEIGHT, tileMap));
-		this.zombies.add(new Zombie(500, 100, (short) Constants.Entities.Enemies.Zombie.SPRITE_WIDTH,
-				(short) Constants.Entities.Enemies.Zombie.SPRITE_HEIGHT, tileMap));
-		this.zombies.add(new Zombie(200, 100, (short) Constants.Entities.Enemies.Zombie.SPRITE_WIDTH,
-				(short) Constants.Entities.Enemies.Zombie.SPRITE_HEIGHT, tileMap));
-		this.zombies.add(new Zombie(300, 100, (short) Constants.Entities.Enemies.Zombie.SPRITE_WIDTH,
-				(short) Constants.Entities.Enemies.Zombie.SPRITE_HEIGHT, tileMap));
-		this.zombies.add(new Zombie(400, 100, (short) Constants.Entities.Enemies.Zombie.SPRITE_WIDTH,
-				(short) Constants.Entities.Enemies.Zombie.SPRITE_HEIGHT, tileMap));
+		this.gsm = gsm;
 
 		this.keyboardInput = new KeyboardInput(this);
 		this.mouseInput = new MouseInput(this);
@@ -75,36 +29,15 @@ public class GamePanel extends JPanel {
 		addMouseListener(this.mouseInput);
 	}
 
-	public Player getPlayer() {
-		return player;
-	}
-
-	public void update() {
-		tileMap.setPosition(halfWidth - player.getX(), halfHeight - player.getY());
-		bg.setPosition(tileMap.getX(), tileMap.getY());
-	}
-
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
-		update();
-		bg.draw(g);
-		tileMap.draw(g);
-		player.update();
-		player.draw(g);
-		
-		for (Zombie zombie : zombies) {
-			zombie.update();
-			zombie.draw(g);
-		}
+		gsm.update();
+		gsm.draw(g);
 	}
 
-	public TileMap getTileMap() {
-		return tileMap;
-	}
-
-	public void setTileMap(TileMap tileMap) {
-		this.tileMap = tileMap;
+	public GameStateManager getGsm() {
+		return gsm;
 	}
 }
