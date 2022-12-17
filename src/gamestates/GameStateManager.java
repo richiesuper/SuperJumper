@@ -1,7 +1,9 @@
 package gamestates;
 
 import java.awt.Graphics2D;
+import java.awt.event.MouseEvent;
 
+import ui.MenuButton;
 import utils.Constants;
 
 public class GameStateManager {
@@ -19,12 +21,14 @@ public class GameStateManager {
 	private void loadState(int state) {
 		if (state == Constants.GameStates.MAIN_MENU) {
 			gameStates[state] = new MainMenuState(this);
-		} else if (state == Constants.GameStates.LVL_1) {
+		} 
+		if (state == Constants.GameStates.LVL_1) {
 			gameStates[state] = new Level1State(this);
 		}
 		if (state == Constants.GameStates.LVL_2) {
 			gameStates[state] = new Level2State(this);
 		}
+		
 	}
 
 	private void unloadState(int state) {
@@ -43,6 +47,14 @@ public class GameStateManager {
 
 	public void draw(Graphics2D g) {
 		gameStates[currState].draw(g);
+	}
+	
+	public void keyPressed(int k) {
+		gameStates[currState].keyPressed(k);
+	}
+	
+	public void keyReleased(int k) {
+		gameStates[currState].keyReleased(k);
 	}
 
 }

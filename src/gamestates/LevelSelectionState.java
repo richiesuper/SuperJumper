@@ -26,4 +26,16 @@ public class LevelSelectionState extends GameState {
 
 	}
 
+	@Override
+	public void keyPressed(int k) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyReleased(int k) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

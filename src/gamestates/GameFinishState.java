@@ -26,4 +26,16 @@ public class GameFinishState extends GameState {
 
 	}
 
+	@Override
+	public void keyPressed(int k) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyReleased(int k) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
