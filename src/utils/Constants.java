@@ -8,6 +8,7 @@ public class Constants {
 		public static final String ENEMIES = "/entities/enemies/";
 		public static final String MAPS = "/maps/";
 		public static final String TILESETS = "/tilesets/";
+		public static final String UI = "/ui/";
 	}
 
 	public static class Game {
@@ -34,6 +35,16 @@ public class Constants {
 		public static final byte LEVEL_SELECTION = 5;
 		public static final byte LVL_1 = 6;
 		public static final byte LVL_2 = 7;
+	}
+	
+	// UI game
+	public static class UI{
+		// Button menu
+		public static class Button{
+			public static final String MENU_BUTTON = Folders.UI + "menubutton1.png";
+			public static final int B_WIDTH = 140;
+			public static final int B_HEIGHT = 56;
+		}
 	}
 
 	public static class Tile {
