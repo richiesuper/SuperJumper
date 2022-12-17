@@ -41,7 +41,7 @@ public class Constants {
 	public static class UI{
 		// Button menu
 		public static class Button{
-			public static final String MENU_BUTTON = Folders.UI + "menubutton1.png";
+			public static final String MENU_BUTTON = Folders.UI + "menubutton.png";
 			public static final int B_WIDTH = 140;
 			public static final int B_HEIGHT = 56;
 		}

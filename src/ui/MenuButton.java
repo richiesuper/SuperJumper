@@ -44,6 +44,8 @@ public class MenuButton {
 			e.printStackTrace();
 		}
 		
+		// Errornya disini, dia ga nangkep gambarnya
+		
 //		for(int i = 0; i < imgs.length; i++) {
 //			imgs[i] = temp.getSubimage(i * B_WIDTH, rowIndex * B_HEIGHT, B_WIDTH, B_HEIGHT);
 //		}
