@@ -1,7 +1,6 @@
 package entities;
 
 import tilemap.TileMap;
-import utils.Constants;
 
 public abstract class Enemy extends Entity {
 

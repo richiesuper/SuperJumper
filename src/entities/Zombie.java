@@ -4,7 +4,6 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Writer;
 
 import javax.imageio.ImageIO;
 
@@ -16,7 +15,8 @@ public class Zombie extends Enemy {
 	public Zombie(float x, float y, short width, short height, TileMap tileMap) {
 		super(x, y, width, height, tileMap);
 		init();
-		initHitbox(x, y, Constants.Entities.Enemies.Zombie.HITBOX_WIDTH, Constants.Entities.Enemies.Zombie.HITBOX_HEIGHT);
+		initHitbox(x, y, Constants.Entities.Enemies.Zombie.HITBOX_WIDTH,
+				Constants.Entities.Enemies.Zombie.HITBOX_HEIGHT);
 	}
 
 	@Override
@@ -71,7 +71,8 @@ public class Zombie extends Enemy {
 		for (int i = 0; i < Constants.Entities.Enemies.Zombie.SPRITE_ROWS; i++)
 			for (int j = 0; j < Constants.Entities.Enemies.Zombie.SPRITE_COLS; j++) {
 				spriteTile[i][j] = spriteSheet.getSubimage(j * Constants.Entities.Enemies.Zombie.SPRITE_WIDTH,
-						i * Constants.Entities.Enemies.Zombie.SPRITE_HEIGHT, Constants.Entities.Enemies.Zombie.SPRITE_WIDTH,
+						i * Constants.Entities.Enemies.Zombie.SPRITE_HEIGHT,
+						Constants.Entities.Enemies.Zombie.SPRITE_WIDTH,
 						Constants.Entities.Enemies.Zombie.SPRITE_HEIGHT);
 			}
 	}
@@ -83,17 +84,15 @@ public class Zombie extends Enemy {
 
 	@Override
 	public void draw(Graphics g) {
-		g.drawImage(spriteTile[state][idx],
-				(int) (x + tileMap.getX() + 1000) + width,
-				(int) (y + tileMap.getY()),
+		g.drawImage(spriteTile[state][idx], (int) (x + tileMap.getX() + 1000) + width, (int) (y + tileMap.getY()),
 				-Constants.Entities.Enemies.Zombie.SPRITE_WIDTH, Constants.Entities.Enemies.Zombie.SPRITE_HEIGHT, null);
 
 		updateTicker();
 		drawHitbox(g);
 
 		// debugging
-		//System.out.println("x: " + x + " y: " + y);
-		//System.out.println("hb-x: " + hitbox.x + " hb-y: " + hitbox.y);
+		// System.out.println("x: " + x + " y: " + y);
+		// System.out.println("hb-x: " + hitbox.x + " hb-y: " + hitbox.y);
 
 	}
 

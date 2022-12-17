@@ -1,7 +1,8 @@
 package entities;
 
+import static utils.Helpers.canMoveHere;
+
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,8 +11,6 @@ import javax.imageio.ImageIO;
 
 import tilemap.TileMap;
 import utils.Constants;
-
-import static utils.Helpers.canMoveHere;
 
 public class Player extends Entity {
 
@@ -207,8 +206,8 @@ public class Player extends Entity {
 		drawHitbox(g);
 
 		// debugging
-		//System.out.println("x: " + x + " y: " + y);
-		//System.out.println("hb-x: " + hitbox.x + " hb-y: " + hitbox.y);
+		// System.out.println("x: " + x + " y: " + y);
+		// System.out.println("hb-x: " + hitbox.x + " hb-y: " + hitbox.y);
 	}
 
 	@Override
