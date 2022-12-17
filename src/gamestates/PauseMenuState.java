@@ -1,6 +1,6 @@
 package gamestates;
 
-import java.awt.Graphics2D;
+import java.awt.Graphics;
 
 public class PauseMenuState extends GameState {
 
@@ -21,7 +21,7 @@ public class PauseMenuState extends GameState {
 	}
 
 	@Override
-	public void draw(Graphics2D g) {
+	public void draw(Graphics g) {
 		// TODO Auto-generated method stub
 
 	}
@@ -29,13 +29,13 @@ public class PauseMenuState extends GameState {
 	@Override
 	public void keyPressed(int k) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void keyReleased(int k) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

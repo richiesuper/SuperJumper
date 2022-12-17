@@ -1,7 +1,6 @@
 package gamestates;
 
 import java.awt.event.MouseEvent;
-import java.awt.event.KeyEvent;
 
 public interface StateMethods {
 	public void mouseClicked(MouseEvent e);
