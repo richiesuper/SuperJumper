@@ -42,6 +42,7 @@ public class Constants {
 		// Button menu
 		public static class MenuButton {
 			public static final String MENU_BUTTON = Folders.UI + "menubutton.png";
+			public static final String MENU_SCREEN = Folders.UI + "menuscreen.png";
 		}
 		
 		// Level Selection Menu
@@ -55,6 +56,7 @@ public class Constants {
 		// Game Over Menu
 		public static class GameOver{
 			public static final String GAME_OVER = Folders.UI + "gameover.png";
+			public static final String GAME_OVER_SCREEN = Folders.UI + "gameoverscreen.png";
 		}
 		
 		public static class GameFinish{
