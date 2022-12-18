@@ -40,10 +40,18 @@ public class Constants {
 	// UI game
 	public static class UI {
 		// Button menu
-		public static class Button {
+		public static class MenuButton {
 			public static final String MENU_BUTTON = Folders.UI + "menubutton.png";
 			public static final int B_WIDTH = 139;
 			public static final int B_HEIGHT = 55;
+		}
+		
+		// Level Selection Menu
+		public static class LevelSelection{
+			public static final String LEVEL_TITLE = Folders.UI + "leveltitle.png";
+			public static final String LEVEL_UNSELECT = Folders.UI + "levelunselect.png";
+			public static final String LEVEL_1_SELECT = Folders.UI + "level1select.png";
+			public static final String LEVEL_2_SELECT = Folders.UI + "level2Select.png";
 		}
 	}
 

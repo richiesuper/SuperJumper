@@ -21,4 +21,12 @@ public abstract class GameState {
 	public Player getPlayer() {
 		return null;
 	}
+//	
+//	public MainMenuState getMainMenu() {
+//		return null;
+//	}
+//	
+//	public Level1State getLevel1() {
+//		return null;
+//	}
 }

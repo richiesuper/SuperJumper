@@ -38,7 +38,7 @@ public class Level2State extends GameState {
 		bg = new Background(Constants.Backgrounds.LVL_2);
 
 		// LevelManager and Player
-		this.player = new Player(100, 100, Constants.Entities.Player.SPRITE_WIDTH,
+		this.player = new Player(0, 0, Constants.Entities.Player.SPRITE_WIDTH,
 				Constants.Entities.Player.SPRITE_HEIGHT, tileMap);
 
 	}

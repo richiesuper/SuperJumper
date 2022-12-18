@@ -1,8 +1,8 @@
 package ui;
 
-import static utils.Constants.UI.Button.B_HEIGHT;
-import static utils.Constants.UI.Button.B_WIDTH;
-import static utils.Constants.UI.Button.MENU_BUTTON;
+import static utils.Constants.UI.MenuButton.B_HEIGHT;
+import static utils.Constants.UI.MenuButton.B_WIDTH;
+import static utils.Constants.UI.MenuButton.MENU_BUTTON;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
@@ -17,7 +17,7 @@ import gamestates.EnumState;
 public class MenuButton {
 	private int xPos, yPos;
 	private int rowIndex, index;
-	private int xOffsetCenter = 140;
+	private int xOffsetCenter = 80;
 
 	private EnumState state;
 	private BufferedImage[] imgs;
@@ -39,8 +39,8 @@ public class MenuButton {
 		BufferedImage temp = null;
 
 		InputStream is = getClass().getResourceAsStream(MENU_BUTTON);
-		System.out.println(is);
-		System.out.println("TEST");
+//		System.out.println(is);
+//		System.out.println("TEST");
 
 		try {
 			temp = ImageIO.read(is);
@@ -48,8 +48,6 @@ public class MenuButton {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		// Errornya disini, dia ga nangkep gambarnya
 
 		for (int i = 0; i < imgs.length; i++) {
 			imgs[i] = temp.getSubimage(i * B_WIDTH, rowIndex * B_HEIGHT, B_WIDTH, B_HEIGHT);

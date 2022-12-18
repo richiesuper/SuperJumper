@@ -12,7 +12,7 @@ public class GameStateManager {
 
 	public GameStateManager() {
 		gameStates = new GameState[Constants.GameStates.NUM_GAME_STATE];
-		this.currState = Constants.GameStates.MAIN_MENU;
+		this.currState = Constants.GameStates.LEVEL_SELECTION;
 		loadState(currState);
 	}
 
@@ -26,7 +26,9 @@ public class GameStateManager {
 		if (state == Constants.GameStates.LVL_2) {
 			gameStates[state] = new Level2State(this);
 		}
-
+		if (state == Constants.GameStates.LEVEL_SELECTION) {
+			gameStates[state] = new LevelSelectionState(this);
+		}
 	}
 
 	private void unloadState(int state) {
@@ -62,5 +64,4 @@ public class GameStateManager {
 	public int getCurrState() {
 		return currState;
 	}
-
 }

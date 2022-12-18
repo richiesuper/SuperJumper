@@ -1,11 +1,49 @@
 package gamestates;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+import tilemap.Background;
+import utils.Constants;
 
 public class LevelSelectionState extends GameState {
+	private GameStateManager gsm;
+	private Font font;
+	private BufferedImage levelTitle;
+	private BufferedImage levelUnselect;
+	private BufferedImage[] level;
+	private Background bg;
+	private int currentChoice;
+	
+	private String[] menu = {
+		"1", "2", "Back"
+	};
 
-	public LevelSelectionState() {
-		// TODO Auto-generated constructor stub
+	public LevelSelectionState(GameStateManager gsm) {
+		this.gsm = gsm;
+		level = new BufferedImage[2];
+		currentChoice = 0;
+		
+		try {
+			bg = new Background(Constants.Backgrounds.LVL_SELECTION_MENU);
+			font = new Font("Algerian", Font.BOLD, 30);
+			
+			levelTitle = ImageIO.read(getClass().getResourceAsStream(Constants.UI.LevelSelection.LEVEL_TITLE));
+			levelUnselect = ImageIO.read(getClass().getResourceAsStream(Constants.UI.LevelSelection.LEVEL_UNSELECT));
+			level[0] = ImageIO.read(getClass().getResourceAsStream(Constants.UI.LevelSelection.LEVEL_1_SELECT));
+			level[1] = ImageIO.read(getClass().getResourceAsStream(Constants.UI.LevelSelection.LEVEL_2_SELECT));
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+		
+		init();
 	}
 
 	@Override
@@ -16,20 +54,79 @@ public class LevelSelectionState extends GameState {
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void draw(Graphics g) {
-		// TODO Auto-generated method stub
-
+		bg.draw(g);
+		g.drawImage(levelTitle, 196, 50, levelTitle.getWidth(), levelTitle.getHeight(), null);
+//		System.out.println(currentChoice);
+		if(currentChoice < 2)
+			g.drawImage(level[currentChoice], 0, 0, level[currentChoice].getWidth(), level[currentChoice].getHeight(), null);
+		else
+			g.drawImage(levelUnselect, 0, 0, levelUnselect.getWidth(), levelUnselect.getHeight(), null);
+		
+		g.setFont(font);
+		for(int i = 0; i < menu.length; i++) {
+			if(i == currentChoice)
+				g.setColor(Color.RED);
+			else
+				g.setColor(Color.GRAY);
+			
+			if(i == menu.length - 1)
+				g.drawString(menu[i], 880, 520);
+		}
+	}
+	
+	private void select() {
+		if(currentChoice == 0) {
+			gsm.setState(Constants.GameStates.LVL_1);
+		}
+		if(currentChoice == 1) {
+			gsm.setState(Constants.GameStates.LVL_2);
+		}
+		if(currentChoice == 2) {
+			gsm.setState(Constants.GameStates.MAIN_MENU);
+		}
 	}
 
 	@Override
 	public void keyPressed(int k) {
-		// TODO Auto-generated method stub
-
+		if(k == KeyEvent.VK_ENTER) {
+			select();
+		}
+		if(k == KeyEvent.VK_LEFT) {
+			currentChoice--;
+			if(currentChoice < 0) {
+				currentChoice = menu.length - 1;
+			}
+		}
+		if(k == KeyEvent.VK_RIGHT) {
+			currentChoice++;
+			if(currentChoice == menu.length) {
+				currentChoice = 0;
+			}
+		}
+		if(k == KeyEvent.VK_DOWN) {
+			if(currentChoice == 0 || currentChoice == 1) {
+				currentChoice = 2;
+			}
+			else {
+				currentChoice = 0;
+			}
+		}
+		if(k == KeyEvent.VK_UP) {
+			if(currentChoice == 0) {
+				currentChoice = 2;
+			}
+			else if(currentChoice == 1) {
+				currentChoice = 0;
+			}
+			else {
+				currentChoice = 1;
+			}
+		}
 	}
 
 	@Override
