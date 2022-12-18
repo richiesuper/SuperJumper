@@ -13,7 +13,6 @@ import tilemap.Background;
 import utils.Constants;
 
 public class LevelSelectionState extends GameState {
-	private GameStateManager gsm;
 	private Font font;
 	private BufferedImage levelTitle;
 	private BufferedImage levelUnselect;
@@ -34,7 +33,7 @@ public class LevelSelectionState extends GameState {
 			bg = new Background(Constants.Backgrounds.LVL_SELECTION_MENU);
 			bg.setVector(0.2, 0);
 			
-			font = new Font("Algerian", Font.BOLD, 30);
+			font = new Font("Algerian", Font.BOLD, 40);
 			
 			levelTitle = ImageIO.read(getClass().getResourceAsStream(Constants.UI.LevelSelection.LEVEL_TITLE));
 			levelUnselect = ImageIO.read(getClass().getResourceAsStream(Constants.UI.LevelSelection.LEVEL_UNSELECT));
@@ -63,7 +62,7 @@ public class LevelSelectionState extends GameState {
 	public void draw(Graphics g) {
 		bg.draw(g);
 		g.drawImage(levelTitle, 196, 50, levelTitle.getWidth(), levelTitle.getHeight(), null);
-//		System.out.println(currentChoice);
+		//System.out.println(currentChoice);
 		if(currentChoice < 2)
 			g.drawImage(level[currentChoice], 0, 0, level[currentChoice].getWidth(), level[currentChoice].getHeight(), null);
 		else
@@ -82,35 +81,37 @@ public class LevelSelectionState extends GameState {
 	}
 	
 	private void select() {
+		System.out.println("p");
 		if(currentChoice == 0) {
 			gsm.setState(Constants.GameStates.LVL_1);
 		}
-		if(currentChoice == 1) {
+		else if(currentChoice == 1) {
 			gsm.setState(Constants.GameStates.LVL_2);
 		}
-		if(currentChoice == 2) {
+		else if(currentChoice == 2) {
 			gsm.setState(Constants.GameStates.MAIN_MENU);
 		}
 	}
 
 	@Override
 	public void keyPressed(int k) {
+		System.out.println(k);
 		if(k == KeyEvent.VK_ENTER) {
 			select();
 		}
-		if(k == KeyEvent.VK_LEFT) {
+		else if(k == KeyEvent.VK_LEFT) { 
 			currentChoice--;
 			if(currentChoice == -1) {
 				currentChoice = options.length - 1;
 			}
 		}
-		if(k == KeyEvent.VK_RIGHT) {
+		else if(k == KeyEvent.VK_RIGHT) {
 			currentChoice++;
 			if(currentChoice == options.length) {
 				currentChoice = 0;
 			}
 		}
-		if(k == KeyEvent.VK_DOWN) {
+		else if(k == KeyEvent.VK_DOWN) {
 			if(currentChoice == 0 || currentChoice == 1) {
 				currentChoice = 2;
 			}
@@ -118,7 +119,7 @@ public class LevelSelectionState extends GameState {
 				currentChoice = 0;
 			}
 		}
-		if(k == KeyEvent.VK_UP) {
+		else if(k == KeyEvent.VK_UP) {
 			if(currentChoice == 0) {
 				currentChoice = 2;
 			}

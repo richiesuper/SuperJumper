@@ -20,7 +20,7 @@ public class KeyboardInput implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if (gamePanel.getGsm().getCurrState() >= Constants.GameStates.LEVEL_SELECTION) {
+		if (gamePanel.getGsm().getCurrState() > Constants.GameStates.LEVEL_SELECTION) {
 			switch (e.getKeyChar()) {
 			case 'a':
 				gamePanel.getGsm().getGameState().getPlayer().setDirection(Constants.Entities.Player.DIR_LEFT);
@@ -66,13 +66,16 @@ public class KeyboardInput implements KeyListener {
 				break;
 			}
 		}
+		else {
+			gamePanel.getGsm().keyPressed(e.getKeyCode());
+		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		System.out.println("Key " + e.getKeyChar() + " was released!");
 
-		if (gamePanel.getGsm().getCurrState() >= Constants.GameStates.LEVEL_SELECTION) {
+		if (gamePanel.getGsm().getCurrState() > Constants.GameStates.LEVEL_SELECTION) {
 			switch (e.getKeyChar()) {
 			case 'w':
 			case 'W':
@@ -88,6 +91,9 @@ public class KeyboardInput implements KeyListener {
 			default:
 				break;
 			}
+		}
+		else {
+			gamePanel.getGsm().keyReleased(e.getKeyCode());
 		}
 	}
 }

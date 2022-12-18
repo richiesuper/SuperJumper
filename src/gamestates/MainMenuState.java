@@ -1,106 +1,96 @@
 package gamestates;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 
 import tilemap.Background;
-import ui.MenuButton;
 import utils.Constants;
 
-public class MainMenuState extends GameState implements StateMethods {
+public class MainMenuState extends GameState{
 	private Background bg;
-	private MenuButton[] buttons;
-	private GameStateManager gsm;
-
+	private Font font;
+	
+	private int currentChoice;
+	private String[] options = {
+		"Play",
+		"About",
+		"Quit"
+	};
+	
 	public MainMenuState(GameStateManager gsm) {
 		this.gsm = gsm;
-		buttons = new MenuButton[2];
-
+		currentChoice = 0;
+		
 		bg = new Background(Constants.Backgrounds.MAIN_MENU);
-
-		loadButtons();
-	}
-
-	private boolean isIn(MouseEvent e, MenuButton mb) {
-		return mb.getBounds().contains(e.getX(), e.getY());
-	}
-
-	private void loadButtons() {
-		buttons[0] = new MenuButton(Constants.Panel.WIDTH / 2, 340, 0, EnumState.PLAYING);
-		buttons[1] = new MenuButton(Constants.Panel.WIDTH / 2, 400, 1, EnumState.QUIT);
-	}
-
-	@Override
-	public void update() {
-		//bg.update();
-		for (MenuButton mb : buttons) {
-			mb.update();
-		}
+		font = new Font("Algerian", Font.PLAIN, 25);
 	}
 
 	@Override
 	public void init() {
-		// TODO Auto-generated method stub
-
+	
 	}
 
 	@Override
-	public void draw(Graphics g) {
-		bg.draw(g);
-		for (MenuButton mb : buttons) {
-			mb.draw(g);
-		}
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		for (MenuButton mb : buttons) {
-			if (isIn(e, mb)) {
-				mb.setMousePressed(true);
-			}
-		}
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		for (MenuButton mb : buttons) {
-			if (isIn(e, mb)) {
-				if (mb.isMousePressed()) {
-					mb.applyEnumstate();
-				}
-				break;
-			}
-		}
-		resetButton();
-	}
-
-	private void resetButton() {
-		for (MenuButton mb : buttons) {
-			mb.resetBools();
-		}
-	}
-
-	@Override
-	public void mouseMoved(MouseEvent e) {
+	public void update() {
 		
 	}
 
 	@Override
+	public void draw(Graphics g) {
+		// draw background
+		bg.draw(g);
+		
+		// draw menu options
+		g.setFont(font);
+		for(int i = 0; i < options.length; i++) {
+			if(i == currentChoice)
+				g.setColor(Color.RED);
+			else
+				g.setColor(Color.GRAY);
+			
+			g.drawString(options[i], Constants.Panel.WIDTH / 2 - font.getSize() * 2, Constants.Panel.HEIGHT - (Constants.Panel.HEIGHT / 3) + i * 35);
+		}
+	}
+	
+	private void select() {
+		if(currentChoice == 0) {
+			gsm.setState(Constants.GameStates.LEVEL_SELECTION);
+		}
+		if(currentChoice == 1) {
+			gsm.setState(Constants.GameStates.ABOUT_MENU);
+		}
+		if(currentChoice == 2) {
+			System.exit(0);
+		}
+	}
+
+	@Override
 	public void keyPressed(int k) {
-		if (k == KeyEvent.VK_ENTER) {
-			EnumState.state = EnumState.PLAYING;
+		if(k == KeyEvent.VK_ENTER) {
+			select();
+		}
+		if(k == KeyEvent.VK_UP) {
+			currentChoice--;
+			if(currentChoice == -1) {
+				currentChoice = options.length - 1;
+			}
+		}
+		if(k == KeyEvent.VK_DOWN) {
+			currentChoice++;
+			if(currentChoice == options.length) {
+				currentChoice = 0;
+			}
 		}
 	}
 
 	@Override
 	public void keyReleased(int k) {
 		// TODO Auto-generated method stub
+		
 	}
+	
 }

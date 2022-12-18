@@ -4,7 +4,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import main.GamePanel;
-import gamestates.EnumState;
 
 public class MouseInput implements MouseListener {
 	private GamePanel gamePanel;
