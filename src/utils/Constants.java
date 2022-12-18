@@ -53,6 +53,10 @@ public class Constants {
 			public static final String LEVEL_1_SELECT = Folders.UI + "level1select.png";
 			public static final String LEVEL_2_SELECT = Folders.UI + "level2Select.png";
 		}
+		
+		public static class GameOver{
+			public static final String GAME_OVER = Folders.UI + "gameover.png";
+		}
 	}
 
 	public static class Tile {

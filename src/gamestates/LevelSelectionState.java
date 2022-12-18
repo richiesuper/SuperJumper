@@ -21,7 +21,7 @@ public class LevelSelectionState extends GameState {
 	private Background bg;
 	private int currentChoice;
 	
-	private String[] menu = {
+	private String[] options = {
 		"1", "2", "Back"
 	};
 
@@ -32,6 +32,8 @@ public class LevelSelectionState extends GameState {
 		
 		try {
 			bg = new Background(Constants.Backgrounds.LVL_SELECTION_MENU);
+			bg.setVector(0.2, 0);
+			
 			font = new Font("Algerian", Font.BOLD, 30);
 			
 			levelTitle = ImageIO.read(getClass().getResourceAsStream(Constants.UI.LevelSelection.LEVEL_TITLE));
@@ -54,7 +56,7 @@ public class LevelSelectionState extends GameState {
 
 	@Override
 	public void update() {
-		
+		bg.update();
 	}
 
 	@Override
@@ -68,14 +70,14 @@ public class LevelSelectionState extends GameState {
 			g.drawImage(levelUnselect, 0, 0, levelUnselect.getWidth(), levelUnselect.getHeight(), null);
 		
 		g.setFont(font);
-		for(int i = 0; i < menu.length; i++) {
+		for(int i = 0; i < options.length; i++) {
 			if(i == currentChoice)
 				g.setColor(Color.RED);
 			else
 				g.setColor(Color.GRAY);
 			
-			if(i == menu.length - 1)
-				g.drawString(menu[i], 880, 520);
+			if(i == options.length - 1)
+				g.drawString(options[i], 880, 520);
 		}
 	}
 	
@@ -98,13 +100,13 @@ public class LevelSelectionState extends GameState {
 		}
 		if(k == KeyEvent.VK_LEFT) {
 			currentChoice--;
-			if(currentChoice < 0) {
-				currentChoice = menu.length - 1;
+			if(currentChoice == -1) {
+				currentChoice = options.length - 1;
 			}
 		}
 		if(k == KeyEvent.VK_RIGHT) {
 			currentChoice++;
-			if(currentChoice == menu.length) {
+			if(currentChoice == options.length) {
 				currentChoice = 0;
 			}
 		}

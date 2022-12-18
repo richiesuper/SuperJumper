@@ -29,6 +29,12 @@ public class GameStateManager {
 		if (state == Constants.GameStates.LEVEL_SELECTION) {
 			gameStates[state] = new LevelSelectionState(this);
 		}
+		if (state == Constants.GameStates.GAME_OVER) {
+			gameStates[state] = new GameOverState(this);
+		}
+		if (state == Constants.GameStates.GAME_FINISH) {
+			gameStates[state] = new GameFinishState(this);
+		}
 	}
 
 	private void unloadState(int state) {

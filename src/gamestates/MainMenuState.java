@@ -33,6 +33,7 @@ public class MainMenuState extends GameState implements StateMethods {
 
 	@Override
 	public void update() {
+		//bg.update();
 		for (MenuButton mb : buttons) {
 			mb.update();
 		}

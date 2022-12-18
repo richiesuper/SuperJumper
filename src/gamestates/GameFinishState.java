@@ -4,7 +4,7 @@ import java.awt.Graphics;
 
 public class GameFinishState extends GameState {
 
-	public GameFinishState() {
+	public GameFinishState(GameStateManager gsm) {
 		// TODO Auto-generated constructor stub
 	}
 
