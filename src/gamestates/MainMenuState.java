@@ -27,8 +27,8 @@ public class MainMenuState extends GameState implements StateMethods {
 	}
 
 	private void loadButtons() {
-		buttons[0] = new MenuButton(Constants.Panel.WIDTH / 2, 400, 0, EnumState.PLAYING);
-		buttons[1] = new MenuButton(Constants.Panel.WIDTH / 2, 500, 1, EnumState.QUIT);
+		buttons[0] = new MenuButton(Constants.Panel.WIDTH / 2, 340, 0, EnumState.PLAYING);
+		buttons[1] = new MenuButton(Constants.Panel.WIDTH / 2, 400, 1, EnumState.QUIT);
 	}
 
 	@Override
@@ -88,6 +88,7 @@ public class MainMenuState extends GameState implements StateMethods {
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
+		
 	}
 
 	@Override
@@ -100,6 +101,5 @@ public class MainMenuState extends GameState implements StateMethods {
 	@Override
 	public void keyReleased(int k) {
 		// TODO Auto-generated method stub
-
 	}
 }
