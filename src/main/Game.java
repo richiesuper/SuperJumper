@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import gamestates.GameStateManager;
 import gamestates.MainMenuState;
 import utils.Constants;
+import inputs.KeyboardInput.*;
 
 public class Game implements Runnable {
 	private GameFrame gameFrame;
@@ -35,8 +36,20 @@ public class Game implements Runnable {
 	@Override
 	public void run() {
 		while (true) {
+			//System.out.println(gamePanel.getPause());
+			if(gamePanel.getPause()) {
+				try {
+					gamePanel.repaint();
+					Thread.sleep(1000);
+					continue;
+				}
+				catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+			
 			gamePanel.repaint();
-
+			
 			try {
 				Thread.sleep((long) Constants.Game.FRAME_PERIOD);
 			} catch (InterruptedException e) {

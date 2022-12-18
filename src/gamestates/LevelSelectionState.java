@@ -33,7 +33,7 @@ public class LevelSelectionState extends GameState {
 			bg = new Background(Constants.Backgrounds.LVL_SELECTION_MENU);
 			bg.setVector(0.2, 0);
 			
-			font = new Font("Algerian", Font.BOLD, 40);
+			font = new Font("Algerian", Font.BOLD, 30);
 			
 			levelTitle = ImageIO.read(getClass().getResourceAsStream(Constants.UI.LevelSelection.LEVEL_TITLE));
 			levelUnselect = ImageIO.read(getClass().getResourceAsStream(Constants.UI.LevelSelection.LEVEL_UNSELECT));

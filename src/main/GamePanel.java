@@ -13,9 +13,9 @@ import inputs.MouseInput;
 public class GamePanel extends JPanel {
 	private KeyboardInput keyboardInput;
 	private MouseInput mouseInput;
-
 	private GameStateManager gsm;
-
+	
+	private boolean pause = false;
 	public GamePanel(int width, int height, GameStateManager gsm) {
 		super();
 
@@ -33,11 +33,22 @@ public class GamePanel extends JPanel {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
-		gsm.update();
+		if(!pause) {
+			gsm.update();
+		}
+		
 		gsm.draw(g);
 	}
 
 	public GameStateManager getGsm() {
 		return gsm;
+	}
+	
+	public void setPause(boolean pause) {
+		this.pause = pause;
+	}
+	
+	public boolean getPause() {
+		return pause;
 	}
 }

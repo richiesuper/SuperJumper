@@ -2,6 +2,7 @@ package gamestates;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import entities.Player;
@@ -14,11 +15,10 @@ public class Level2State extends GameState {
 	private TileMap tileMap;
 	private Background bg;
 	private Player player;
+	private PauseMenuState pauseState;
 
-	// Temp
-	private int eventFinish;
-	private int eventDead;
-	private ArrayList<Rectangle> ls;
+	// Pause
+	private static boolean pause = false;
 
 	public Level2State(GameStateManager gsm) {
 		this.gsm = gsm;
@@ -40,7 +40,9 @@ public class Level2State extends GameState {
 		// LevelManager and Player
 		this.player = new Player(0, 0, Constants.Entities.Player.SPRITE_WIDTH,
 				Constants.Entities.Player.SPRITE_HEIGHT, tileMap);
-
+		
+		// Pause
+		pauseState = new PauseMenuState();
 	}
 
 	@Override
@@ -53,7 +55,22 @@ public class Level2State extends GameState {
 
 		// Set background position
 		bg.setPosition(tileMap.getX(), tileMap.getY());
+		
+		if(player.getY() >= Constants.Tile.HEIGHT * (tileMap.getRowCount() - 2) - 20) {
+			eventDead();
+		}
 
+		if(player.getX() >= Constants.Tile.WIDTH * (tileMap.getColCount() - 4)) {
+			eventFinish();
+		}
+	}
+	
+	private void eventDead() {
+		gsm.setState(Constants.GameStates.GAME_OVER);
+	}
+	
+	private void eventFinish() {
+		gsm.setState(Constants.GameStates.GAME_FINISH);
 	}
 
 	@Override
@@ -67,12 +84,23 @@ public class Level2State extends GameState {
 		// Draw player
 		player.draw(g);
 
+		if(pause) {
+			pauseState.draw(g);
+		}
 	}
 
 	@Override
 	public void keyPressed(int k) {
-		// TODO Auto-generated method stub
-
+		if(k == KeyEvent.VK_ESCAPE) {
+			if(!pause)
+				pause = true;
+			else
+				pause = false;
+		}
+		else if(k == KeyEvent.VK_ENTER && pause) {
+			pause = false;
+			gsm.setState(Constants.GameStates.LEVEL_SELECTION);
+		}
 	}
 
 	@Override

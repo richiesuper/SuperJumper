@@ -26,7 +26,7 @@ public class MainMenuState extends GameState{
 		currentChoice = 0;
 		
 		bg = new Background(Constants.Backgrounds.MAIN_MENU);
-		font = new Font("Algerian", Font.PLAIN, 25);
+		font = new Font("Algerian", Font.PLAIN, 35);
 	}
 
 	@Override

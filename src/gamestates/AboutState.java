@@ -13,8 +13,13 @@ public class AboutState extends GameState{
 	private Font font;
 	
 	private String[] about = {
-			"Richie Seputro          - 5025211213",
-			" ", 
+			"ABOUT US",
+			"", 
+			"Saya suka saya suka saya suka saya suka saya suka", 
+			"Saya suka saya suka saya suka saya suka saya suka", 
+			"Saya suka saya suka saya suka saya suka saya suka", 
+			" ",
+			"Richie Seputro          	- 5025211213", 
 			"M Naufal Badruttamam    - 5025211240",
 			" ",
 			"BACK"
@@ -24,7 +29,7 @@ public class AboutState extends GameState{
 		this.gsm = gsm;
 		
 		bg = new Background(Constants.Backgrounds.ABOUT_MENU);
-		font = new Font("Algerian", Font.PLAIN, 22);
+		font = new Font("Algerian", Font.PLAIN, 25);
 	}
 
 	@Override
@@ -49,10 +54,10 @@ public class AboutState extends GameState{
 		for(int i = 0; i < about.length; i++) {
 			if(i == about.length - 1) {
 				g.setColor(Color.RED);
-				g.drawString(about[i], 500, 400);
+				g.drawString(about[i], 500, 550);
 			}
 			else {
-				g.setColor(Color.GREEN);
+				g.setColor(Color.BLACK);
 				g.drawString(about[i], 200, 50 + i * 50);
 			}
 		}

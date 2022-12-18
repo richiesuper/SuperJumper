@@ -60,6 +60,11 @@ public class Constants {
 		public static class GameFinish{
 			public static final String GAME_FINISH = Folders.UI + "finishscreen.png";
 		}
+		
+		public static class PauseGame{
+			public static final String PAUSE_SCREEN = Folders.UI + "pausescreen.png";
+			public static final String PAUSE_THEME = Folders.UI + "pause.png";
+		}
 	}
 
 	public static class Tile {
