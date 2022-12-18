@@ -1,5 +1,6 @@
 package gamestates;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -20,7 +21,8 @@ public class PauseMenuState {
 			"Paused",
 			"Press ESC to resume",
 			"or",
-			"Press ENTER to back to level selection"
+			"Press ENTER to back ",
+			"		to level selection"
 	};
 
 	public PauseMenuState() {
@@ -29,7 +31,7 @@ public class PauseMenuState {
 			pauseTheme = ImageIO.read(getClass().getResourceAsStream(Constants.UI.PauseGame.PAUSE_THEME));
 			
 			font1 = new Font("Algerian", Font.BOLD | Font.PLAIN, 35);
-			font2 = new Font("Algerian", Font.PLAIN, 20);
+			font2 = new Font("Algerian", Font.BOLD, 20);
 		}
 		catch(IOException e) {
 			e.printStackTrace();
@@ -42,7 +44,22 @@ public class PauseMenuState {
 		
 		// draw notifications
 		g.setFont(font1);
-		g.drawString(notifications[0], 300, 200);
+		g.setColor(Color.BLACK);
+		g.drawString(notifications[0], Constants.Panel.WIDTH / 2 - font1.getSize() * 2, 170);
+		
+		g.setFont(font2);
+		g.setColor(Color.BLACK);
+		for(int i = 1; i < notifications.length; i++) {
+			if(i == 2) {
+				g.drawString(notifications[i], 500, 276 + (i - 1) * 40);
+			}
+			else if(i == notifications.length - 1) {
+				g.drawString(notifications[i], 410, 276 + (i - 1) * 35);
+			}
+			else {
+				g.drawString(notifications[i], 403, 276 + (i - 1) * 40);
+			}
+		}
 	}
 	
 }

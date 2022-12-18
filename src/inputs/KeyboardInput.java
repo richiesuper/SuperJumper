@@ -9,7 +9,6 @@ import gamestates.*;
 
 public class KeyboardInput implements KeyListener {
 	private GamePanel gamePanel;
-	protected Boolean pause = false;
 
 	public KeyboardInput(GamePanel gamePanel) {
 		this.gamePanel = gamePanel;
@@ -68,16 +67,17 @@ public class KeyboardInput implements KeyListener {
 				break;
 			}
 			
+			// Pause 
 			gamePanel.getGsm().keyPressed(e.getKeyCode());
 			int keyCode = e.getKeyCode();
 			if(keyCode == KeyEvent.VK_ESCAPE) {
-				System.out.println("p");
-				if(!pause) 
+				System.out.println(gamePanel.getPause());
+				if(!gamePanel.getPause()) 
 					gamePanel.setPause(true);
 				else
 					gamePanel.setPause(false);
 			}
-			else if(keyCode == KeyEvent.VK_ENTER && pause) 
+			else if(keyCode == KeyEvent.VK_ENTER && gamePanel.getPause()) 
 				gamePanel.setPause(false);
 		}
 		else {
