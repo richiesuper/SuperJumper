@@ -49,7 +49,7 @@ public class Constants {
 			public static final String LEVEL_TITLE = Folders.UI + "leveltitle.png";
 			public static final String LEVEL_UNSELECT = Folders.UI + "levelunselect.png";
 			public static final String LEVEL_1_SELECT = Folders.UI + "level1select.png";
-			public static final String LEVEL_2_SELECT = Folders.UI + "level2Select.png";
+			public static final String LEVEL_2_SELECT = Folders.UI + "level2select.png";
 		}
 		
 		// Game Over Menu
