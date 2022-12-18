@@ -13,6 +13,8 @@ public class Background {
 	private BufferedImage bg;
 	private float x;
 	private float y;
+	private float dx;
+	private float dy;
 	private double moveScale;
 	private short ticker;
 
@@ -38,6 +40,16 @@ public class Background {
 	public void setPosition(double x, double y) {
 		this.x = (float) ((x * moveScale) % Constants.Panel.WIDTH);
 		this.y = (float) ((y * moveScale) % Constants.Panel.HEIGHT);
+	}
+	
+	public void setVector(double dx, double dy) {
+		this.dx = (float) dx;
+		this.dy = (float) dy;
+	}
+	
+	public void update() {
+		this.x += dx;
+		this.y += dy;
 	}
 
 	public void draw(Graphics g) {
