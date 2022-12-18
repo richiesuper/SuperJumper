@@ -67,7 +67,12 @@ public class GameOverState extends GameState {
 	
 	private void select() {
 		if(currentChoice == 0) {
-			gsm.setState(Constants.GameStates.LVL_1);
+			if(gsm.getCurrLevel() == 1) {
+				gsm.setState(Constants.GameStates.LVL_1);
+			}
+			else if(gsm.getCurrLevel() == 2){
+				gsm.setState(Constants.GameStates.LVL_2);
+			}
 		}
 		if(currentChoice == 1) {
 			gsm.setState(Constants.GameStates.MAIN_MENU);

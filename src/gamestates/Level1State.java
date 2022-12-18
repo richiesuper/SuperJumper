@@ -57,7 +57,7 @@ public class Level1State extends GameState {
 		// Set background position
 		bg.setPosition(tileMap.getX(), tileMap.getY());
 		
-		if(player.getY() >= Constants.Tile.HEIGHT * (tileMap.getRowCount() - 2)) {
+		if(player.getY() >= Constants.Tile.HEIGHT * (tileMap.getRowCount() - 3)) {
 			eventDead();
 		}
 		
@@ -94,7 +94,7 @@ public class Level1State extends GameState {
 
 	@Override
 	public void keyPressed(int k) {
-		System.out.println(pause);
+		//System.out.println(pause);
 		if(k == KeyEvent.VK_ESCAPE) {
 			if(!pause)
 				pause = true;

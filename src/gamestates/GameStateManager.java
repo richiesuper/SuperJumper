@@ -8,27 +8,48 @@ public class GameStateManager {
 	// GameState
 	private GameState[] gameStates;
 	private int currState;
+	private int currLevel;
 
 	public GameStateManager() {
 		gameStates = new GameState[Constants.GameStates.NUM_GAME_STATE];
 		this.currState = Constants.GameStates.MAIN_MENU;
-		loadState();
-		setState(currState);
+		loadState(currState);
 	}
 
-	private void loadState() {
-		gameStates[Constants.GameStates.MAIN_MENU] = new MainMenuState(this);
-		gameStates[Constants.GameStates.PAUSE_MENU] = new PauseMenuState(this);
-		gameStates[Constants.GameStates.ABOUT_MENU] = new AboutState(this);
-		gameStates[Constants.GameStates.GAME_OVER] = new GameOverState(this);
-		gameStates[Constants.GameStates.GAME_FINISH] = new GameFinishState(this);
-		gameStates[Constants.GameStates.LEVEL_SELECTION] = new LevelSelectionState(this);
-		gameStates[Constants.GameStates.LVL_1] = new Level1State(this);
-		gameStates[Constants.GameStates.LVL_2] = new Level2State(this);
+	private void loadState(int state) {
+		if (state == Constants.GameStates.MAIN_MENU) {
+			gameStates[state] = new MainMenuState(this);
+		}
+		if (state == Constants.GameStates.ABOUT_MENU) {
+			gameStates[state] = new AboutState(this);
+		} 
+		if (state == Constants.GameStates.LVL_1) {
+			currLevel = 1;
+			gameStates[state] = new Level1State(this);
+		}
+		if (state == Constants.GameStates.LVL_2) {
+			currLevel = 2;
+			gameStates[state] = new Level2State(this);
+		}
+		if (state == Constants.GameStates.LEVEL_SELECTION) {
+			gameStates[state] = new LevelSelectionState(this);
+		}
+		if (state == Constants.GameStates.GAME_OVER) {
+			gameStates[state] = new GameOverState(this);
+		}
+		if (state == Constants.GameStates.GAME_FINISH) {
+			gameStates[state] = new GameFinishState(this);
+		}
 	}
 
 	public void setState(int state) {
+		unloadState(currState);
 		this.currState = state;
+		loadState(currState);
+	}
+
+	private void unloadState(int state) {
+		gameStates[state] = null;
 	}
 
 	public void update() {
@@ -53,5 +74,13 @@ public class GameStateManager {
 
 	public int getCurrState() {
 		return currState;
+	}
+
+	public int getCurrLevel() {
+		return currLevel;
+	}
+
+	public void setCurrLevel(int currLevel) {
+		this.currLevel = currLevel;
 	}
 }
