@@ -61,12 +61,13 @@ public class GameOverState extends GameState {
 		for(int i = 0; i < options.length; i++) {
 			if(i == currentChoice) g.setColor(Color.RED);
 			else g.setColor(Color.GRAY);
-			g.drawString(options[i], Constants.Panel.WIDTH / 2 - font.getSize() * 2, Constants.Panel.HEIGHT - (Constants.Panel.HEIGHT / 4) + i * 40);
+			g.drawString(options[i], Constants.Panel.WIDTH / 2 - font.getSize() * 2, Constants.Panel.HEIGHT - (Constants.Panel.HEIGHT / 4) + i * 35);
 		}
 	}
 	
 	private void select() {
 		if(currentChoice == 0) {
+			gsm.setState(Constants.GameStates.LVL_1);
 			if(gsm.getCurrState() == Constants.GameStates.LVL_1) {
 				gsm.setState(Constants.GameStates.LVL_1);
 			}
