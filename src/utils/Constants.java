@@ -29,7 +29,7 @@ public class Constants {
 		// types of game states
 		public static final byte MAIN_MENU = 0;
 		public static final byte PAUSE_MENU = 1;
-		public static final byte OPTIONS_MENU = 2;
+		public static final byte ABOUT_MENU = 2;
 		public static final byte GAME_OVER = 3;
 		public static final byte GAME_FINISH = 4;
 		public static final byte LEVEL_SELECTION = 5;
@@ -42,8 +42,6 @@ public class Constants {
 		// Button menu
 		public static class MenuButton {
 			public static final String MENU_BUTTON = Folders.UI + "menubutton.png";
-			public static final int B_WIDTH = 139;
-			public static final int B_HEIGHT = 55;
 		}
 		
 		// Level Selection Menu
@@ -54,8 +52,13 @@ public class Constants {
 			public static final String LEVEL_2_SELECT = Folders.UI + "level2Select.png";
 		}
 		
+		// Game Over Menu
 		public static class GameOver{
 			public static final String GAME_OVER = Folders.UI + "gameover.png";
+		}
+		
+		public static class GameFinish{
+			public static final String GAME_FINISH = Folders.UI + "finishscreen.png";
 		}
 	}
 
@@ -89,6 +92,7 @@ public class Constants {
 		public static final String LVL_2 = Folders.BGS + "level-2.png";
 		public static final String LVL_SELECTION_MENU = Folders.BGS + "level-selection-menu.png";
 		public static final String MAIN_MENU = Folders.BGS + "main-menu.png";
+		public static final String ABOUT_MENU = Folders.BGS + "about-menu.png";
 	}
 
 	public static class TileSets {
