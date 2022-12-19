@@ -61,7 +61,7 @@ public class LevelSelectionState extends GameState {
 	@Override
 	public void draw(Graphics g) {
 		bg.draw(g);
-		g.drawImage(levelTitle, 196, 50, levelTitle.getWidth(), levelTitle.getHeight(), null);
+		g.drawImage(levelTitle, 120, 40, levelTitle.getWidth(), levelTitle.getHeight(), null);
 		//System.out.println(currentChoice);
 		if(currentChoice < 2)
 			g.drawImage(level[currentChoice], 0, 0, level[currentChoice].getWidth(), level[currentChoice].getHeight(), null);

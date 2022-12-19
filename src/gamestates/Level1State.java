@@ -68,7 +68,7 @@ public class Level1State extends GameState {
 		// Set background position
 		bg.setPosition(tileMap.getX(), tileMap.getY());
 		
-		if(player.getY() >= Constants.Tile.HEIGHT * (tileMap.getRowCount())) {
+		if(player.getY() >= Constants.Tile.HEIGHT * (tileMap.getRowCount() - 2)) {
 			eventDead();
 		}
 		

@@ -10,7 +10,8 @@ import utils.Constants;
 
 public class AboutState extends GameState{
 	private Background bg;
-	private Font font;
+	private Font font1;
+	private Font font2;
 	
 	private String[] about = {
 			"ABOUT US",
@@ -29,7 +30,8 @@ public class AboutState extends GameState{
 		this.gsm = gsm;
 		
 		bg = new Background(Constants.Backgrounds.ABOUT_MENU);
-		font = new Font("Algerian", Font.PLAIN, 25);
+		font1 = new Font("Algerian", Font.BOLD, 40);
+		font2 = new Font("Algerian", Font.PLAIN, 25);
 	}
 
 	@Override
@@ -48,13 +50,18 @@ public class AboutState extends GameState{
 	public void draw(Graphics g) {
 		// draw bg
 		bg.draw(g);
-		
+
 		// draw title
-		g.setFont(font);
-		for(int i = 0; i < about.length; i++) {
+		g.setFont(font1);
+		g.setColor(Color.BLACK);
+		g.drawString(about[0], 425, 75);
+		
+		// draw text
+		g.setFont(font2);
+		for(int i = 1; i < about.length; i++) {
 			if(i == about.length - 1) {
 				g.setColor(Color.RED);
-				g.drawString(about[i], 500, 550);
+				g.drawString(about[i], 500, 500);
 			}
 			else {
 				g.setColor(Color.BLACK);
