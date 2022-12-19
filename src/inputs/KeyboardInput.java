@@ -45,6 +45,9 @@ public class KeyboardInput implements KeyListener {
 			case ' ':
 				gamePanel.getGsm().getGameState().getPlayer().setJumping(true);
 				gamePanel.getGsm().getGameState().getPlayer().setMoving(true);
+				gamePanel.getGsm().getGameState().getPlayer().setLastState(
+						gamePanel.getGsm().getGameState().getPlayer().getState()
+				);
 				gamePanel.getGsm().getGameState().getPlayer().setState(Constants.Entities.Player.JUMP);
 			default:
 				break;
