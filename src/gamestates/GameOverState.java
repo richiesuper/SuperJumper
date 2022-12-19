@@ -14,7 +14,8 @@ import utils.Constants;
 
 public class GameOverState extends GameState {
 	private Background bg;
-	private BufferedImage gameTitle;
+	private BufferedImage gameOverTitle;
+	private BufferedImage gameOverScreen;
 	private Font font;
 	
 	private int currentChoice;
@@ -30,9 +31,10 @@ public class GameOverState extends GameState {
 			bg = new Background(Constants.Backgrounds.LVL_SELECTION_MENU);
 			bg.setVector(-0.2, 0);
 			
-			gameTitle = ImageIO.read(getClass().getResourceAsStream(Constants.UI.GameOver.GAME_OVER));
+			gameOverTitle = ImageIO.read(getClass().getResourceAsStream(Constants.UI.GameOver.GAME_OVER));
+			gameOverScreen = ImageIO.read(getClass().getResourceAsStream(Constants.UI.GameOver.GAME_OVER_SCREEN));
 			
-			font = new Font("Courier New", Font.ITALIC, 30);
+			font = new Font("Algerian", Font.PLAIN, 30);
 		}
 		catch(IOException e) {
 			e.printStackTrace();
@@ -54,20 +56,29 @@ public class GameOverState extends GameState {
 	public void draw(Graphics g) {
 		bg.draw(g);
 		
-		g.drawImage(gameTitle, (Constants.Panel.WIDTH - gameTitle.getWidth()) / 2, 40, gameTitle.getWidth(), gameTitle.getHeight(), null);
+		g.drawImage(gameOverScreen, 0, 0, gameOverScreen.getWidth(), gameOverScreen.getHeight(), null);
+		g.drawImage(gameOverTitle, (Constants.Panel.WIDTH - gameOverTitle.getWidth()) / 2, 40, gameOverTitle.getWidth(), gameOverTitle.getHeight(), null);
 		
 		// Draw Menu options
 		g.setFont(font);
 		for(int i = 0; i < options.length; i++) {
 			if(i == currentChoice) g.setColor(Color.RED);
 			else g.setColor(Color.GRAY);
-			g.drawString(options[i], Constants.Panel.WIDTH / 2 - font.getSize() * 2, Constants.Panel.HEIGHT - (Constants.Panel.HEIGHT / 4) + i * 35);
+			if(i == 1)
+				g.drawString(options[i], Constants.Panel.WIDTH / 2 - font.getSize() * 2 + 33, Constants.Panel.HEIGHT - (Constants.Panel.HEIGHT / 4) + i * 35);
+			else
+				g.drawString(options[i], Constants.Panel.WIDTH / 2 - font.getSize() * 2, Constants.Panel.HEIGHT - (Constants.Panel.HEIGHT / 4) + i * 35);
 		}
 	}
 	
 	private void select() {
 		if(currentChoice == 0) {
-			gsm.setState(Constants.GameStates.LVL_1);
+			if(gsm.getCurrLevel() == 1) {
+				gsm.setState(Constants.GameStates.LVL_1);
+			}
+			else if(gsm.getCurrLevel() == 2){
+				gsm.setState(Constants.GameStates.LVL_2);
+			}
 		}
 		if(currentChoice == 1) {
 			gsm.setState(Constants.GameStates.MAIN_MENU);

@@ -39,9 +39,10 @@ public class Constants {
 
 	// UI game
 	public static class UI {
-		// Button menu
-		public static class MenuButton {
+		// Main Menu
+		public static class MainMenu {
 			public static final String MENU_BUTTON = Folders.UI + "menubutton.png";
+			public static final String MENU_SCREEN = Folders.UI + "menuscreen.png";
 		}
 		
 		// Level Selection Menu
@@ -55,15 +56,24 @@ public class Constants {
 		// Game Over Menu
 		public static class GameOver{
 			public static final String GAME_OVER = Folders.UI + "gameover.png";
+			public static final String GAME_OVER_SCREEN = Folders.UI + "gameoverscreen.png";
 		}
 		
+		// Game Finish
 		public static class GameFinish{
 			public static final String GAME_FINISH = Folders.UI + "finishscreen.png";
 		}
 		
+		// Game Pause
 		public static class PauseGame{
 			public static final String PAUSE_SCREEN = Folders.UI + "pausescreen.png";
 			public static final String PAUSE_THEME = Folders.UI + "pause.png";
+		}
+		
+		// HUD
+		public static class AttributeGames{
+			public static final String HUD_SCREEN = Folders.UI + "HUD.png";
+			public static final String CLOCK_SCREEN = Folders.UI + "clock.png";
 		}
 	}
 
@@ -151,7 +161,7 @@ public class Constants {
 			// player direction
 			public static final byte DIR_LEFT = 0;
 			public static final byte DIR_RIGHT = 1;
-			// Temo
+			// Temp
 			public static final byte DIR_UP = 2;
 			public static final byte DIR_DOWN = 3;
 
@@ -172,7 +182,8 @@ public class Constants {
 			public static final byte DEAD = 11;
 
 			// player general stats
-			public static final float DEFAULT_HEALTH = 1000f;
+			public static final float DEFAULT_HEALTH = 5;
+			public static final float DEFAULT_ENERGY = 50;
 			public static final float DEFAULT_WALK_SPEED = 1.5f;
 			public static final float DEFAULT_RUN_SPEED = DEFAULT_WALK_SPEED * 2.5f;
 			public static final float DEFAULT_JUMP_HEIGHT = Tile.HEIGHT * 2.5f;

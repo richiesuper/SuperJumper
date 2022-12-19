@@ -8,12 +8,12 @@ public class GameStateManager {
 	// GameState
 	private GameState[] gameStates;
 	private int currState;
+	private int currLevel;
 
 	public GameStateManager() {
 		gameStates = new GameState[Constants.GameStates.NUM_GAME_STATE];
 		this.currState = Constants.GameStates.MAIN_MENU;
-		loadState();
-		setState(currState);
+		loadState(currState);
 	}
 
 	private void loadState() {
@@ -27,7 +27,13 @@ public class GameStateManager {
 	}
 
 	public void setState(int state) {
+		unloadState(currState);
 		this.currState = state;
+		loadState(currState);
+	}
+
+	private void unloadState(int state) {
+		gameStates[state] = null;
 	}
 
 	public void update() {
@@ -52,5 +58,13 @@ public class GameStateManager {
 
 	public int getCurrState() {
 		return currState;
+	}
+
+	public int getCurrLevel() {
+		return currLevel;
+	}
+
+	public void setCurrLevel(int currLevel) {
+		this.currLevel = currLevel;
 	}
 }

@@ -5,7 +5,10 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import tilemap.Background;
 import utils.Constants;
@@ -13,6 +16,7 @@ import utils.Constants;
 public class MainMenuState extends GameState{
 	private Background bg;
 	private Font font;
+	private BufferedImage menuScreen;
 	
 	private int currentChoice;
 	private String[] options = {
@@ -25,8 +29,15 @@ public class MainMenuState extends GameState{
 		this.gsm = gsm;
 		currentChoice = 0;
 		
-		bg = new Background(Constants.Backgrounds.MAIN_MENU);
-		font = new Font("Algerian", Font.PLAIN, 35);
+		try {
+			bg = new Background(Constants.Backgrounds.MAIN_MENU);
+			font = new Font("Algerian", Font.PLAIN, 30);
+			
+			menuScreen = ImageIO.read(getClass().getResourceAsStream(Constants.UI.MainMenu.MENU_SCREEN));
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -44,6 +55,9 @@ public class MainMenuState extends GameState{
 		// draw background
 		bg.draw(g);
 		
+		// draw image screen
+		g.drawImage(menuScreen, 0, 0, menuScreen.getWidth(), menuScreen.getHeight(), null);
+		
 		// draw menu options
 		g.setFont(font);
 		for(int i = 0; i < options.length; i++) {
@@ -52,7 +66,15 @@ public class MainMenuState extends GameState{
 			else
 				g.setColor(Color.GRAY);
 			
-			g.drawString(options[i], Constants.Panel.WIDTH / 2 - font.getSize() * 2, Constants.Panel.HEIGHT - (Constants.Panel.HEIGHT / 3) + i * 35);
+			if(i == 0) {
+				g.drawString(options[i], Constants.Panel.WIDTH / 2 - font.getSize() * 2 + 12, Constants.Panel.HEIGHT - (Constants.Panel.HEIGHT / 3) + i * 35);
+			}
+			else if(i == 1){
+				g.drawString(options[i], Constants.Panel.WIDTH / 2 - font.getSize() * 2, Constants.Panel.HEIGHT - (Constants.Panel.HEIGHT / 3) + i * 35);
+			}
+			else {
+				g.drawString(options[i], Constants.Panel.WIDTH / 2 - font.getSize() * 2 + 20, Constants.Panel.HEIGHT - (Constants.Panel.HEIGHT / 3) + i * 35);
+			}
 		}
 	}
 	

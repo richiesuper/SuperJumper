@@ -32,7 +32,7 @@ public class GameFinishState extends GameState {
 			
 			gameTitle = ImageIO.read(getClass().getResourceAsStream(Constants.UI.GameFinish.GAME_FINISH));
 			
-			font = new Font("Courier New", Font.ITALIC, 30);
+			font = new Font("Algerian", Font.PLAIN, 30);
 		}
 		catch(IOException e) {
 			e.printStackTrace();
@@ -66,7 +66,10 @@ public class GameFinishState extends GameState {
 			else 
 				g.setColor(Color.GRAY);
 			
-			g.drawString(options[i], Constants.Panel.WIDTH / 2 - font.getSize() * 5, Constants.Panel.HEIGHT - (Constants.Panel.HEIGHT / 4) + i * 30);
+			if(i == 1)
+				g.drawString(options[i], Constants.Panel.WIDTH / 2 - font.getSize() * 4 + 75, Constants.Panel.HEIGHT - (Constants.Panel.HEIGHT / 4) + i * 35);
+			else
+				g.drawString(options[i], Constants.Panel.WIDTH / 2 - font.getSize() * 4 - 13, Constants.Panel.HEIGHT - (Constants.Panel.HEIGHT / 4) + i * 35);
 		}
 	}
 	

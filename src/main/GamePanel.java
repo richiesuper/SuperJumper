@@ -16,6 +16,7 @@ public class GamePanel extends JPanel {
 	private GameStateManager gsm;
 	
 	private boolean pause = false;
+	
 	public GamePanel(int width, int height, GameStateManager gsm) {
 		super();
 
@@ -34,6 +35,7 @@ public class GamePanel extends JPanel {
 		super.paintComponent(g);
 
 		if(!pause) {
+			//System.out.println("p");
 			gsm.update();
 		}
 		
