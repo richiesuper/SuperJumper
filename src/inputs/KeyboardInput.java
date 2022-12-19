@@ -25,22 +25,30 @@ public class KeyboardInput implements KeyListener {
 			case 'a':
 				gamePanel.getGsm().getGameState().getPlayer().setDirection(Constants.Entities.Player.DIR_LEFT);
 				gamePanel.getGsm().getGameState().getPlayer().setMoving(true);
-				gamePanel.getGsm().getGameState().getPlayer().setState(Constants.Entities.Player.WALK);
+				if (!gamePanel.getGsm().getGameState().getPlayer().isAttacking()) {
+					gamePanel.getGsm().getGameState().getPlayer().setState(Constants.Entities.Player.WALK);
+				}
 				break;
 			case 'A':
 				gamePanel.getGsm().getGameState().getPlayer().setDirection(Constants.Entities.Player.DIR_LEFT);
 				gamePanel.getGsm().getGameState().getPlayer().setMoving(true);
-				gamePanel.getGsm().getGameState().getPlayer().setState(Constants.Entities.Player.RUN);
+				if (!gamePanel.getGsm().getGameState().getPlayer().isAttacking()) {
+					gamePanel.getGsm().getGameState().getPlayer().setState(Constants.Entities.Player.RUN);
+				}
 				break;
 			case 'd':
 				gamePanel.getGsm().getGameState().getPlayer().setDirection(Constants.Entities.Player.DIR_RIGHT);
 				gamePanel.getGsm().getGameState().getPlayer().setMoving(true);
-				gamePanel.getGsm().getGameState().getPlayer().setState(Constants.Entities.Player.WALK);
+				if (!gamePanel.getGsm().getGameState().getPlayer().isAttacking()) {
+					gamePanel.getGsm().getGameState().getPlayer().setState(Constants.Entities.Player.WALK);
+				}
 				break;
 			case 'D':
 				gamePanel.getGsm().getGameState().getPlayer().setDirection(Constants.Entities.Player.DIR_RIGHT);
 				gamePanel.getGsm().getGameState().getPlayer().setMoving(true);
-				gamePanel.getGsm().getGameState().getPlayer().setState(Constants.Entities.Player.RUN);
+				if (!gamePanel.getGsm().getGameState().getPlayer().isAttacking()) {
+					gamePanel.getGsm().getGameState().getPlayer().setState(Constants.Entities.Player.RUN);
+				}
 				break;
 			case ' ':
 				gamePanel.getGsm().getGameState().getPlayer().setJumping(true);

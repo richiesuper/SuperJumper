@@ -6,13 +6,16 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
+import main.GamePanel;
 import tilemap.TileMap;
 import utils.Constants;
 
 public class Player extends Entity {
+	ArrayList<Enemy> enemies;
 
 	private boolean goingLeft;
 	private boolean goingRight;
@@ -28,19 +31,20 @@ public class Player extends Entity {
 	
 	private byte lastState;
 
-	public Player(float x, float y, short width, short height, TileMap tileMap) {
+	public Player(float x, float y, short width, short height, TileMap tileMap, ArrayList<Enemy> enemies) {
 		super(x, y, width, height, tileMap);
 		init();
 		initHitbox(x, y, Constants.Entities.Player.HITBOX_WIDTH, Constants.Entities.Player.HITBOX_HEIGHT);
 		inMiddleArea = false;
 		
 		gravity = 0.1f;
-		jumpSpeed = -5.1f;
+		jumpSpeed = -5.0f;
 		floatSpeed = 0f;
 		floatSpeedAfterHeadBump = 0.5f;
 		floating = false;
 	
 		lastState = Constants.Entities.Player.IDLE;
+		this.enemies = enemies;
 	}
 
 	@Override
@@ -108,7 +112,7 @@ public class Player extends Entity {
 		}
 
 		if (jumping) {
-			System.out.println("jumping!");
+			//System.out.println("jumping!");
 			jump();
 		}
 		
@@ -117,10 +121,10 @@ public class Player extends Entity {
 		}
 
 		if (floating) {
-			System.out.println("floating");
+			//System.out.println("floating");
 			updateXandYPos(tempSpeedX);
 		} else {
-			System.out.println("not floating");
+			//System.out.println("not floating");
 			updateXPos(tempSpeedX);
 		}
 	}
@@ -133,13 +137,10 @@ public class Player extends Entity {
 					hitbox.y += floatSpeed;
 					y += floatSpeed;
 				} else {
-//					hitbox.y = getEntityYPosUnderRoofOrAboveFloor(hitbox.y, hitbox, tempSpeedX);
-//					y = hitbox.y;
-					
 					// if we have landed...
 					if (floatSpeed > 0) {
 						resetFloating();
-					} else {
+					} else { // if we bumped our head
 						floatSpeed = floatSpeedAfterHeadBump;
 					}
 				}
@@ -149,13 +150,10 @@ public class Player extends Entity {
 					hitbox.y += floatSpeed;
 					y += floatSpeed;
 				} else {
-//					hitbox.y = getEntityYPosUnderRoofOrAboveFloor(hitbox.y, hitbox, tempSpeedX);
-//					y = hitbox.y;
-					
 					// if we have landed...
 					if (floatSpeed > 0) {
 						resetFloating();
-					} else {
+					} else { // if we bumped our head
 						floatSpeed = floatSpeedAfterHeadBump;
 					}
 				}
@@ -166,13 +164,10 @@ public class Player extends Entity {
 				hitbox.y += floatSpeed;
 				y += floatSpeed;
 			} else {
-//				y = getEntityYPosUnderRoofOrAboveFloor(y, hitbox, tempSpeedX);
-//				hitbox.y = y;
-				
 				// if we have landed...
 				if (floatSpeed > 0) {
 					resetFloating();
-				} else {
+				} else { // if we bumped our head
 					floatSpeed = floatSpeedAfterHeadBump;
 				}
 			}
@@ -244,6 +239,22 @@ public class Player extends Entity {
 
 	@Override
 	public void attack() {
+		if (idx >= 3) {
+			if (facingRight)
+				for (int i = 0; i < enemies.size() - 1; i++) {
+					if (enemies.get(i).x + 48 >= x && enemies.get(i).x + 48 <= x + 120) {
+						enemies.remove(i);
+					}
+				}
+					
+			if (facingLeft) {
+				for (int i = 0; i < enemies.size() - 1; i++) {
+					if (enemies.get(i).x + 48 >= x && enemies.get(i).x + 48 <= x - 120) {
+						enemies.remove(i);
+					}
+				}
+			}
+		}
 	}
 
 	@Override
@@ -295,7 +306,7 @@ public class Player extends Entity {
 		}
 
 		updateTicker();
-		drawHitbox(g);
+		//drawHitbox(g);
 
 		// debugging
 		// System.out.println("x: " + x + " y: " + y);
@@ -359,5 +370,5 @@ public class Player extends Entity {
 	public void setLastState(byte lastState) {
 		this.lastState = lastState;
 	}
-	
+
 }

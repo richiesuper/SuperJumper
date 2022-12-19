@@ -6,8 +6,10 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import entities.Clock;
+import entities.Enemy;
 import entities.HUD;
 import entities.Player;
+import entities.Zombie;
 import tilemap.Background;
 import tilemap.TileMap;
 import utils.Constants;
@@ -24,9 +26,28 @@ public class Level2State extends GameState {
 	// Pause
 	private static boolean pause = false;
 
+	// enemies list
+	private ArrayList<Enemy> enemies;
+
 	public Level2State(GameStateManager gsm) {
 		this.gsm = gsm;
 		init();
+		populateEnemies();
+
+		this.player = new Player(0, 0, Constants.Entities.Player.SPRITE_WIDTH,
+				Constants.Entities.Player.SPRITE_HEIGHT, tileMap, enemies);
+		
+		// HUD
+		hud = new HUD(player);
+	}
+
+	private void populateEnemies() {
+		enemies = new ArrayList<Enemy>();
+		enemies.add(new Zombie(300, 300, Constants.Entities.Enemies.Zombie.SPRITE_WIDTH, Constants.Entities.Enemies.Zombie.SPRITE_HEIGHT, tileMap, player));
+		enemies.add(new Zombie(600, 300, Constants.Entities.Enemies.Zombie.SPRITE_WIDTH, Constants.Entities.Enemies.Zombie.SPRITE_HEIGHT, tileMap, player));
+		enemies.add(new Zombie(1800, 300, Constants.Entities.Enemies.Zombie.SPRITE_WIDTH, Constants.Entities.Enemies.Zombie.SPRITE_HEIGHT, tileMap, player));
+		enemies.add(new Zombie(2400, 300, Constants.Entities.Enemies.Zombie.SPRITE_WIDTH, Constants.Entities.Enemies.Zombie.SPRITE_HEIGHT, tileMap, player));
+		enemies.add(new Zombie(3000, 300, Constants.Entities.Enemies.Zombie.SPRITE_WIDTH, Constants.Entities.Enemies.Zombie.SPRITE_HEIGHT, tileMap, player));
 	}
 
 	@Override
@@ -41,15 +62,8 @@ public class Level2State extends GameState {
 		// Background
 		bg = new Background(Constants.Backgrounds.LVL_2);
 
-		// LevelManager and Player
-		this.player = new Player(0, 0, Constants.Entities.Player.SPRITE_WIDTH,
-				Constants.Entities.Player.SPRITE_HEIGHT, tileMap);
-		
 		// Pause
 		pauseState = new PauseMenuState();
-		
-		// HUD
-		hud = new HUD(player);
 		
 		// Clock
 		clock = new Clock();

@@ -46,6 +46,29 @@ public class Helpers {
 		return false;
 	}
 
+	private static boolean isSolidEnemy(float x, float y, int[][] lvlData, boolean inMiddleArea,
+			TileMap tileMap) {
+		if (x < 0 || x >= tileMap.getColCount() * Constants.Tile.WIDTH || y < 0 || y >= tileMap.getColCount() * Constants.Tile.HEIGHT)
+			return true;
+
+		float xIndex = x / Constants.Tile.WIDTH;
+		float yIndex = y / Constants.Tile.HEIGHT;
+
+		// measure against ArrayIndexOutOfBounds when player tries to move past panel
+		// borders
+		if (xIndex < 0 || xIndex > tileMap.getColCount() || yIndex < 0 || yIndex > tileMap.getRowCount())
+			return true;
+
+		int tile = lvlData[(int) yIndex][(int) xIndex];
+
+		// System.out.println("xCorner: " + x + " yCorner: " + y + " Tile: " + tile);
+
+		if (tile < 0 || tile > 19)
+			return true;
+
+		return false;
+	}
+
 	public static float getEntityXPosNextToWall(float x, Rectangle2D.Float hitbox, float xSpeed) {
 		int currentTile = (int) (x / Constants.Tile.WIDTH);
 		if (xSpeed > 0) {
@@ -75,6 +98,14 @@ public class Helpers {
 			boolean inMiddleArea, Rectangle2D.Float hitbox, TileMap tileMap) {
 		if (!isSolid(x, y + hitbox.height + 1, lvlData, inMiddleArea, hitbox, tileMap))
 			if (!isSolid(x + hitbox.width, y + hitbox.height + 1, lvlData, inMiddleArea, hitbox, tileMap))
+				return false;
+		return true;
+	}
+
+	public static boolean isEnemyOnFloor(float x, float y, int[][] lvlData,
+			boolean inMiddleArea, Rectangle2D.Float hitbox, TileMap tileMap) {
+		if (!isSolidEnemy(x, y + hitbox.height + 1, lvlData, inMiddleArea, tileMap) ||
+				!isSolidEnemy(x + hitbox.width, y + hitbox.height + 1, lvlData, inMiddleArea, tileMap))
 				return false;
 		return true;
 	}

@@ -1,6 +1,8 @@
 package entities;
 
 import java.awt.Graphics;
+
+
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,17 +11,33 @@ import javax.imageio.ImageIO;
 
 import tilemap.TileMap;
 import utils.Constants;
+import static utils.Helpers.*;
 
 public class Zombie extends Enemy {
 
-	int walkSpeed;
-	
-	public Zombie(float x, float y, short width, short height, TileMap tileMap) {
+	private float gravity;
+	private float floatSpeed;
+	private boolean floating;
+	private int stateTicker;
+	private int stateTickerCycle;
+
+	public Zombie(float x, float y, short width, short height, TileMap tileMap, Player player) {
 		super(x, y, width, height, tileMap);
 		init();
 		initHitbox(x, y, Constants.Entities.Enemies.Zombie.HITBOX_WIDTH,
 				Constants.Entities.Enemies.Zombie.HITBOX_HEIGHT);
-		walkSpeed = 2;
+		
+		facingLeft = true;
+		facingRight = false;
+		
+		gravity = 0.01f;
+		floatSpeed = 0f;
+		floating = false;
+		
+		stateTicker = 0;
+		stateTickerCycle = 200;
+		
+		this.player = player;
 	}
 
 	@Override
@@ -82,15 +100,87 @@ public class Zombie extends Enemy {
 
 	@Override
 	public void move() {
+		// Temp
+		float tempSpeedX = 0;
+		
+		if (moving) {
+			if (facingLeft && !facingRight) {
+				// Temp
+				tempSpeedX = -speedX;
+
+				facingLeft = true;
+				facingRight = false;
+			} else if (facingRight && !facingLeft) {
+				
+				// Temp
+				tempSpeedX = speedX;
+
+				facingRight = true;
+				facingLeft = false;
+			}
+		}
+
+		if (!floating && !isEntityOnFloor(x, y, tileMap.getMap(), true, hitbox, tileMap)) {
+			floating = true;
+		}
+
+		if (floating) {
+			//System.out.println("floating");
+			updateXandYPos(tempSpeedX);
+		} else {
+			//System.out.println("not floating");
+
+			if (isEnemyOnFloor(x, y, tileMap.getMap(), true, hitbox, tileMap))
+				updateXPos(tempSpeedX);
+		}
+	}
+
+	private void resetFloating() {
+		floating = false;
+		floatSpeed = 0f;
+		setState(Constants.Entities.Enemies.Zombie.IDLE);
+	}
+
+	private void updateXandYPos(float tempSpeedX) {
+		if (canMoveHere(x, y + floatSpeed, hitbox.width, hitbox.height, tileMap.getMap(), true,
+				hitbox, tileMap)) {
+			hitbox.y += floatSpeed;
+			y += floatSpeed;
+		} else {
+			// if we have landed...
+			if (floatSpeed > 0) {
+				resetFloating();
+			}
+		}
+		
+		floatSpeed += gravity;
+		updateXPos(tempSpeedX);
+	}
+
+	private void updateXPos(float tempSpeedX) {
+		if (canMoveHere(x + tempSpeedX, y, hitbox.width, hitbox.height, tileMap.getMap(),
+				true, hitbox, tileMap)) {
+			x += tempSpeedX;
+			hitbox.x = (float) (x + tileMap.getX());
+		}
 	}
 
 	@Override
 	public void draw(Graphics g) {
-		g.drawImage(spriteTile[state][idx], (int) (x + tileMap.getX() + 1000) + width, (int) (y + tileMap.getY()),
-				-Constants.Entities.Enemies.Zombie.SPRITE_WIDTH, Constants.Entities.Enemies.Zombie.SPRITE_HEIGHT, null);
+		if (facingRight && !facingLeft) {
+			g.drawImage(spriteTile[state][idx],
+					(int) (x + tileMap.getX() - Constants.Entities.Enemies.Zombie.HITBOX_X_OFFSET),
+					(int) (y + tileMap.getY() + Constants.Entities.Enemies.Zombie.HITBOX_Y_OFFSET),
+					Constants.Entities.Enemies.Zombie.SPRITE_WIDTH, Constants.Entities.Enemies.Zombie.SPRITE_HEIGHT, null);
+		} else {
+			g.drawImage(spriteTile[state][idx],
+					(int) (x + tileMap.getX() - Constants.Entities.Enemies.Zombie.HITBOX_X_OFFSET + width + 32),
+					(int) (y + tileMap.getY() + Constants.Entities.Enemies.Zombie.HITBOX_Y_OFFSET),
+					-Constants.Entities.Enemies.Zombie.SPRITE_WIDTH, Constants.Entities.Enemies.Zombie.SPRITE_HEIGHT, null);
+		}
 
 		updateTicker();
-		drawHitbox(g);
+		//drawHitbox(g);
 
 		// debugging
 		// System.out.println("x: " + x + " y: " + y);
@@ -100,6 +190,31 @@ public class Zombie extends Enemy {
 
 	@Override
 	public void update() {
+		stateTicker++;
+		if (stateTicker >= stateTickerCycle) {
+			stateTicker = 0;
+			
+			if (facingLeft && !facingRight) {
+				System.out.println("left");
+			} else if (facingRight && !facingLeft) {
+				System.out.println("right");
+			}
+			if (state == Constants.Entities.Enemies.Zombie.IDLE) {
+				if (facingLeft && !facingRight) {
+					facingLeft = false;
+					facingRight = true;
+				} else if (facingRight && !facingLeft){
+					facingRight = false;
+					facingLeft = true;
+				}
+				moving = true;
+				state = Constants.Entities.Enemies.Zombie.WALK;
+			} else {
+				moving = false;
+				state = Constants.Entities.Enemies.Zombie.IDLE;
+			}
+		}
+
 		switch (state) {
 		case Constants.Entities.Enemies.Zombie.WALK:
 			speedX = Constants.Entities.Enemies.Zombie.DEFAULT_WALK_SPEED;
@@ -130,12 +245,21 @@ public class Zombie extends Enemy {
 
 	@Override
 	public void attack() {
+		if (facingRight) {
+			if (player.x >= x && player.x <= x + 5) {
+				player.setHealth(player.getHealth() - 0.001f);
+			}
+		}
+				
+		if (facingLeft) {
+			if (player.x <= x && player.x >= x - 5) {
+				player.setHealth(player.getHealth() - 0.001f);
+			}
+		}
 	}
 
 	@Override
 	public void die() {
-		// TODO Auto-generated method stub
-
 	}
 
 }

@@ -1,7 +1,9 @@
 package gamestates;
 
 import java.awt.Graphics;
+import java.util.ArrayList;
 
+import entities.Enemy;
 import entities.Player;
 
 public abstract class GameState {
@@ -21,6 +23,7 @@ public abstract class GameState {
 	public Player getPlayer() {
 		return null;
 	}
+	
 //	
 //	public MainMenuState getMainMenu() {
 //		return null;

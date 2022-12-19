@@ -37,6 +37,7 @@ public abstract class Entity {
 	protected float energy;
 	protected float maxEnergy;
 	protected float attackDmg;
+	protected boolean attacking;
 	protected boolean moving;
 	protected byte ticker;
 	protected byte idx;
@@ -86,7 +87,9 @@ public abstract class Entity {
 
 	protected void drawHitbox(Graphics g) {
 		g.setColor(Color.PINK);
-		g.drawRect((int) hitbox.x, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height);
+
+		if (hitbox.x > 0 || hitbox.x < Constants.Panel.WIDTH)
+			g.drawRect((int) hitbox.x, (int) hitbox.y, (int) hitbox.width, (int) hitbox.height);
 	}
 
 	public float getHitboxX() {
@@ -206,6 +209,14 @@ public abstract class Entity {
 
 	public void setMoving(boolean moving) {
 		this.moving = moving;
+	}
+
+	public boolean isAttacking() {
+		return attacking;
+	}
+
+	public void setAttacking(boolean attacking) {
+		this.attacking = attacking;
 	}
 
 	public byte getTicker() {

@@ -213,6 +213,10 @@ public class Constants {
 				public static final byte SPRITE_ROWS = 10;
 				public static final byte SPRITE_COLS = 11;
 
+				// zombie direction
+				public static final byte DIR_LEFT = 0;
+				public static final byte DIR_RIGHT = 1;
+
 				// sprite tile matrix properties
 				public static final byte IDLE_TILE_COUNT = 9;
 				public static final byte WALK_TILE_COUNT = 10;
@@ -241,14 +245,14 @@ public class Constants {
 
 				// zombie general stats
 				public static final float DEFAULT_HEALTH = 100f;
-				public static final float DEFAULT_WALK_SPEED = 1.5f;
+				public static final float DEFAULT_WALK_SPEED = 0.5f;
 				public static final float DEFAULT_RUN_SPEED = DEFAULT_WALK_SPEED * 2.5f;
 				public static final float DEFAULT_JUMP_HEIGHT = Tile.HEIGHT * 2.5f;
 
 				public static final int HITBOX_INITIAL_WIDTH = 80;
 				public static final int HITBOX_INITIAL_HEIGHT = 96;
 				public static final int HITBOX_X_OFFSET = 48; // original = 48 (for full body hitbox)
-				public static final int HITBOX_Y_OFFSET = 33; // original = 32 (for full body hitbox)
+				public static final int HITBOX_Y_OFFSET = 16; // original = 32 (for full body hitbox)
 
 				public static final int HITBOX_WIDTH = HITBOX_INITIAL_WIDTH - HITBOX_X_OFFSET;
 				public static final int HITBOX_HEIGHT = HITBOX_INITIAL_HEIGHT - HITBOX_Y_OFFSET;
