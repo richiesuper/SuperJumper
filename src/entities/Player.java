@@ -32,6 +32,8 @@ public class Player extends Entity {
 		speedX = Constants.Entities.Player.DEFAULT_WALK_SPEED;
 		maxHealth = Constants.Entities.Player.DEFAULT_HEALTH;
 		health = maxHealth;
+		energy = Constants.Entities.Player.DEFAULT_ENERGY;
+		maxEnergy = energy;
 		width = Constants.Entities.Player.SPRITE_WIDTH;
 		height = Constants.Entities.Player.SPRITE_HEIGHT;
 		ticker = (byte) 0;

@@ -33,7 +33,7 @@ public class MainMenuState extends GameState{
 			bg = new Background(Constants.Backgrounds.MAIN_MENU);
 			font = new Font("Algerian", Font.PLAIN, 30);
 			
-			menuScreen = ImageIO.read(getClass().getResourceAsStream(Constants.UI.MenuButton.MENU_SCREEN));
+			menuScreen = ImageIO.read(getClass().getResourceAsStream(Constants.UI.MainMenu.MENU_SCREEN));
 		}
 		catch(IOException e) {
 			e.printStackTrace();

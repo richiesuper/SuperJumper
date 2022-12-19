@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
+import entities.HUD;
 import entities.Player;
 import tilemap.Background;
 import tilemap.TileMap;
@@ -16,6 +17,7 @@ public class Level2State extends GameState {
 	private Background bg;
 	private Player player;
 	private PauseMenuState pauseState;
+	private HUD hud;
 
 	// Pause
 	private static boolean pause = false;
@@ -43,6 +45,9 @@ public class Level2State extends GameState {
 		
 		// Pause
 		pauseState = new PauseMenuState();
+		
+		// HUD
+		hud = new HUD(player);
 	}
 
 	@Override
@@ -84,9 +89,13 @@ public class Level2State extends GameState {
 		// Draw player
 		player.draw(g);
 
+		// Draw Pause
 		if(pause) {
 			pauseState.draw(g);
 		}
+		
+		// Draw HUD
+		hud.draw(g);
 	}
 
 	@Override

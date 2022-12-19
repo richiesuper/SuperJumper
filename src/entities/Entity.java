@@ -12,12 +12,30 @@ public abstract class Entity {
 	// intrinsic traits
 	protected float x;
 	protected float y;
+	public float getEnergy() {
+		return energy;
+	}
+
+	public void setEnergy(float energy) {
+		this.energy = energy;
+	}
+
+	public float getMaxEnergy() {
+		return maxEnergy;
+	}
+
+	public void setMaxEnergy(float maxEnergy) {
+		this.maxEnergy = maxEnergy;
+	}
+
 	protected byte state;
 	protected byte direction;
 	protected float speedX;
 	protected float speedY;
 	protected float health;
 	protected float maxHealth;
+	protected float energy;
+	protected float maxEnergy;
 	protected float attackDmg;
 	protected boolean moving;
 	protected boolean running;
