@@ -25,6 +25,8 @@ public class Player extends Entity {
 	private float floatSpeed;
 	private float floatSpeedAfterHeadBump;
 	private boolean floating;
+	
+	private byte lastState;
 
 	public Player(float x, float y, short width, short height, TileMap tileMap) {
 		super(x, y, width, height, tileMap);
@@ -37,6 +39,8 @@ public class Player extends Entity {
 		floatSpeed = 0f;
 		floatSpeedAfterHeadBump = 0.5f;
 		floating = false;
+	
+		lastState = Constants.Entities.Player.IDLE;
 	}
 
 	@Override
@@ -107,6 +111,10 @@ public class Player extends Entity {
 			System.out.println("jumping!");
 			jump();
 		}
+		
+		if (!floating && !isEntityOnFloor(x, y, tileMap.getMap(), inMiddleArea, hitbox, tileMap)) {
+			floating = true;
+		}
 
 		if (floating) {
 			System.out.println("floating");
@@ -125,8 +133,8 @@ public class Player extends Entity {
 					hitbox.y += floatSpeed;
 					y += floatSpeed;
 				} else {
-					hitbox.y = getEntityYPosUnderRoofOrAboveFloor(hitbox.y, hitbox, tempSpeedX);
-					y = hitbox.y;
+//					hitbox.y = getEntityYPosUnderRoofOrAboveFloor(hitbox.y, hitbox, tempSpeedX);
+//					y = hitbox.y;
 					
 					// if we have landed...
 					if (floatSpeed > 0) {
@@ -139,8 +147,8 @@ public class Player extends Entity {
 					hitbox.y += floatSpeed;
 					y += floatSpeed;
 				} else {
-					hitbox.y = getEntityYPosUnderRoofOrAboveFloor(hitbox.y, hitbox, tempSpeedX);
-					y = hitbox.y;
+//					hitbox.y = getEntityYPosUnderRoofOrAboveFloor(hitbox.y, hitbox, tempSpeedX);
+//					y = hitbox.y;
 					
 					// if we have landed...
 					if (floatSpeed > 0) {
@@ -154,8 +162,8 @@ public class Player extends Entity {
 				hitbox.y += floatSpeed;
 				y += floatSpeed;
 			} else {
-				y = getEntityYPosUnderRoofOrAboveFloor(y, hitbox, tempSpeedX);
-				hitbox.y = y;
+//				y = getEntityYPosUnderRoofOrAboveFloor(y, hitbox, tempSpeedX);
+//				hitbox.y = y;
 				
 				// if we have landed...
 				if (floatSpeed > 0) {
@@ -171,6 +179,7 @@ public class Player extends Entity {
 	private void resetFloating() {
 		floating = false;
 		floatSpeed = 0f;
+		setState(lastState);
 	}
 
 	private void updateXPos(float tempSpeedX) {
@@ -192,42 +201,6 @@ public class Player extends Entity {
 			if (canMoveHere(x + tempSpeedX, y, hitbox.width, hitbox.height, tileMap.getMap(), inMiddleArea,
 					hitbox, tileMap)) {
 				x += tempSpeedX;
-			}
-		}
-	}
-
-	private void updatePos(float tempSpeedX) {
-		if (floating) {
-			this.floatSpeed += gravity;
-			System.out.println("floatSpeed: " + floatSpeed);
-		}
-
-		if (!inMiddleArea) {
-			if (x >= tileMap.getColCount() * Constants.Tile.WIDTH - Constants.Panel.WIDTH / 2) {
-				if (canMoveHere(x + tempSpeedX, y + floatSpeed, hitbox.width, hitbox.height, tileMap.getMap(),
-						inMiddleArea, hitbox, tileMap)) {
-					hitbox.x += tempSpeedX;
-					x += tempSpeedX;
-					
-					hitbox.y += floatSpeed;
-					y += floatSpeed;
-				}
-			} else {
-				if (canMoveHere(hitbox.x + tempSpeedX, hitbox.y + floatSpeed, hitbox.width, hitbox.height,
-						tileMap.getMap(), inMiddleArea, hitbox, tileMap)) {
-					hitbox.x += tempSpeedX;
-					x += tempSpeedX;
-
-					hitbox.y += floatSpeed;
-					y += floatSpeed;
-				}
-			}
-		} else {
-			if (canMoveHere(x + tempSpeedX, y + floatSpeed, hitbox.width, hitbox.height, tileMap.getMap(), inMiddleArea,
-					hitbox, tileMap)) {
-				x += tempSpeedX;
-
-				y += floatSpeed;
 			}
 		}
 	}
@@ -372,4 +345,13 @@ public class Player extends Entity {
 	public void setJumping(boolean jumping) {
 		this.jumping = jumping;
 	}
+
+	public byte getLastState() {
+		return lastState;
+	}
+
+	public void setLastState(byte lastState) {
+		this.lastState = lastState;
+	}
+	
 }
