@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
+import entities.Clock;
 import entities.HUD;
 import entities.Player;
 import tilemap.Background;
@@ -18,6 +19,7 @@ public class Level2State extends GameState {
 	private Player player;
 	private PauseMenuState pauseState;
 	private HUD hud;
+	private Clock clock;
 
 	// Pause
 	private static boolean pause = false;
@@ -48,6 +50,10 @@ public class Level2State extends GameState {
 		
 		// HUD
 		hud = new HUD(player);
+		
+		// Clock
+		clock = new Clock();
+		clock.start();
 	}
 
 	@Override
@@ -75,6 +81,7 @@ public class Level2State extends GameState {
 	}
 	
 	private void eventFinish() {
+		clock.stop();
 		gsm.setState(Constants.GameStates.GAME_FINISH);
 	}
 
@@ -89,22 +96,31 @@ public class Level2State extends GameState {
 		// Draw player
 		player.draw(g);
 
-		// Draw Pause
+		// HUD
+		hud.draw(g);
+		
+		// Clock
+		clock.draw(g);
+		
+		// Pause
 		if(pause) {
 			pauseState.draw(g);
 		}
-		
-		// Draw HUD
-		hud.draw(g);
 	}
 
 	@Override
 	public void keyPressed(int k) {
 		if(k == KeyEvent.VK_ESCAPE) {
-			if(!pause)
-				pause = true;
-			else
-				pause = false;
+			if(k == KeyEvent.VK_ESCAPE) {
+				if(!pause) {
+					pause = true;
+					clock.stop();
+				}
+				else {
+					pause = false;
+					clock.start();
+				}
+			}
 		}
 		else if(k == KeyEvent.VK_ENTER && pause) {
 			pause = false;

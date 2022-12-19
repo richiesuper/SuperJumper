@@ -71,8 +71,9 @@ public class Constants {
 		}
 		
 		// HUD
-		public static class HUD{
+		public static class AttributeGames{
 			public static final String HUD_SCREEN = Folders.UI + "HUD.png";
+			public static final String CLOCK_SCREEN = Folders.UI + "clock.png";
 		}
 	}
 

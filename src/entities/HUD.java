@@ -19,7 +19,7 @@ public class HUD {
 		this.player = player;
 		
 		try {
-			img = ImageIO.read(getClass().getResourceAsStream(Constants.UI.HUD.HUD_SCREEN));
+			img = ImageIO.read(getClass().getResourceAsStream(Constants.UI.AttributeGames.HUD_SCREEN));
 			font = new Font("Arial", Font.PLAIN, 15);
 		}
 		catch(IOException e) {
