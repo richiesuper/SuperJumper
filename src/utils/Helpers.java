@@ -13,8 +13,7 @@ public class Helpers {
 				if (!isSolid(x + width, y, lvlData, inMiddleArea, hitbox, tileMap)) // top right corner
 					if (!isSolid(x, y + height, lvlData, inMiddleArea, hitbox, tileMap)) // bottom left corner
 						if (!isSolid(x, y + height / 2, lvlData, inMiddleArea, hitbox, tileMap)) // middle left
-							if (!isSolid(x + width, y + height / 2, lvlData, inMiddleArea, hitbox, tileMap)) // middle
-																												// right
+							if (!isSolid(x + width, y + height / 2, lvlData, inMiddleArea, hitbox, tileMap)) // middle right
 								return true;
 		return false;
 	}
