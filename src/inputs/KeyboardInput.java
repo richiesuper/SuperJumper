@@ -44,26 +44,10 @@ public class KeyboardInput implements KeyListener {
 				gamePanel.getGsm().getGameState().getPlayer().setMoving(true);
 				gamePanel.getGsm().getGameState().getPlayer().setState(Constants.Entities.Player.RUN);
 				break;
-			case 'w':
-				gamePanel.getGsm().getGameState().getPlayer().setDirection(Constants.Entities.Player.DIR_UP);
+			case ' ':
+				gamePanel.getGsm().getGameState().getPlayer().setJumping(true);
 				gamePanel.getGsm().getGameState().getPlayer().setMoving(true);
-				gamePanel.getGsm().getGameState().getPlayer().setState(Constants.Entities.Player.WALK);
-				break;
-			case 'W':
-				gamePanel.getGsm().getGameState().getPlayer().setDirection(Constants.Entities.Player.DIR_UP);
-				gamePanel.getGsm().getGameState().getPlayer().setMoving(true);
-				gamePanel.getGsm().getGameState().getPlayer().setState(Constants.Entities.Player.RUN);
-				break;
-			case 's':
-				gamePanel.getGsm().getGameState().getPlayer().setDirection(Constants.Entities.Player.DIR_DOWN);
-				gamePanel.getGsm().getGameState().getPlayer().setMoving(true);
-				gamePanel.getGsm().getGameState().getPlayer().setState(Constants.Entities.Player.WALK);
-				break;
-			case 'S':
-				gamePanel.getGsm().getGameState().getPlayer().setDirection(Constants.Entities.Player.DIR_DOWN);
-				gamePanel.getGsm().getGameState().getPlayer().setMoving(true);
-				gamePanel.getGsm().getGameState().getPlayer().setState(Constants.Entities.Player.RUN);
-				break;
+				gamePanel.getGsm().getGameState().getPlayer().setState(Constants.Entities.Player.JUMP);
 			default:
 				break;
 			}
@@ -102,6 +86,8 @@ public class KeyboardInput implements KeyListener {
 				gamePanel.getGsm().getGameState().getPlayer().setMoving(false);
 				gamePanel.getGsm().getGameState().getPlayer().setState(Constants.Entities.Player.IDLE);
 				break;
+			case ' ':
+				gamePanel.getGsm().getGameState().getPlayer().setJumping(false);
 			default:
 				break;
 			}

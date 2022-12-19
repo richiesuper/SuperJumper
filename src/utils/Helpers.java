@@ -46,4 +46,38 @@ public class Helpers {
 
 		return false;
 	}
+
+	public static float getEntityXPosNextToWall(float x, Rectangle2D.Float hitbox, float xSpeed) {
+		int currentTile = (int) (x / Constants.Tile.WIDTH);
+		if (xSpeed > 0) {
+			// Right
+			int tileXPos = currentTile * Constants.Tile.WIDTH;
+			int xOffset = (int) (Constants.Tile.WIDTH - hitbox.width);
+			return tileXPos + xOffset - 1;
+		} else
+			// Left
+			return currentTile * Constants.Tile.WIDTH;
+	}
+
+	public static float getEntityYPosUnderRoofOrAboveFloor(float y, Rectangle2D.Float hitbox, float floatSpeed) {
+		int currentTile = (int) (y / Constants.Tile.HEIGHT);
+		if (floatSpeed > 0) {
+			// Falling - touching floor
+			int tileYPos = (currentTile + 1) * Constants.Tile.HEIGHT;
+			int yOffset = (int) (Constants.Tile.HEIGHT - hitbox.height);
+			return tileYPos + yOffset - 1;
+		} else
+			// Jumping
+			return (currentTile + 1) * Constants.Tile.HEIGHT;
+
+	}
+
+	public static boolean isEntityOnFloor(float x, float y, int[][] lvlData,
+			boolean inMiddleArea, Rectangle2D.Float hitbox, TileMap tileMap) {
+		if (!isSolid(x, y + hitbox.height + 1, lvlData, inMiddleArea, hitbox, tileMap))
+			if (!isSolid(x + hitbox.width, y + hitbox.height + 1, lvlData, inMiddleArea, hitbox, tileMap))
+				return false;
+		return true;
+	}
+
 }

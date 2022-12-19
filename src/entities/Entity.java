@@ -20,8 +20,6 @@ public abstract class Entity {
 	protected float maxHealth;
 	protected float attackDmg;
 	protected boolean moving;
-	protected boolean running;
-	protected boolean jumping;
 	protected byte ticker;
 	protected byte idx;
 	protected byte[] tileColCount;
@@ -190,22 +188,6 @@ public abstract class Entity {
 
 	public void setMoving(boolean moving) {
 		this.moving = moving;
-	}
-
-	public boolean isRunning() {
-		return running;
-	}
-
-	public void setRunning(boolean running) {
-		this.running = running;
-	}
-
-	public boolean isJumping() {
-		return jumping;
-	}
-
-	public void setJumping(boolean jumping) {
-		this.jumping = jumping;
 	}
 
 	public byte getTicker() {

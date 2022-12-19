@@ -18,7 +18,6 @@ public class GameStateManager {
 
 	private void loadState() {
 		gameStates[Constants.GameStates.MAIN_MENU] = new MainMenuState(this);
-		gameStates[Constants.GameStates.PAUSE_MENU] = new PauseMenuState(this);
 		gameStates[Constants.GameStates.ABOUT_MENU] = new AboutState(this);
 		gameStates[Constants.GameStates.GAME_OVER] = new GameOverState(this);
 		gameStates[Constants.GameStates.GAME_FINISH] = new GameFinishState(this);

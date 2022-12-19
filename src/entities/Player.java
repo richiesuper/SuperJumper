@@ -1,6 +1,6 @@
 package entities;
 
-import static utils.Helpers.canMoveHere;
+import static utils.Helpers.*;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -17,12 +17,26 @@ public class Player extends Entity {
 	private boolean goingLeft;
 	private boolean goingRight;
 	private boolean inMiddleArea;
+	
+	// jumping
+	private boolean jumping;
+	private float gravity;
+	private float jumpSpeed;
+	private float floatSpeed;
+	private float floatSpeedAfterHeadBump;
+	private boolean floating;
 
 	public Player(float x, float y, short width, short height, TileMap tileMap) {
 		super(x, y, width, height, tileMap);
 		init();
 		initHitbox(x, y, Constants.Entities.Player.HITBOX_WIDTH, Constants.Entities.Player.HITBOX_HEIGHT);
 		inMiddleArea = false;
+		
+		gravity = 0.1f;
+		jumpSpeed = -5f;
+		floatSpeed = 0f;
+		floatSpeedAfterHeadBump = 0.5f;
+		floating = false;
 	}
 
 	@Override
@@ -65,8 +79,7 @@ public class Player extends Entity {
 	public void move() {
 		// Temp
 		float tempSpeedX = 0;
-		float tempSpeedY = 0;
-
+		
 		if (moving) {
 			switch (direction) {
 			case Constants.Entities.Player.DIR_LEFT:
@@ -83,50 +96,138 @@ public class Player extends Entity {
 				facingRight = true;
 				facingLeft = false;
 				break;
-			case Constants.Entities.Player.DIR_UP:
-				// Temp
-				tempSpeedY = -speedY;
-
-				break;
-			case Constants.Entities.Player.DIR_DOWN:
-				// Temp
-				tempSpeedY = speedY;
-
-				break;
 			default:
 				break;
 			}
 		}
 
+		if (jumping) {
+			System.out.println("jumping!");
+			jump();
+		}
+
+		if (floating) {
+			System.out.println("floating");
+			updateXandYPos(tempSpeedX);
+		} else {
+			System.out.println("not floating");
+			updateXPos(tempSpeedX);
+		}
+	}
+	
+	private void updateXandYPos(float tempSpeedX) {
 		if (!inMiddleArea) {
 			if (x >= tileMap.getColCount() * Constants.Tile.WIDTH - Constants.Panel.WIDTH / 2) {
-				if (canMoveHere(x + tempSpeedX, y + tempSpeedY, hitbox.width, hitbox.height, tileMap.getMap(),
+				if (canMoveHere(x, y + floatSpeed, hitbox.width, hitbox.height, tileMap.getMap(),
 						inMiddleArea, hitbox, tileMap)) {
-					hitbox.x += tempSpeedX;
-					hitbox.y += tempSpeedY;
-					x += tempSpeedX;
-					y += tempSpeedY;
+					hitbox.y += floatSpeed;
+					y += floatSpeed;
+				} else {
+					hitbox.y = getEntityYPosUnderRoofOrAboveFloor(hitbox.y, hitbox, tempSpeedX);
+					y = hitbox.y;
+					
+					// if we have landed...
+					if (floatSpeed > 0) {
+						resetFloating();
+					}
 				}
 			} else {
-				if (canMoveHere(hitbox.x + tempSpeedX, hitbox.y + tempSpeedY, hitbox.width, hitbox.height,
+				if (canMoveHere(hitbox.x, hitbox.y + floatSpeed, hitbox.width, hitbox.height,
 						tileMap.getMap(), inMiddleArea, hitbox, tileMap)) {
-					hitbox.x += tempSpeedX;
-					hitbox.y += tempSpeedY;
-					x += tempSpeedX;
-					y += tempSpeedY;
+					hitbox.y += floatSpeed;
+					y += floatSpeed;
+				} else {
+					hitbox.y = getEntityYPosUnderRoofOrAboveFloor(hitbox.y, hitbox, tempSpeedX);
+					y = hitbox.y;
+					
+					// if we have landed...
+					if (floatSpeed > 0) {
+						resetFloating();
+					}
 				}
 			}
 		} else {
-			if (canMoveHere(x + tempSpeedX, y + tempSpeedY, hitbox.width, hitbox.height, tileMap.getMap(), inMiddleArea,
+			if (canMoveHere(x, y + floatSpeed, hitbox.width, hitbox.height, tileMap.getMap(), inMiddleArea,
 					hitbox, tileMap)) {
-				x += tempSpeedX;
-				y += tempSpeedY;
-				if (direction == Constants.Entities.Player.DIR_DOWN || direction == Constants.Entities.Player.DIR_UP) {
-					hitbox.y += tempSpeedY;
+				hitbox.y += floatSpeed;
+				y += floatSpeed;
+			} else {
+				y = getEntityYPosUnderRoofOrAboveFloor(y, hitbox, tempSpeedX);
+				hitbox.y = y;
+				
+				// if we have landed...
+				if (floatSpeed > 0) {
+					resetFloating();
 				}
 			}
 		}
 		
+		floatSpeed += gravity;
+		updateXPos(tempSpeedX);
+	}
+
+	private void resetFloating() {
+		floating = false;
+		floatSpeed = 0f;
+	}
+
+	private void updateXPos(float tempSpeedX) {
+		if (!inMiddleArea) {
+			if (x >= tileMap.getColCount() * Constants.Tile.WIDTH - Constants.Panel.WIDTH / 2) {
+				if (canMoveHere(x + tempSpeedX, y, hitbox.width, hitbox.height, tileMap.getMap(),
+						inMiddleArea, hitbox, tileMap)) {
+					hitbox.x += tempSpeedX;
+					x += tempSpeedX;
+				}
+			} else {
+				if (canMoveHere(hitbox.x + tempSpeedX, hitbox.y, hitbox.width, hitbox.height,
+						tileMap.getMap(), inMiddleArea, hitbox, tileMap)) {
+					hitbox.x += tempSpeedX;
+					x += tempSpeedX;
+				}
+			}
+		} else {
+			if (canMoveHere(x + tempSpeedX, y, hitbox.width, hitbox.height, tileMap.getMap(), inMiddleArea,
+					hitbox, tileMap)) {
+				x += tempSpeedX;
+			}
+		}
+	}
+
+	private void updatePos(float tempSpeedX) {
+		if (floating) {
+			this.floatSpeed += gravity;
+			System.out.println("floatSpeed: " + floatSpeed);
+		}
+
+		if (!inMiddleArea) {
+			if (x >= tileMap.getColCount() * Constants.Tile.WIDTH - Constants.Panel.WIDTH / 2) {
+				if (canMoveHere(x + tempSpeedX, y + floatSpeed, hitbox.width, hitbox.height, tileMap.getMap(),
+						inMiddleArea, hitbox, tileMap)) {
+					hitbox.x += tempSpeedX;
+					x += tempSpeedX;
+					
+					hitbox.y += floatSpeed;
+					y += floatSpeed;
+				}
+			} else {
+				if (canMoveHere(hitbox.x + tempSpeedX, hitbox.y + floatSpeed, hitbox.width, hitbox.height,
+						tileMap.getMap(), inMiddleArea, hitbox, tileMap)) {
+					hitbox.x += tempSpeedX;
+					x += tempSpeedX;
+
+					hitbox.y += floatSpeed;
+					y += floatSpeed;
+				}
+			}
+		} else {
+			if (canMoveHere(x + tempSpeedX, y + floatSpeed, hitbox.width, hitbox.height, tileMap.getMap(), inMiddleArea,
+					hitbox, tileMap)) {
+				x += tempSpeedX;
+
+				y += floatSpeed;
+			}
+		}
 	}
 
 	@Override
@@ -141,7 +242,6 @@ public class Player extends Entity {
 			speedY = Constants.Entities.Player.DEFAULT_RUN_SPEED;
 			break;
 		case Constants.Entities.Player.JUMP:
-			speedY = Constants.Entities.Player.DEFAULT_JUMP_HEIGHT;
 			break;
 		case Constants.Entities.Player.IDLE:
 		case Constants.Entities.Player.ATK_1:
@@ -167,6 +267,17 @@ public class Player extends Entity {
 
 	@Override
 	public void die() {
+	}
+	
+	public void jump() {
+		if (floating) {
+			return;
+		}
+		
+		System.out.println("Starting to jump!");
+			
+		floating = true;
+		floatSpeed = jumpSpeed;
 	}
 
 	@Override
@@ -254,5 +365,9 @@ public class Player extends Entity {
 
 	public void setGoingRight(boolean goingRight) {
 		this.goingRight = goingRight;
+	}
+
+	public void setJumping(boolean jumping) {
+		this.jumping = jumping;
 	}
 }
