@@ -139,6 +139,8 @@ public class Player extends Entity {
 					// if we have landed...
 					if (floatSpeed > 0) {
 						resetFloating();
+					} else {
+						floatSpeed = floatSpeedAfterHeadBump;
 					}
 				}
 			} else {
@@ -153,6 +155,8 @@ public class Player extends Entity {
 					// if we have landed...
 					if (floatSpeed > 0) {
 						resetFloating();
+					} else {
+						floatSpeed = floatSpeedAfterHeadBump;
 					}
 				}
 			}
@@ -168,6 +172,8 @@ public class Player extends Entity {
 				// if we have landed...
 				if (floatSpeed > 0) {
 					resetFloating();
+				} else {
+					floatSpeed = floatSpeedAfterHeadBump;
 				}
 			}
 		}
