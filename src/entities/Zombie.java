@@ -12,11 +12,14 @@ import utils.Constants;
 
 public class Zombie extends Enemy {
 
+	int walkSpeed;
+	
 	public Zombie(float x, float y, short width, short height, TileMap tileMap) {
 		super(x, y, width, height, tileMap);
 		init();
 		initHitbox(x, y, Constants.Entities.Enemies.Zombie.HITBOX_WIDTH,
 				Constants.Entities.Enemies.Zombie.HITBOX_HEIGHT);
+		walkSpeed = 2;
 	}
 
 	@Override
@@ -79,7 +82,6 @@ public class Zombie extends Enemy {
 
 	@Override
 	public void move() {
-
 	}
 
 	@Override
@@ -128,8 +130,6 @@ public class Zombie extends Enemy {
 
 	@Override
 	public void attack() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
