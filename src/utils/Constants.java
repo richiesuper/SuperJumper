@@ -24,7 +24,7 @@ public class Constants {
 
 	public static class GameStates {
 		// Num GameStates
-		public static final byte NUM_GAME_STATE = 8;
+		public static final byte NUM_GAME_STATE = 9;
 
 		// types of game states
 		public static final byte MAIN_MENU = 0;
@@ -33,8 +33,9 @@ public class Constants {
 		public static final byte GAME_OVER = 3;
 		public static final byte GAME_FINISH = 4;
 		public static final byte LEVEL_SELECTION = 5;
-		public static final byte LVL_1 = 6;
-		public static final byte LVL_2 = 7;
+		public static final byte HIGH_SCORE = 6;
+		public static final byte LVL_1 = 7;
+		public static final byte LVL_2 = 8;
 	}
 
 	// UI game
@@ -75,6 +76,14 @@ public class Constants {
 			public static final String HUD_SCREEN = Folders.UI + "HUD.png";
 			public static final String CLOCK_SCREEN = Folders.UI + "clock.png";
 		}
+		
+		// High Scores
+		public static class HighScore{
+			public static final String HIGH_SCORE_FOLDER = Folders.UI + "/highscore/";
+			public static final String HIGH_SCORE_LEVEL = HIGH_SCORE_FOLDER + "level";
+			public static final String HIGH_SCORE_DEFAULT = HIGH_SCORE_FOLDER + "Time.dat";
+			public static final String NEW_HIGH_SCORE = HIGH_SCORE_FOLDER + "newhighscore.png";
+		}
 	}
 
 	public static class Tile {
@@ -108,6 +117,7 @@ public class Constants {
 		public static final String LVL_SELECTION_MENU = Folders.BGS + "level-selection-menu.png";
 		public static final String MAIN_MENU = Folders.BGS + "main-menu.png";
 		public static final String ABOUT_MENU = Folders.BGS + "about-menu.png";
+		public static final String HIGHSCORE_MENU = Folders.BGS + "highscore.png";
 	}
 
 	public static class TileSets {

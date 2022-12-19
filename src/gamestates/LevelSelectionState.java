@@ -21,7 +21,10 @@ public class LevelSelectionState extends GameState {
 	private int currentChoice;
 	
 	private String[] options = {
-		"1", "2", "Back"
+		"1",
+		"2",
+		"HIGH SCORE",
+		"BACK"
 	};
 
 	public LevelSelectionState(GameStateManager gsm) {
@@ -77,11 +80,12 @@ public class LevelSelectionState extends GameState {
 			
 			if(i == options.length - 1)
 				g.drawString(options[i], 880, 520);
+			else if(i == options.length - 2)
+				g.drawString(options[i], 50, 520);
 		}
 	}
 	
 	private void select() {
-		System.out.println("p");
 		if(currentChoice == 0) {
 			gsm.setState(Constants.GameStates.LVL_1);
 		}
@@ -89,6 +93,9 @@ public class LevelSelectionState extends GameState {
 			gsm.setState(Constants.GameStates.LVL_2);
 		}
 		else if(currentChoice == 2) {
+			gsm.setState(Constants.GameStates.HIGH_SCORE);
+		}
+		else if(currentChoice == 3) {
 			gsm.setState(Constants.GameStates.MAIN_MENU);
 		}
 	}
@@ -112,11 +119,17 @@ public class LevelSelectionState extends GameState {
 			}
 		}
 		else if(k == KeyEvent.VK_DOWN) {
-			if(currentChoice == 0 || currentChoice == 1) {
+			if(currentChoice == 0) {
 				currentChoice = 2;
 			}
-			else {
+			else if(currentChoice == 1) {
+				currentChoice = 3;
+			}
+			else if(currentChoice == 2){
 				currentChoice = 0;
+			}
+			else {
+				currentChoice = 1;
 			}
 		}
 		else if(k == KeyEvent.VK_UP) {
@@ -124,11 +137,13 @@ public class LevelSelectionState extends GameState {
 				currentChoice = 2;
 			}
 			else if(currentChoice == 1) {
+				currentChoice = 3;
+			}
+			else if(currentChoice == 2){
 				currentChoice = 0;
 			}
-			else {
+			else
 				currentChoice = 1;
-			}
 		}
 	}
 

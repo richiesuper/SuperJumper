@@ -40,6 +40,9 @@ public class GameStateManager {
 		if (state == Constants.GameStates.GAME_FINISH) {
 			gameStates[state] = new GameFinishState(this);
 		}
+		if (state == Constants.GameStates.HIGH_SCORE) {
+			gameStates[state] = new HighScoreState(this);
+		}
 	}
 
 	public void setState(int state) {

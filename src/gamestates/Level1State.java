@@ -51,7 +51,7 @@ public class Level1State extends GameState {
 		
 		// HUD
 		hud = new HUD(player);
-		
+			
 		// Clock
 		clock = new Clock();
 		clock.start();
