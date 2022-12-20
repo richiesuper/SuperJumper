@@ -38,7 +38,7 @@ public class Player extends Entity {
 		inMiddleArea = false;
 		
 		gravity = 0.1f;
-		jumpSpeed = -5.0f;
+		jumpSpeed = -5.5f;
 		floatSpeed = 0f;
 		floatSpeedAfterHeadBump = 0.5f;
 		floating = false;
